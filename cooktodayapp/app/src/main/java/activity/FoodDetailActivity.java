@@ -172,7 +172,6 @@ public class FoodDetailActivity extends AppCompatActivity {
     public void backPage(View view){
         Intent intent=new Intent();
         intent.setClass(this, MainActivity.class);
-        //启动
         startActivity(intent);
     }
 }
