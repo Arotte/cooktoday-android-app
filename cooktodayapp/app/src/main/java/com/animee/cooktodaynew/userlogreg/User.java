@@ -1,4 +1,4 @@
-package com.animee.cooktodaynew;
+package com.animee.cooktodaynew.userlogreg;
 
 public class User {
     private String name;

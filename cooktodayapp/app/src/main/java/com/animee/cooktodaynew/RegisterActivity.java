@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.animee.cooktodaynew.userlogreg.DBOpenHelper;
+
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private DBOpenHelper mDBOpenHelper;

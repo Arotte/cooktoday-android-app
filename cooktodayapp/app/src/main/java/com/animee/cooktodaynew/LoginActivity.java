@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.animee.cooktodaynew.userlogreg.DBOpenHelper;
+import com.animee.cooktodaynew.userlogreg.User;
+
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {

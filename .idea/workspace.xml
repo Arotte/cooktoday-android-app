@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb159311-7ef8-4146-83ce-026cb977692e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cooktodayapp/app/src/main/java/com/animee/cooktodaynew/DBOpenHelper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cooktodayapp/app/src/main/java/com/animee/cooktodaynew/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/cooktodayapp/app/src/main/java/com/animee/cooktodaynew/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cooktodayapp/app/src/main/java/com/animee/cooktodaynew/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/cooktodayapp/app/src/main/java/com/animee/cooktodaynew/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cooktodayapp/app/src/main/java/com/animee/cooktodaynew/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/cooktodayapp/app/src/main/java/com/animee/cooktodaynew/RegisterActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cooktodayapp/app/src/main/java/com/animee/cooktodaynew/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cooktodayapp/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cooktodayapp/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cooktodayapp/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cooktodayapp/app/src/main/res/values/colors.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +30,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cooktodayapp" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

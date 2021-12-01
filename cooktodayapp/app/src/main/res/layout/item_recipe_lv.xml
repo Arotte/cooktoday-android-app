@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+    <ImageView
+        android:id="@+id/item_recipe_iv"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/beanmilk"
+        android:scaleType="centerCrop"/>
+    <TextView
+        android:id="@+id/item_recipe_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/item_recipe_iv"
+        android:layout_marginTop="10dp"
+        android:text="Bean milk"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
+    <TextView
+        android:id="@+id/item_recipe_tv_ingredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/item_recipe_tv_title"
+        android:layout_alignBottom="@+id/item_recipe_iv"
+        android:text="Soy bean, water" />
+    <ImageView
+        android:id="@+id/item_recipe_iv_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/expand"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        />
+</RelativeLayout>

@@ -1,10 +1,12 @@
-package com.animee.cooktodaynew;
+package com.animee.cooktodaynew.userlogreg;
 
 // I not sure how to do, just type online code on here
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.animee.cooktodaynew.userlogreg.User;
 
 import java.util.ArrayList;
 
