@@ -1,4 +1,4 @@
-package com.animee.cooktodayapp;
+package com.animee.cooktodaynew;
 
 import org.junit.Test;
 
