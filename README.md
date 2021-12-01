@@ -23,3 +23,12 @@ How do I test the code to ensure the build is correct?
   
 ## Team Members
  Who's working on this application?
+-----------update 01/12/2021--------------
+login username:11
+password:11
+
+you can register, login and logout now. Curently doing recipe show and search interface and tomorrow will done. 
+
+
+
+
