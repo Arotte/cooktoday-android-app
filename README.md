@@ -28,10 +28,10 @@ login username:11
 password:11
 
 you can register, login and logout now. Curently doing recipe show and search interface and tomorrow will done. 
-
-![image](https://github.com/UoA-Software-Engineering/Alpha-21-22-FE/tree/cooktodayapp/IMG/login.png)
-![image](https://github.com/UoA-Software-Engineering/Alpha-21-22-FE/tree/cooktodayapp/IMG/main.png)
-![image](https://github.com/UoA-Software-Engineering/Alpha-21-22-FE/tree/cooktodayapp/IMG/register.png)
+https://github.com/UoA-Software-Engineering/Alpha-21-22-FE/blob/3ec2ebf674821623267c64b8585473848fe3d8fe/IMG/login.png
+![image](https://github.com/UoA-Software-Engineering/Alpha-21-22-FE/blob/3ec2ebf674821623267c64b8585473848fe3d8fe/IMG/login.png)
+![image](https://github.com/UoA-Software-Engineering/Alpha-21-22-FE/blob/3ec2ebf674821623267c64b8585473848fe3d8fe/IMG/main.png)
+![image](https://github.com/UoA-Software-Engineering/Alpha-21-22-FE/blob/3ec2ebf674821623267c64b8585473848fe3d8fe/IMG/register.png)
 
 
 
