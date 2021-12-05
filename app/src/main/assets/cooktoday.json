@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "name": "My Recipe",
+    "short_description": "Helohelohelo",
+    "average_cooking_time": 0,
+    "portions": 0,
+    "ingredients": [
+      {
+        "id": "12",
+        "unit": "kg",
+        "untisNo": "123"
+      }
+    ],
+    "cooking_instructions": [
+      {
+        "time": "600",
+        "content": "something"
+      }
+    ],
+    "long_description": "Helohelohelo",
+    "pub_date": "2021-11-24T15:26:18.699202Z"
+  },
+  {
+    "id": 2,
+    "name": "My Super Recipe",
+    "short_description": "Helohelohelo",
+    "average_cooking_time": 0,
+    "portions": 0,
+    "ingredients": [
+      {
+        "id": "12",
+        "unit": "kg",
+        "untisNo": "123"
+      }
+    ],
+    "cooking_instructions": [
+      {
+        "time": "600",
+        "content": "something"
+      }
+    ],
+    "long_description": "Helohelohelo",
+    "pub_date": "2021-11-24T15:26:28.808744Z"
+  },
+  {
+    "id": 3,
+    "name": "Chicken kebab",
+    "short_description": "Helohelohelo",
+    "average_cooking_time": 0,
+    "portions": 0,
+    "ingredients": [
+      {
+        "id": "12",
+        "unit": "kg",
+        "untisNo": "123"
+      }
+    ],
+    "cooking_instructions": [
+      {
+        "time": "600",
+        "content": "something"
+      }
+    ],
+    "long_description": "Helohelohelo",
+    "pub_date": "2021-11-24T15:26:40.061842Z"
+  }
+]

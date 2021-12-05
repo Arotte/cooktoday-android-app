@@ -4,8 +4,20 @@ package com.animee.cooktodaynew.bean;
 
 import com.animee.cooktodaynew.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class FoodUtils {
     private static final String[] food = { "猪肉", "猪肝", "猪血", "羊肉", "牛肉", "牛肝", "鹅肉", "兔肉", "狗肉",
@@ -72,12 +84,17 @@ public class FoodUtils {
             "白酒主要由水乙醇和少量微量元素组成。夜晚服用少量的白酒，可平缓的促进血液循环，起到催眠作用。饮少量白酒可刺激胃液分泌与唾液分泌，因而起到健胃和止疼痛、利小便及驱虫的作用。白酒味苦、甘、辛，性温，有毒，入心、肝、肺、胃经。",
             "啤酒营养丰富，其中含有丰富的氨基酸，是原料大麦含有的蛋白质经过酶的作用分解而产生的。且啤酒中还含有多种维生素。适量饮啤酒有强心、利尿、健胃的功效。"};
 
-    public static List<FoodBean> getAllFoodList(){
-        List<FoodBean>list = new ArrayList<>();
-        for (int i = 0; i < food.length; i++) {
-            FoodBean bean = new FoodBean(food[i],food1[i],fooddesc[i],resId[i]);
-            list.add(bean);
-        }
-        return list;
+
+
+        public static List<FoodBean> getAllFoodList(){
+            List<FoodBean>list = new ArrayList<>();
+            for (int i = 0; i < food.length; i++) {
+                FoodBean bean = new FoodBean(food[i],food1[i],fooddesc[i],resId[i]);
+                list.add(bean);
+            }
+            return list;
+
     }
+
+
 }
