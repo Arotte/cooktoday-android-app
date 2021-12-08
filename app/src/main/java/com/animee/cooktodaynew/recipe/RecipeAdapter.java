@@ -66,9 +66,9 @@ public class RecipeAdapter extends BaseAdapter {
         }
         // Loading controls to display content
         FoodBean foodBean = mDatas.get(position);
-        holder.titleTv.setText(foodBean.getTitle());
+        holder.titleTv.setText(foodBean.getName());
         holder.ingredientsTv.setText("Ingredients: "+foodBean.getIngredients());
-        holder.iv.setImageResource(foodBean.getPicId());
+        //holder.iv.setImageResource(foodBean.getPicId());
         return convertView;
     }
 

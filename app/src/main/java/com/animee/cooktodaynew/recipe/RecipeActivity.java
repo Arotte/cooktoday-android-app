@@ -2,18 +2,12 @@ package com.animee.cooktodaynew.recipe;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.*;
-import java.net.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,16 +15,10 @@ import com.animee.cooktodaynew.R;
 import com.animee.cooktodaynew.bean.FoodBean;
 import com.animee.cooktodaynew.bean.FoodUtils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -43,6 +31,7 @@ public class RecipeActivity extends AppCompatActivity implements View.OnClickLis
     List<FoodBean>mDatas;
     List<FoodBean>allFoodList;
     private RecipeAdapter adapter;
+    private Handler mainHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -50,11 +39,12 @@ public class RecipeActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_recipe);
         initView();
         mDatas = new ArrayList<>();
-        allFoodList = FoodUtils.getAllFoodList();
+        allFoodList = FoodUtils.getInstance().getAllFoodList(this);
         mDatas.addAll(allFoodList);
 
         adapter = new RecipeAdapter(this, mDatas);
         showLv.setAdapter(adapter); // set adapter
+        initData();
     }
 
     private void initView() {
@@ -66,7 +56,36 @@ public class RecipeActivity extends AppCompatActivity implements View.OnClickLis
         flushIv.setOnClickListener(this); // add chick event listener
 
     }
+    private void initData(){
+        mainHandler = new Handler(getMainLooper());
+        String url = "https://cooktoday-api.herokuapp.com/api/recipes/";
+        OkHttpClient okHttpClient = new OkHttpClient();
+        final Request request = new Request.Builder()
+                .url(url)
+                .build();
+        final Call call = okHttpClient.newCall(request);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Response response = call.execute();
+                    final String str = response.body().string();
+                    mainHandler.post(new Runnable() {
 
+
+                        @Override
+                        public void run() {
+                            allFoodList = FoodUtils.getInstance()
+                                    .getAllFoodList(RecipeActivity.this);
+                        }
+                    });
+                }
+                catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
 
     @Override
     public void onClick(View v) {
@@ -86,7 +105,7 @@ public class RecipeActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 List<FoodBean>list = new ArrayList<>();
                 for (int i = 0; i < allFoodList.size(); i++) {
-                    String title = allFoodList.get(i).getTitle();
+                    String title = allFoodList.get(i).getName();
                     if (title.contains(msg)) {
                         list.add(allFoodList.get(i));
                     }

@@ -12,8 +12,9 @@ public class FoodBean {
     private String pub_date;
     private int picId; // we need picture
 
-    public FoodBean(String id, String name, String short_description, String average_cooking_time, String portions,
-                    String ingredients, String cooking_instructions, String long_description, String pub_date, int picId) {
+    public FoodBean(String id, String name, String short_description, String average_cooking_time,
+                    String portions, String ingredients, String cooking_instructions,
+                    String long_description, String pub_date, int picId) {
         this.id = id;
         this.name = name;
         this.short_description = short_description;
@@ -26,19 +27,44 @@ public class FoodBean {
         this.picId = picId;
     }
 
-    public FoodBean(String title, String ingredients, String desc, int picId) {
-
+    public String getId() {
+        return id;
     }
 
-    public FoodBean() {
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getShort_description() {
+        return short_description;
+    }
+
+    public void setShort_description(String short_description) {
+        this.short_description = short_description;
+    }
+
+    public String getAverage_cooking_time() {
+        return average_cooking_time;
+    }
+
+    public void setAverage_cooking_time(String average_cooking_time) {
+        this.average_cooking_time = average_cooking_time;
+    }
+
+    public String getPortions() {
+        return portions;
+    }
+
+    public void setPortions(String portions) {
+        this.portions = portions;
     }
 
     public String getIngredients() {
@@ -49,12 +75,28 @@ public class FoodBean {
         this.ingredients = ingredients;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getCooking_instructions() {
+        return cooking_instructions;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setCooking_instructions(String cooking_instructions) {
+        this.cooking_instructions = cooking_instructions;
+    }
+
+    public String getLong_description() {
+        return long_description;
+    }
+
+    public void setLong_description(String long_description) {
+        this.long_description = long_description;
+    }
+
+    public String getPub_date() {
+        return pub_date;
+    }
+
+    public void setPub_date(String pub_date) {
+        this.pub_date = pub_date;
     }
 
     public int getPicId() {
