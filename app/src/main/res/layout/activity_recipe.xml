@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RegisterActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:padding="10dp"
+        android:background="@mipmap/search_background">
+
+        <ImageView
+            android:id="@+id/recipe_iv_flush"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="0dp"
+            android:src="@mipmap/clear_btn" />
+
+        <ImageView
+            android:id="@+id/recipe_iv_search"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="1dp"
+            android:layout_toLeftOf="@id/recipe_iv_flush"
+            android:src="@mipmap/search_btn" />
+        <EditText
+            android:id="@+id/recipe_et_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/recipe_iv_search"
+            android:paddingLeft="20dp"
+            android:background="@drawable/info_et_bg"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/recipelist_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/dividerColor"
+        android:dividerHeight="1dp"></ListView>
+</LinearLayout>
