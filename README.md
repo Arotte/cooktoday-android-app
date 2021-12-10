@@ -8,7 +8,7 @@ https://developer.android.com/studio?gclid=EAIaIQobChMIvfaTyZDa9AIV-pNmAh0d4Aq9E
 
 3. Open Android Studio > Projects > Open. Find where the file Alpha-21-22-FE-cooktodayapp is located, select it, then click OK.
 
-4. After Gradle bilding is finished (this starts automatically), click Make Project (or Ctrl+F9).
+4. After Gradle building is finished (this starts automatically), click Make Project (or Ctrl+F9).
 
 5. Set up a device through AVD Manager. We use Pixel 4.
 
