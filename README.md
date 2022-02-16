@@ -13,6 +13,7 @@ This repository contains the source of the CookToday Android mobile application.
    git fetch
    git branch
    git checkout develop
+   git pull
    ```
 
 **If you don't have a copy of this repository on your machine:**
@@ -36,3 +37,4 @@ This repository contains the source of the CookToday Android mobile application.
 
 ## Development Practices
 
+TODO
