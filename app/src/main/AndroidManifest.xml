@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.animee.cooktodaynew">
+    package="com.aron.cooktoday">
 
     <application
         android:allowBackup="true"
@@ -8,21 +8,40 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Cooktodaynew" >
+        android:theme="@style/Theme.CookToday">
+
         <activity
-            android:name=".LoginActivity"
+            android:name=".onboarding.login.LogInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".onboarding.registration.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".onboarding.survey.SurveySlidePagerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".onboarding.registration.RegisterEmailVerificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".upload.UploadActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecipeDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".onboarding.OnBoardingActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".recipe.RecipeActivity"></activity>
 
     </application>
-
-
 
 </manifest>

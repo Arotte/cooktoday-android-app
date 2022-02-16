@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:background="@drawable/shape_round">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add a Filter"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/textMain"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:layout_marginBottom="30dp"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/textMain"
+            android:textSize="17sp"
+            android:textAlignment="textStart"
+            android:layout_marginBottom="15dp"/>
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchFilterCategories"
+            app:justifyContent="space_between"
+            app:flexWrap="wrap"
+            app:toggle_requiredAmount="1"
+            app:toggle_selectableAmount="1"
+
+            app:toggle_selectAnimation="circular_reveal">
+
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:id="@+id/searchFilterCategoryAll"
+                android:layout_margin="5dp"
+                app:toggle_text="All"
+                app:toggle_fontFamily="/fonts/interr.ttf"
+                app:toggle_selectedBackgroundColor="@color/primaryGreen">
+            </nl.bryanderidder.themedtogglebuttongroup.ThemedButton>
+
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                app:toggle_fontFamily="/fonts/interr.ttf"
+                android:id="@+id/searchFilterCategoryVegan"
+                android:layout_margin="5dp"
+                app:toggle_text="Vegan"
+                app:toggle_selectedBackgroundColor="@color/primaryGreen">
+            </nl.bryanderidder.themedtogglebuttongroup.ThemedButton>
+
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                android:layout_width="wrap_content"
+                app:toggle_fontFamily="/fonts/interr.ttf"
+                android:layout_height="38dp"
+                android:id="@+id/searchFilterCategoryGlutenFree"
+                android:layout_margin="5dp"
+                app:toggle_text="Gluten Free"
+                app:toggle_selectedBackgroundColor="@color/primaryGreen">
+            </nl.bryanderidder.themedtogglebuttongroup.ThemedButton>
+
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                app:toggle_fontFamily="/fonts/interr.ttf"
+                android:id="@+id/searchFilterCategoryDrink"
+                android:layout_margin="5dp"
+                app:toggle_text="Drinks"
+                app:toggle_selectedBackgroundColor="@color/primaryGreen">
+            </nl.bryanderidder.themedtogglebuttongroup.ThemedButton>
+
+        </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cooking Duration"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/textMain"
+            android:textSize="17sp"
+            android:textAlignment="textStart"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/interr"
+            android:text="1h 30m"
+            android:textColor="@color/textMain"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <SeekBar
+            android:layout_marginTop="10dp"
+            android:id="@+id/sbCookingDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="10"
+            android:progress="5"
+
+            android:progressDrawable="@drawable/custom_seekbar"
+            android:thumb="@drawable/custom_seekbar_thumb"
+            android:tickMarkTint="@color/textSecondary"
+            android:layout_marginBottom="20dp"/>
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSearchFilterCancel"
+                app:cornerRadius="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/form"
+                android:textColor="@color/textMain"
+                android:textAllCaps="false"
+                android:fontFamily="@font/interr"
+                android:stateListAnimator="@null"
+                android:text="Cancel" />
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSearchFilterDone"
+                app:cornerRadius="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:textAllCaps="false"
+                app:rippleColor="@color/white"
+                android:backgroundTint="@color/primaryGreen"
+                android:textColor="@color/white"
+                android:fontFamily="@font/interr"
+                android:stateListAnimator="@null"
+                android:text="Done" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

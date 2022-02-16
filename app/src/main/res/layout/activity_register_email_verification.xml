@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".onboarding.registration.RegisterEmailVerificationActivity"
+    android:id="@+id/verificationLayout"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Check your email"
+        android:fontFamily="@font/inter_bold"
+        android:textColor="@color/textMain"
+        android:textSize="23sp"
+        android:textAlignment="center"
+        android:layout_marginTop="25dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/interr"
+        android:textColor="@color/textSecondary"
+        android:textSize="15sp"
+        android:text="We've sent the code to your email"
+        android:textAlignment="center"
+        android:layout_marginTop="15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:id="@+id/containerVerifCode">
+
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:inputType="number"
+            android:id="@+id/etVerifCode1"
+            android:textAlignment="center"
+            android:maxLength="1"
+            android:background="@drawable/custom_code_input"
+            android:layout_marginEnd="10dp"/>
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/custom_code_input"
+            android:textAlignment="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:id="@+id/etVerifCode2"
+            android:layout_marginEnd="10dp"/>
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/custom_code_input"
+            android:textAlignment="center"
+            android:inputType="number"
+            android:layout_marginEnd="10dp"
+            android:maxLength="1"
+            android:id="@+id/etVerifCode3"/>
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/custom_code_input"
+            android:textAlignment="center"
+            android:maxLength="1"
+            android:inputType="number"
+            android:id="@+id/etVerifCode4"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvCodeExpires"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Code expires in"
+                android:fontFamily="@font/interr"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tvCodeVerifCountdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 03:00"
+                android:fontFamily="@font/inter_bold"
+                android:textSize="14sp"
+                android:textColor="@color/red" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnVerifyCode"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:fontFamily="@font/interr"
+        android:text="Verify"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:cornerRadius="30dp"
+        android:backgroundTint="@color/primaryGreen"
+        android:stateListAnimator="@null"
+        app:rippleColor="@color/black"
+        />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGetNewCode"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:fontFamily="@font/interr"
+        android:text="Get New Code"
+        android:textAllCaps="false"
+        android:textColor="@color/textSecondary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:cornerRadius="30dp"
+        android:backgroundTint="@color/white"
+        app:strokeColor="@color/textSecondary"
+        app:strokeWidth="2dp"
+        app:rippleColor="@color/textSecondary"
+        android:stateListAnimator="@null"
+        />
+
+</LinearLayout>

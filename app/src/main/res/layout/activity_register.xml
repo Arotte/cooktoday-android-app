@@ -1,138 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eeeeee">
+    android:orientation="vertical"
+    tools:context=".onboarding.registration.RegisterActivity"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp">
 
-    <!--
-    this total is relativelayout is top of the
-    interface, called 'top', include:
-    ← Register
-    '←' is clickable id= iv_registeractivity_back
-    'Register' not clickable id= tv_registeractivity_register
-
-    -->
-    <RelativeLayout
-        android:id="@+id/rl_registeractivity_top"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/color_minefragment_top">
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_bold"
+        android:text="Let's set up your account"
+        android:translationZ="5dp"
+        android:textAlignment="center"
+        android:textColor="@color/textMain"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"/>
 
-        <ImageView
-            android:id="@+id/iv_registeractivity_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_left_back"
-            android:clickable="true"
-            android:onClick="onClick" />
 
-        <TextView
-            android:id="@+id/tv_registeractivity_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Register"
-            android:textColor="#fff"
-            android:textSize="30dp"
-            android:layout_toRightOf="@id/iv_registeractivity_back"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            />
-    </RelativeLayout>
-    <!--
-    And now we need to have two text input frame let user put username & password
-    we use LinearLayout here, and orientation is vertical of course
+    <EditText
+        android:id="@+id/editTextTextEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/custom_ic_email"
+        android:ems="10"
+        android:layout_marginTop="40dp"
+        android:hint="Email or phone number"
+        android:inputType="textEmailAddress"
+        android:fontFamily="@font/interr"
+        android:drawablePadding="12dp"
+        android:background="@drawable/custom_input"
+        android:layout_marginBottom="10dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
+        />
 
-    username:
-    password:
-    -->
+    <EditText
+        android:id="@+id/etSignupPwField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/custom_ic_lock"
+        android:ems="10"
+        android:layout_marginTop="10dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:fontFamily="@font/interr"
+        android:drawablePadding="12dp"
+        android:background="@drawable/custom_input"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"/>
+
     <LinearLayout
-        android:id="@+id/ll_registeractivity_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@+id/rl_registeractivity_top"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        >
-        <!--
-        username:      please enter your username
-        (tv_registeractivity_username)     (et_registeractivity_username)
-        is horizontal
-        -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/tv_registeractivity_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Username: "
-                android:textSize="25dp"/>
-            <EditText
-                android:id="@+id/et_registeractivity_username"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:hint="Please enter your username"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="10dp"/>
-        </LinearLayout>
-        <!--
-            password:      please enter your password
-            (tv_loginactivity_password)     (et_loginactivity_password)
-            is horizontal
-        -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/tv_registeractivity_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Password: "
-                android:textSize="25dp"/>
-            <EditText
-                android:id="@+id/et_registeractivity_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:hint="Please enter your password"/>
-        </LinearLayout>
-    <!--
-    After user input username and password will click register button,
-    so we need a button called Register
-    -->
-    <Button
-        android:id="@+id/bt_registeractivity_register"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/selector_loginactivity_button"
-        android:text="Register"
-        android:textColor="#fff"
-        android:gravity="center"
-        android:onClick="onClick"
-        />
+        android:layout_marginTop="25dp"
+        android:id="@+id/signupPwReqContainer">
 
-    <RelativeLayout
-        android:id="@+id/rl_registeractivity_bottom"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ivPwReqMinChars"
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="At least 6 characters"
+                android:fontFamily="@font/interr"
+                android:textColor="@color/textSecondary"
+                android:layout_marginStart="7dp"
+                android:layout_gravity="center"
+                android:id="@+id/tvPwReqMinChars"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ivPwReqContainsNum"
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contains a number"
+                android:fontFamily="@font/interr"
+                android:textColor="@color/textSecondary"
+                android:layout_marginStart="7dp"
+                android:layout_gravity="center"
+                android:id="@+id/tvPwReqContainsNum"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCreateAccount_activity_signup"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp">
+        android:layout_height="60dp"
+        android:layout_marginTop="25dp"
+        android:backgroundTint="@color/primaryGreen"
+        android:fontFamily="@font/interr"
+        android:text="Create Account"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:cornerRadius="30dp"
+        app:rippleColor="@color/black"
+        android:stateListAnimator="@null"/>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="150dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:background="?android:attr/listDivider"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:cornerRadius="30dp"
+            app:iconTint="@color/white"
+            app:icon="@drawable/ic_google"
+            app:iconSize="20dp"
+            android:backgroundTint="@color/google"
+            android:layout_margin="10dp"
+            android:stateListAnimator="@null"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:cornerRadius="30dp"
+            app:iconTint="@color/white"
+            app:icon="@drawable/ic_facebook_2"
+            android:backgroundTint="@color/facebook"
+            android:layout_margin="10dp"
+            android:stateListAnimator="@null"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:cornerRadius="30dp"
+            app:iconTint="@color/white"
+            app:icon="@drawable/ic_twitter_2"
+            android:backgroundTint="@color/twitter"
+            android:layout_margin="10dp"
+            android:stateListAnimator="@null"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:cornerRadius="30dp"
+            app:iconTint="@color/white"
+            app:icon="@drawable/ic_instagram_2"
+            android:backgroundTint="@color/instagram"
+            android:layout_margin="10dp"
+            android:stateListAnimator="@null"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/goToLoginFromSignup"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/interr"
+            android:text="Already have an account?"
+            android:textAlignment="center"
+            android:textColor="@color/textMain"
+            android:layout_marginEnd="10dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Registration means agreeing to the 'User Agreement'" />
-    </RelativeLayout>
+            android:fontFamily="@font/interr"
+            android:text="Log In"
+            android:textAlignment="center"
+            android:textColor="@color/primaryGreen"
+            android:textStyle="bold" />
 
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
