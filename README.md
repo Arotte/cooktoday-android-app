@@ -2,6 +2,12 @@
 
 This repository contains the source of the CookToday Android mobile application.
 
+## Branches
+
+* `develop`: this is our main branch that we use for development
+* `initial_code`: this branch contains the initial app code created by Zixin and Dimana in the first semester
+
+
 ## Development Setup
 
 **If you already have a copy of this repository on your machine:**
