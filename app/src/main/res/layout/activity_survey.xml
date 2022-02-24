@@ -4,109 +4,145 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="-3dp"
     tools:context=".onboarding.survey.SurveySlidePagerActivity">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/topStepProgressContainer"
+    <ProgressBar
+        android:id="@+id/pbSurveyTopClean"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:indeterminate="false"
+        android:progress="55"
+        android:progressBackgroundTint="#E5E5E5"
+        android:progressBackgroundTintMode="src_over"
+        android:progressTint="@color/primaryGreen"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/transparent"
+        android:translationZ="2dp"/>
+
+    <!-- TOP STEP-BASED PROGRESS BAR WITH ICONS -->
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/topStepProgressContainer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="25dp"-->
+<!--        android:layout_marginEnd="25dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:backgroundTint="@color/transparent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:background="@color/transparent">-->
+
+<!--        <ProgressBar-->
+<!--            android:id="@+id/pbStepProgress"-->
+<!--            style="?android:attr/progressBarStyleHorizontal"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="10dp"-->
+<!--            android:indeterminate="false"-->
+<!--            android:progress="55"-->
+<!--            android:progressBackgroundTint="#E5E5E5"-->
+<!--            android:progressBackgroundTintMode="src_over"-->
+<!--            android:progressTint="@color/primaryGreen"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/ivSurveyStep1"-->
+<!--            android:layout_width="15dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/ic_check_2"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/ivSurveyStep2"-->
+<!--            android:layout_width="15dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/ic_check_2"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/ivSurveyStep3"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/ivSurveyStep1"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/ivSurveyStep3"-->
+<!--            android:layout_width="15dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/ic_check_2"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        &lt;!&ndash;        <ImageView&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:id="@+id/ivSurveyStep4"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:src="@drawable/ic_check_inactive_2"&ndash;&gt;-->
+<!--        &lt;!&ndash;            app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
+<!--        &lt;!&ndash;            app:layout_constraintEnd_toStartOf="@+id/ivSurveyStep5"&ndash;&gt;-->
+<!--        &lt;!&ndash;            app:layout_constraintStart_toEndOf="@+id/ivSurveyStep3"&ndash;&gt;-->
+<!--        &lt;!&ndash;            app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
+
+<!--        &lt;!&ndash;        <ImageView&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:id="@+id/ivSurveyStep5"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:src="@drawable/ic_check_inactive_2"&ndash;&gt;-->
+<!--        &lt;!&ndash;            app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
+<!--        &lt;!&ndash;            app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
+<!--        &lt;!&ndash;            app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
+
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!-- END TOP STEP-BASED PROGRESS BAR WITH ICONS -->
+
+
+    <TextView
+        android:id="@+id/tvSurveyWhatRFavCuisine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ProgressBar
-            android:id="@+id/pbStepProgress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="false"
-            android:progress="55"
-            android:progressBackgroundTint="#E5E5E5"
-            android:progressBackgroundTintMode="src_over"
-            android:progressTint="@color/primaryGreen"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ivSurveyStep1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_check_2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ivSurveyStep2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_check_2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivSurveyStep3"
-            app:layout_constraintStart_toEndOf="@+id/ivSurveyStep1"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ivSurveyStep3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_check_2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!--        <ImageView-->
-        <!--            android:id="@+id/ivSurveyStep4"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:src="@drawable/ic_check_inactive_2"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toStartOf="@+id/ivSurveyStep5"-->
-        <!--            app:layout_constraintStart_toEndOf="@+id/ivSurveyStep3"-->
-        <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-        <!--        <ImageView-->
-        <!--            android:id="@+id/ivSurveyStep5"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:src="@drawable/ic_check_inactive_2"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--    <FrameLayout-->
-<!--        android:id="@+id/surveyStepsFrameLayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_marginTop="20dp" />-->
+        android:text="Your Favourite Cuisines"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:translationZ="2dp"
+        android:fontFamily="@font/inter_bold"
+        android:textColor="@color/textMain"
+        android:textSize="25sp"
+        android:textAlignment="textStart"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="20dp" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/surveyViewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSurveyWhatRFavCuisine"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp"
+        android:background="@color/transparent"
+        android:layout_marginTop="15dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@color/transparent"
         app:layout_constraintBottom_toBottomOf="parent">
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBackSurvey"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:backgroundTint="@color/white"
             android:fontFamily="@font/interr"
             android:text="Previous"
@@ -126,7 +162,7 @@
             android:layout_margin="10dp"
             android:id="@+id/btnNextSurvey"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:backgroundTint="@color/primaryGreen"
             android:fontFamily="@font/interr"
