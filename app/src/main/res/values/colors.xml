@@ -22,4 +22,6 @@
     <color name="facebook">#4267B2</color>
     <color name="twitter">#1DA1F2</color>
     <color name="instagram">#DD2A7B</color>
+
+    <color name="imageOverlay">#6F000000</color>
 </resources>
