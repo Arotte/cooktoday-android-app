@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,11 +26,13 @@ import java.util.List;
 public class SurveySlidePagerActivity extends FragmentActivity {
 
     private static final int NUM_PAGES = 3;
+    private int currentPage = 0;
 
     private ViewPager2 viewPager;
     private FragmentStateAdapter pagerAdapter;
 
-    private TopStepProgressHandler topProgressBar;
+    // private TopStepProgressHandler topProgressBar; // for icon pb
+    private ProgressBar topProgressBar;
     private Button btnNext;
     private Button btnBack;
 
@@ -40,7 +43,9 @@ public class SurveySlidePagerActivity extends FragmentActivity {
 
         btnNext = findViewById(R.id.btnNextSurvey);
         btnBack = findViewById(R.id.btnBackSurvey);
-        initStepProgressHandler();
+        // initStepProgressHandler();
+        topProgressBar = findViewById(R.id.pbSurveyTopClean);
+        topProgressBar.setProgress(0);
 
         // instantiate a ViewPager2 and a PagerAdapter
         viewPager = findViewById(R.id.surveyViewPager);
@@ -51,8 +56,12 @@ public class SurveySlidePagerActivity extends FragmentActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                System.out.println("PAGE SELECTED " + position);
-                topProgressBar.set(position);
+
+                int p = norm(position);
+                System.out.println("PAGE SELECTED " + position + " (" + p + "%)");
+
+                topProgressBar.setProgress(p);
+                currentPage = position;
                 if (position == 1) {
                     // btnBack.setEnabled(true);
                     btnBack.setVisibility(View.VISIBLE);
@@ -85,28 +94,29 @@ public class SurveySlidePagerActivity extends FragmentActivity {
             super.onBackPressed();
         } else {
             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
-            topProgressBar.previous();
+            topProgressBar.setProgress(currentPage - 1);
         }
     }
 
-    private void initStepProgressHandler() {
-        List<Integer>    iconIDs   = new ArrayList<>();
-        ConstraintLayout container = findViewById(R.id.topStepProgressContainer);
-        int              pbID      = R.id.pbStepProgress;
-
-        iconIDs.add(R.id.ivSurveyStep1);
-        iconIDs.add(R.id.ivSurveyStep2);
-        iconIDs.add(R.id.ivSurveyStep3);
-        // iconIDs.add(R.id.ivSurveyStep4);
-        // iconIDs.add(R.id.ivSurveyStep5);
-
-        this.topProgressBar = new TopStepProgressHandler(
-            NUM_PAGES,
-            iconIDs,
-            container,
-            pbID
-        );
-    }
+    // for icon-based top progress bar
+//    private void initStepProgressHandler() {
+//        List<Integer>    iconIDs   = new ArrayList<>();
+//        ConstraintLayout container = findViewById(R.id.topStepProgressContainer);
+//        int              pbID      = R.id.pbStepProgress;
+//
+//        iconIDs.add(R.id.ivSurveyStep1);
+//        iconIDs.add(R.id.ivSurveyStep2);
+//        iconIDs.add(R.id.ivSurveyStep3);
+//        // iconIDs.add(R.id.ivSurveyStep4);
+//        // iconIDs.add(R.id.ivSurveyStep5);
+//
+//        this.topProgressBar = new TopStepProgressHandler(
+//            NUM_PAGES,
+//            iconIDs,
+//            container,
+//            pbID
+//        );
+//    }
 
     private class ScreenSlidePagerAdapter extends FragmentStateAdapter {
         public ScreenSlidePagerAdapter(@NonNull FragmentActivity fa) {
@@ -142,4 +152,9 @@ public class SurveySlidePagerActivity extends FragmentActivity {
         anim.setDuration(500);
         v.startAnimation(anim);
     }
+
+    private int norm(int position) {
+        return (int) Math.round(((double) (position + 1) / (double) NUM_PAGES) * 100);
+    }
+
 }

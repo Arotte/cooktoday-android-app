@@ -172,68 +172,79 @@ editText.setOnTouchListener(new View.OnTouchListener() {
 
 
 
-        <LinearLayout
-            android:id="@+id/layoutSurveyStep2BtnContainer"
-            android:layout_width="match_parent"
+# Upload new recipe FAB
+
+```xml
+
+<!--        Upload new recipe FAB -->
+<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Upload"
+    android:textAllCaps="false"
+    app:icon="@drawable/ic_upload"
+    app:iconTint= "@color/white"
+    android:backgroundTint="@color/primaryGreen"
+    android:textColor="@color/white"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginBottom="20dp"
+    android:layout_marginEnd="20dp"
+    android:stateListAnimator="@null"/>
+
+```
+
+
+# Top "bar" with welcome message and a search icon
+
+```xml
+
+<!--        Top bar with welcome message and search icon-->
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/ctHomeFragmentCustomTopBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:layout_editor_absoluteX="0dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/homeFragmentTopSearchIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/primaryGreen"
+        android:clickable="true"
+        android:elevation="10dp"
+        android:focusable="true"
+        app:cardCornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_search"
+            app:tint="@color/white" />
+    </androidx.cardview.widget.CardView>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnBackSurveyStep2"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/interr"
-                android:text="Previous"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="@color/textSecondary"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:cornerRadius="30dp"
-                android:layout_margin="10dp"
-                app:rippleColor="@color/textSecondary"
-                app:strokeColor="@color/textSecondary"
-                app:strokeWidth="2dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="CookToday"
+        android:textColor="@color/textMain"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_margin="10dp"
-                android:id="@+id/btnNextSurveyStep2"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/primaryGreen"
-                android:fontFamily="@font/interr"
-                android:text="Next"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:cornerRadius="30dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:layout_editor_absoluteX="30dp" />
-        </LinearLayout>
-
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnNextSurveyStep1"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:backgroundTint="@color/primaryGreen"
-                    android:fontFamily="@font/interr"
-                    android:text="Next"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="30dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    tools:layout_editor_absoluteX="30dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginBottom="20dp"/>
+```

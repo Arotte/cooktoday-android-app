@@ -10,23 +10,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.aron.cooktoday.R;
 import com.aron.cooktoday.RecipeDetailsActivity;
+import com.aron.cooktoday.home.rvadapters.RecommedationCirclesRVAdapter;
+import com.aron.cooktoday.home.rvadapters.RecommendedRVAdapter;
+import com.aron.cooktoday.search.SearchFragment;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 
-public class HomeFragment extends Fragment
-        implements
-            RecommendedRecyclerViewAdapter.ItemClickListener,
-            FavouritesRecyclerViewAdapter.ItemClickListener
-    {
+public class HomeFragment extends Fragment implements RecommendedRVAdapter.ItemClickListener, RecommedationCirclesRVAdapter.ItemClickListener {
 
-    RecommendedRecyclerViewAdapter   recommendedRecyclerViewAdapter;
-    FavouritesRecyclerViewAdapter    favouritesRecyclerViewAdapter;
+    RecommendedRVAdapter recommendedRVAdapter;
+    RecommedationCirclesRVAdapter circlesRVAdapter;
 
     public HomeFragment() {
-        // Required empty public constructor
     }
 
     public static HomeFragment newInstance() {
@@ -46,90 +45,54 @@ public class HomeFragment extends Fragment
                              Bundle savedInstanceState) {
 
         View layout = inflater.inflate(R.layout.fragment_home, container, false);
+
         setup(layout);
 
-        // Top search icon
-//        CardView search = layout.findViewById(R.id.homeScreenTopSearchIcon);
-//        search.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(getActivity(), SearchActivity.class));
-//                getActivity().overridePendingTransition(0, 0);
-//            }
-//        });
-
-        // Inflate the layout for this fragment
         return layout;
     }
 
     @Override
     public void onRecItemClick(View view, int position) {
-        // Toast.makeText(getContext(), "You clicked " + recommendedRecyclerViewAdapter.getItem(position) + " at " + position, Toast.LENGTH_SHORT).show();
-
-        // image transition animation
-//        ImageView recipeImg = view.findViewById(R.id.recipeImage);
-//        Intent intent = new Intent(getActivity(), RecipeDetailsActivity.class);
-//        // create the transition animation - the images in the layouts
-//        // of both activities are defined with android:transitionName="robot"
-//        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), recipeImg, "fade");
-//        // start the new activity
-//        startActivity(intent, options.toBundle());
-
         startActivity(new Intent(getContext(), RecipeDetailsActivity.class));
     }
 
     @Override
-    public void onFavItemClick(View view, int position) {
-        // Toast.makeText(getContext(), "You clicked " + favouritesRecyclerViewAdapter.getItem(position) + " at " + position, Toast.LENGTH_SHORT).show();
+    public void onCircleItemClick(View view, int position) {
+
     }
 
     private void setup(View layout) {
-        // data to populate the recommendations RecyclerView with
-        ArrayList<String> animalNames = new ArrayList<>();
-        animalNames.add("Black");
-        animalNames.add("Orange");
-        animalNames.add("Jack Blue");
-        animalNames.add("Cracker");
-        animalNames.add("Black");
-        animalNames.add("Orange");
-        animalNames.add("Blue");
-        animalNames.add("Cracker");
-        // favs
-        ArrayList<String> fav = new ArrayList<>();
-        fav.add("Black");
-        fav.add("Orange");
-        fav.add("Blue");
-        fav.add("Cracker");
-        fav.add("Black");
-        fav.add("Orange");
-        fav.add("Blue");
-        fav.add("Cracker");
 
-        // set up the RecyclerView
-        RecyclerView recyclerView = layout.findViewById(R.id.rvRecipeFeed);
+        // recommended stuff arrays -- TODO: get them from server
+        String[] circleRec = new String[]{"VEGAN", "FISH", "DRINKS", "BREAKFAST", "MAIN DISH", "SNACK"};
+        String[] recommendedRecipeNames = new String[]{"Delicious Pizza", "Mustard Sushi", "Funny Brownie", "LS... Dish"};
+
+        // top circle category selection rv
+        RecyclerView recyclerView = layout.findViewById(R.id.rvHomeFragmentRecommendationCircles);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        recommendedRecyclerViewAdapter = new RecommendedRecyclerViewAdapter(getContext(), animalNames);
-        recommendedRecyclerViewAdapter.setClickListener(this);
-        recyclerView.setAdapter(recommendedRecyclerViewAdapter);
-        // favs
-//        RecyclerView favRecyclerView = layout.findViewById(R.id.rvFavRecipeFeed);
-//        favRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-//        favouritesRecyclerViewAdapter = new FavouritesRecyclerViewAdapter(getContext(), fav);
-//        favouritesRecyclerViewAdapter.setClickListener(this);
-//        favRecyclerView.setAdapter(favouritesRecyclerViewAdapter);
+        circlesRVAdapter = new RecommedationCirclesRVAdapter(getContext(), Arrays.asList(circleRec));
+        circlesRVAdapter.setClickListener(this);
+        recyclerView.setAdapter(circlesRVAdapter);
+
+        // recommended recipes rv
+        RecyclerView recommendedRecipes = layout.findViewById(R.id.rvHomeFragmentRecommendedRecipes);
+        recommendedRecipes.setNestedScrollingEnabled(false);
+        recommendedRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recommendedRVAdapter = new RecommendedRVAdapter(getContext(), Arrays.asList(recommendedRecipeNames));
+        recommendedRVAdapter.setClickListener(this);
+        recommendedRecipes.setAdapter(recommendedRVAdapter);
 
         // TOP SEARCH BAR
-//        EditText search = layout.findViewById(R.id.etHomeSearhBar);
-//        search.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // shared element edittext transition:
-////                Intent intent = new Intent(getContext(), SearchActivity.class);
-////                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), search, "searchFade");
-////                startActivity(intent, options.toBundle());
-//                startActivity(new Intent(getActivity(), SearchActivity.class));
-//                getActivity().overridePendingTransition(0, 0);
-//            }
-//        });
+        EditText search = layout.findViewById(R.id.etHomeFragmentSearchBar);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchFragment nextFragment = new SearchFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, nextFragment, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 }
