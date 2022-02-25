@@ -1,4 +1,4 @@
-package com.aron.cooktoday.home;
+package com.aron.cooktoday.home.rvadapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,14 +12,14 @@ import com.aron.cooktoday.R;
 
 import java.util.List;
 
-public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<FavouritesRecyclerViewAdapter.ViewHolder> {
+public class RecommedationCirclesRVAdapter extends RecyclerView.Adapter<RecommedationCirclesRVAdapter.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+    private RecommedationCirclesRVAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public FavouritesRecyclerViewAdapter(Context context, List<String> data) {
+    public RecommedationCirclesRVAdapter(Context context, List<String> data) {
         // todo: remove public constructor -- not good
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -27,16 +27,16 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
 
     // inflates the row layout from xml when needed
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerview_row_recipe_card, parent, false);
-        return new ViewHolder(view);
+    public RecommedationCirclesRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = mInflater.inflate(R.layout.recyclerview_row_home_story_suggestions, parent, false);
+        return new RecommedationCirclesRVAdapter.ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        String animal = mData.get(position);
-        holder.myTextView.setText(animal);
+    public void onBindViewHolder(RecommedationCirclesRVAdapter.ViewHolder holder, int position) {
+        String name = mData.get(position);
+        holder.myTextView.setText(name);
     }
 
     // total number of rows
@@ -52,13 +52,13 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.tvFoodCard);
+            myTextView = itemView.findViewById(R.id.tvHomeFeedCategorySuggestion);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onFavItemClick(view, getAdapterPosition());
+            if (mClickListener != null) mClickListener.onCircleItemClick(view, getAdapterPosition());
         }
     }
 
@@ -68,12 +68,12 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
     }
 
     // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
+    public void setClickListener(RecommedationCirclesRVAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onFavItemClick(View view, int position);
+        void onCircleItemClick(View view, int position);
     }
 }

@@ -1,9 +1,10 @@
-package com.aron.cooktoday.home;
+package com.aron.cooktoday.home.rvadapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,14 +13,14 @@ import com.aron.cooktoday.R;
 
 import java.util.List;
 
-public class RecommendedRecyclerViewAdapter extends RecyclerView.Adapter<RecommendedRecyclerViewAdapter.ViewHolder> {
+public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdapter.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public RecommendedRecyclerViewAdapter(Context context, List<String> data) {
+    public RecommendedRVAdapter(Context context, List<String> data) {
         // todo: remove public constructor -- not good
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -28,15 +29,15 @@ public class RecommendedRecyclerViewAdapter extends RecyclerView.Adapter<Recomme
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerview_row_recipe_card, parent, false);
+        View view = mInflater.inflate(R.layout.recyclerview_row_recipe_card_v2, parent, false);
         return new ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String animal = mData.get(position);
-        holder.myTextView.setText(animal);
+        String name = mData.get(position);
+        holder.myTextView.setText(name);
     }
 
     // total number of rows
@@ -52,7 +53,7 @@ public class RecommendedRecyclerViewAdapter extends RecyclerView.Adapter<Recomme
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.tvFoodCard);
+            myTextView = itemView.findViewById(R.id.tvRecipeCardV2RecipeName);
             itemView.setOnClickListener(this);
         }
 
