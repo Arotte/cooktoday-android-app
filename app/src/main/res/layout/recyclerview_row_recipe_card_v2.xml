@@ -21,8 +21,8 @@
             app:cardCornerRadius="15dp">
             <ImageView
                 android:id="@+id/ivRecipeCardV2RecipeImg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:src="@drawable/img_food3"
                 android:scaleType="centerCrop"/>
 
@@ -134,10 +134,11 @@
                     android:layout_marginEnd="7dp"/>
 
                 <TextView
+                    android:id="@+id/tvRecipeCardV2Servings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2 servings"
-                    android:fontFamily="@font/inter_light"
+                    android:fontFamily="@font/inter_bold"
                     android:textColor="@color/white"
                     android:textSize="14sp"/>
             </LinearLayout>
@@ -159,10 +160,11 @@
                     android:layout_marginEnd="7dp"/>
 
                 <TextView
+                    android:id="@+id/tvRecipeCardV2Calories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="476 kcal"
-                    android:fontFamily="@font/inter_light"
+                    android:fontFamily="@font/inter_bold"
                     android:textColor="@color/white"
                     android:textSize="14sp"/>
             </LinearLayout>
@@ -183,10 +185,11 @@
                     android:padding="1dp"/>
 
                 <TextView
+                    android:id="@+id/tvRecipeCardV2CookingTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1 hour"
-                    android:fontFamily="@font/inter_light"
+                    android:fontFamily="@font/inter_bold"
                     android:textColor="@color/white"
                     android:textSize="14sp"/>
             </LinearLayout>

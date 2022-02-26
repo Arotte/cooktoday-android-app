@@ -22,12 +22,11 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:fitsSystemWindows="true"
             app:expandedTitleMarginStart="48dp"
-            app:expandedTitleMarginEnd="64dp"
-            >
+            app:expandedTitleMarginEnd="64dp">
 
             <ImageView
                 android:src="@drawable/img_sample_food1"
-                android:id="@+id/recipeDetailsImage"
+                android:id="@+id/ivRecipeDetailsImg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -58,6 +57,7 @@
             android:paddingRight="25dp">
 
             <TextView
+                android:id="@+id/tvRecipeDetailsRecipeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/interr"

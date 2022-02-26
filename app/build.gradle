@@ -25,10 +25,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-//    buildTypes {
-//        viewBinding = true
-//    }
 }
 
 dependencies {
@@ -43,6 +39,10 @@ dependencies {
 
     // 3rd party:
 
-    // src:https://github.com/Bryanx/themed-toggle-button-group
+    // Source: https://github.com/Bryanx/themed-toggle-button-group
     implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.1'
+
+    // Picasso: loads images from web URLs
+    // Source: https://square.github.io/picasso/
+    implementation 'com.squareup.picasso:picasso:2.8'
 }

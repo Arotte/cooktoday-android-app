@@ -66,6 +66,25 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"/>
 
+                <!-- HOT RECIPES -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvHomeFragmentHotRecipes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:overScrollMode="never"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Recommended"
+                    android:fontFamily="@font/inter_bold"
+                    android:textColor="@color/textMain"
+                    android:textSize="25sp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
+
                 <!-- RECOMMENDED RECIPES -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvHomeFragmentRecommendedRecipes"

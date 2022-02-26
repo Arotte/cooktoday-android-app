@@ -10,20 +10,23 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aron.cooktoday.R;
+import com.aron.cooktoday.models.Recipe;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdapter.ViewHolder> {
 
-    private List<String> mData;
+    private List<Recipe> recipes;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public RecommendedRVAdapter(Context context, List<String> data) {
-        // todo: remove public constructor -- not good
+    public RecommendedRVAdapter(Context context, List<Recipe> data) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+        this.recipes = data;
     }
 
     // inflates the row layout from xml when needed
@@ -36,24 +39,44 @@ public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdap
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String name = mData.get(position);
-        holder.myTextView.setText(name);
+        String name     = recipes.get(position).getName();
+        String imgUrl   = recipes.get(position).getImgUrl();
+        String calories = recipes.get(position).getCalories() + " kcal";
+        String time     = recipes.get(position).getFullPrepTimePretty();
+        String servings = recipes.get(position).getServings() + " servings";
+
+        // set recipe name
+        holder.tvRecipeName.setText(name);
+        // set calories & servings & time textviews
+        holder.tvKcal.setText(calories);
+        holder.tvTime.setText(time);
+        holder.tvServings.setText(servings);
+        // download and show recipe img
+        Picasso.get().load(imgUrl).into(holder.ivRecipeImg);
     }
 
     // total number of rows
     @Override
     public int getItemCount() {
-        return mData.size();
+        return recipes.size();
     }
 
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView;
+        TextView    tvRecipeName;
+        TextView    tvKcal;
+        TextView    tvTime;
+        TextView    tvServings;
+        ImageView   ivRecipeImg;
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.tvRecipeCardV2RecipeName);
+            tvRecipeName   = itemView.findViewById(R.id.tvRecipeCardV2RecipeName);
+            tvKcal         = itemView.findViewById(R.id.tvRecipeCardV2Calories);
+            tvServings     = itemView.findViewById(R.id.tvRecipeCardV2Servings);
+            tvTime         = itemView.findViewById(R.id.tvRecipeCardV2CookingTime);
+            ivRecipeImg    = itemView.findViewById(R.id.ivRecipeCardV2RecipeImg);
             itemView.setOnClickListener(this);
         }
 
@@ -64,8 +87,8 @@ public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdap
     }
 
     // convenience method for getting data at click position
-    public String getItem(int id) {
-        return mData.get(id);
+    public Recipe getItem(int id) {
+        return recipes.get(id);
     }
 
     // allows clicks events to be caught

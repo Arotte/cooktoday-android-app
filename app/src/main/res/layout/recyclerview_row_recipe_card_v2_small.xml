@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="250dp"
+        android:layout_height="137dp"
+        android:layout_margin="20dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:cardCornerRadius="15dp">
+            <ImageView
+                android:id="@+id/ivRecipeCardV2SmallRecipeImg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/img_food5"
+                android:scaleType="centerCrop"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/imageOverlay">
+            </FrameLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tvRecipeCardV2SmallRecipeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Honey Mustard\nChicken"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:translationZ="2dp"
+            android:fontFamily="@font/inter_bold"
+            android:textSize="25sp"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="15dp"/>
+
+        <!-- TOP ICON PANEL-->
+<!--        <androidx.appcompat.widget.LinearLayoutCompat-->
+<!--            android:id="@+id/llRecipeCardV2Small"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            android:translationZ="2dp"-->
+<!--            android:paddingStart="15dp"-->
+<!--            android:paddingTop="15dp">-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:translationZ="2dp"-->
+<!--                android:gravity="center"-->
+<!--                android:layout_marginEnd="15dp">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="18dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/ic_check_active"-->
+<!--                    android:layout_marginEnd="5dp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Vegan"-->
+<!--                    android:fontFamily="@font/inter_light"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="14sp"/>-->
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:translationZ="2dp"-->
+<!--                android:gravity="center"-->
+<!--                android:layout_marginEnd="10dp">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="18dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/ic_check_active"-->
+<!--                    android:layout_marginEnd="5dp"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Gluten Free"-->
+<!--                    android:fontFamily="@font/inter_light"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="14sp"/>-->
+<!--            </LinearLayout>-->
+<!--        </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+        <!-- RIGH HAND ICON PANEL-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:translationZ="2dp"
+            android:paddingBottom="15dp"
+            android:paddingStart="15dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:translationZ="2dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_fire"
+                    app:tint="@color/white"
+                    android:layout_marginEnd="7dp"/>
+
+                <TextView
+                    android:id="@+id/tvRecipeCardV2SmallRecipeKcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="476 kcal"
+                    android:fontFamily="@font/inter_bold"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:translationZ="2dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_time_circle"
+                    app:tint="@color/white"
+                    android:layout_marginEnd="7dp" />
+
+                <TextView
+                    android:id="@+id/tvRecipeCardV2SmallFullCookTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1 hour"
+                    android:fontFamily="@font/inter_bold"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

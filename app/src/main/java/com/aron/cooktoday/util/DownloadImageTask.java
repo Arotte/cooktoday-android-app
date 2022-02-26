@@ -1,12 +1,13 @@
 /*
-  DownloadImageTask.java
+  DEPRECATED - USE PICASSO LIBRARY INSTEAD!
 
+  DownloadImageTask.java
   Download an image from a web URL and show it in an ImageView.
 
-  Usage:
+  USAGE:
   new DownloadImageTask((ImageView) findViewById(R.id.myImageView)).execute("<MY_URL>");
 
-  From: https://stackoverflow.com/a/9288544/4745591
+  FROM: https://stackoverflow.com/a/9288544/4745591
  */
 
 package com.aron.cooktoday.util;
@@ -41,5 +42,6 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     protected void onPostExecute(Bitmap result) {
         bmImage.setImageBitmap(result);
+        bmImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 }

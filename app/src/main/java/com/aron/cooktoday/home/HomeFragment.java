@@ -14,16 +14,22 @@ import android.widget.EditText;
 
 import com.aron.cooktoday.R;
 import com.aron.cooktoday.RecipeDetailsActivity;
+import com.aron.cooktoday.home.rvadapters.HotRecipesRVAdapter;
 import com.aron.cooktoday.home.rvadapters.RecommedationCirclesRVAdapter;
 import com.aron.cooktoday.home.rvadapters.RecommendedRVAdapter;
+import com.aron.cooktoday.models.Recipe;
 import com.aron.cooktoday.search.SearchFragment;
+import com.aron.cooktoday.util.MockServer;
 
 import java.util.Arrays;
+import java.util.List;
 
-public class HomeFragment extends Fragment implements RecommendedRVAdapter.ItemClickListener, RecommedationCirclesRVAdapter.ItemClickListener {
+public class HomeFragment extends Fragment
+        implements RecommendedRVAdapter.ItemClickListener, RecommedationCirclesRVAdapter.ItemClickListener, HotRecipesRVAdapter.ItemClickListener {
 
     RecommendedRVAdapter recommendedRVAdapter;
     RecommedationCirclesRVAdapter circlesRVAdapter;
+    HotRecipesRVAdapter hotRecipesRVAdapter;
 
     public HomeFragment() {
     }
@@ -51,21 +57,35 @@ public class HomeFragment extends Fragment implements RecommendedRVAdapter.ItemC
         return layout;
     }
 
+    /*
+    When user clicks a recommended recipe
+     */
     @Override
     public void onRecItemClick(View view, int position) {
-        startActivity(new Intent(getContext(), RecipeDetailsActivity.class));
+        Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
+        intent.putExtra("RecipeObject", recommendedRVAdapter.getItem(position));
+        startActivity(intent);
     }
 
+    /*
+    When user clicks one of the top insta story-like circles
+     */
     @Override
     public void onCircleItemClick(View view, int position) {
 
     }
 
+    /*
+    When user clicks a "hot" recommended recipe
+     */
+    @Override
+    public void onHotItemClick(View view, int position) {
+
+    }
+
     private void setup(View layout) {
 
-        // recommended stuff arrays -- TODO: get them from server
         String[] circleRec = new String[]{"VEGAN", "FISH", "DRINKS", "BREAKFAST", "MAIN DISH", "SNACK"};
-        String[] recommendedRecipeNames = new String[]{"Delicious Pizza", "Mustard Sushi", "Funny Brownie", "LS... Dish"};
 
         // top circle category selection rv
         RecyclerView recyclerView = layout.findViewById(R.id.rvHomeFragmentRecommendationCircles);
@@ -78,9 +98,16 @@ public class HomeFragment extends Fragment implements RecommendedRVAdapter.ItemC
         RecyclerView recommendedRecipes = layout.findViewById(R.id.rvHomeFragmentRecommendedRecipes);
         recommendedRecipes.setNestedScrollingEnabled(false);
         recommendedRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recommendedRVAdapter = new RecommendedRVAdapter(getContext(), Arrays.asList(recommendedRecipeNames));
+        recommendedRVAdapter = new RecommendedRVAdapter(getContext(), getRecommendedRecipesFromServer());
         recommendedRVAdapter.setClickListener(this);
         recommendedRecipes.setAdapter(recommendedRVAdapter);
+
+        // hot recipes rv
+        RecyclerView rvHotRecipes = layout.findViewById(R.id.rvHomeFragmentHotRecipes);
+        rvHotRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        hotRecipesRVAdapter = new HotRecipesRVAdapter(getContext(), getHotRecipesFromServer());
+        hotRecipesRVAdapter.setClickListener(this);
+        rvHotRecipes.setAdapter(hotRecipesRVAdapter);
 
         // TOP SEARCH BAR
         EditText search = layout.findViewById(R.id.etHomeFragmentSearchBar);
@@ -95,4 +122,31 @@ public class HomeFragment extends Fragment implements RecommendedRVAdapter.ItemC
             }
         });
     }
+
+    /**
+     * Get a list of hot recipes from server
+     * and convert them to List<Recipe>
+     *
+     * @return a list of "hot" recipes from the server
+     */
+    private List<Recipe> getHotRecipesFromServer() {
+        // TODO: actually get the recipes from the server
+
+        return MockServer.server().getRecipes("hot");
+    }
+
+    /**
+     * Get a list of recommended recipes from server
+     * and convert them to List<Recipe>
+     *
+     * @return a list of "recommended" recipes from the server
+     */
+    private List<Recipe> getRecommendedRecipesFromServer() {
+        // TODO: actually get the recipes from the server
+
+        return MockServer.server().getRecipes("recommend");
+    }
+
+
+
 }
