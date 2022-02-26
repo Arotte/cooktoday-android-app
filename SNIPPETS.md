@@ -248,3 +248,133 @@ editText.setOnTouchListener(new View.OnTouchListener() {
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 ```
+
+# Scale view animation
+
+```java
+public void scaleView(View v, float startScale, float endScale) {
+    Animation anim = new ScaleAnimation(
+            startScale, endScale, // Start and end values for the X axis scaling
+            1f, 1f, // Start and end values for the Y axis scaling
+            Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
+            Animation.RELATIVE_TO_SELF, 1f); // Pivot point of Y scaling
+    anim.setFillAfter(true); // Needed to keep the result of the animation
+    anim.setDuration(500);
+    v.startAnimation(anim);
+}
+```
+
+
+# Icon-based top progress bar for the survey page
+
+```java
+private TopStepProgressHandler topProgressBar; // for icon pb
+
+// ...
+
+
+// for icon-based top progress bar
+//    private void initStepProgressHandler() {
+//        List<Integer>    iconIDs   = new ArrayList<>();
+//        ConstraintLayout container = findViewById(R.id.topStepProgressContainer);
+//        int              pbID      = R.id.pbStepProgress;
+//
+//        iconIDs.add(R.id.ivSurveyStep1);
+//        iconIDs.add(R.id.ivSurveyStep2);
+//        iconIDs.add(R.id.ivSurveyStep3);
+//        // iconIDs.add(R.id.ivSurveyStep4);
+//        // iconIDs.add(R.id.ivSurveyStep5);
+//
+//        this.topProgressBar = new TopStepProgressHandler(
+//            NUM_PAGES,
+//            iconIDs,
+//            container,
+//            pbID
+//        );
+//    }
+
+```
+
+
+```xml
+
+    <!-- TOP STEP-BASED PROGRESS BAR WITH ICONS -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topStepProgressContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/transparent">
+
+        <ProgressBar
+            android:id="@+id/pbStepProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:indeterminate="false"
+            android:progress="55"
+            android:progressBackgroundTint="#E5E5E5"
+            android:progressBackgroundTintMode="src_over"
+            android:progressTint="@color/primaryGreen"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivSurveyStep1"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivSurveyStep2"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivSurveyStep3"
+            app:layout_constraintStart_toEndOf="@+id/ivSurveyStep1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivSurveyStep3"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/ivSurveyStep4"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:src="@drawable/ic_check_inactive_2"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toStartOf="@+id/ivSurveyStep5"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/ivSurveyStep3"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/ivSurveyStep5"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:src="@drawable/ic_check_inactive_2"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- END TOP STEP-BASED PROGRESS BAR WITH ICONS -->
+
+```

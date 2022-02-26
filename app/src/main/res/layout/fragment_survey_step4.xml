@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".onboarding.survey.steps.SurveyFragment1Cuisines">
+    tools:context=".onboarding.survey.steps.SurveyFragment4Ingreds">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,10 +20,9 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvSurveySubSurveyTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Your Favourite Cuisines"
+                    android:text="Any ingredients you\ndont want to see?"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -36,7 +35,7 @@
                     android:layout_marginStart="20dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvSurveyStep1Cuisines"
+                    android:id="@+id/rvSurveyStep4ExcludedIngredients"
                     android:overScrollMode="never"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -49,8 +48,6 @@
                     android:orientation="vertical"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

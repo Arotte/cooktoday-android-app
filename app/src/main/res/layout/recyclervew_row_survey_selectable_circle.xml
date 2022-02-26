@@ -7,29 +7,31 @@
     android:layout_marginBottom="20dp">
 
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:cardCornerRadius="50dp"
+        app:rippleColor="@color/textMain"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
         <ImageView
-            android:id="@+id/ivSurveyCuisineImage"
+            android:id="@+id/ivSurveySelectableCircleImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/img_food3"
             android:scaleType="centerCrop"/>
 
         <FrameLayout
+            android:id="@+id/flSurveySelectableCircleImgOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/imageOverlay"/>
+            android:background="@color/imageOverlay" />
 
         <TextView
-            android:id="@+id/tvSurveyCuisineName"
+            android:id="@+id/tvSurveySelectableCircleName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="AMERICAN"
@@ -38,5 +40,5 @@
             android:fontFamily="@font/inter_bold"
             android:layout_gravity="center" />
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
