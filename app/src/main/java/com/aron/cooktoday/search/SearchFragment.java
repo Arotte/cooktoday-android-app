@@ -17,21 +17,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.aron.cooktoday.R;
+import com.aron.cooktoday.search.bottomsheet.SearchFilterBottomSheet;
+import com.aron.cooktoday.search.rvadapters.SearchHistoryRVAdapter;
+import com.aron.cooktoday.search.rvadapters.SearchSuggestionRVAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends Fragment
         implements
-            SearchSuggestionsRecyclerViewAdapter.ItemClickListener,
-            SearchHistoryRecyclerViewAdapter.ItemClickListener
+            SearchSuggestionRVAdapter.ItemClickListener,
+            SearchHistoryRVAdapter.ItemClickListener
 {
 
     EditText search;
     ImageView filter;
 
-    SearchSuggestionsRecyclerViewAdapter searchSuggestionsRecyclerViewAdapter;
-    SearchHistoryRecyclerViewAdapter searchHistoryRecyclerViewAdapter;
+    SearchSuggestionRVAdapter searchSuggestionRVAdapter;
+    SearchHistoryRVAdapter searchHistoryRVAdapter;
     List<String> searchHistory;
     List<String> searchSuggestions;
 
@@ -69,16 +72,16 @@ public class SearchFragment extends Fragment
 
         // init search history RecyclerView
         rvSearchHistory.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        searchHistoryRecyclerViewAdapter = new SearchHistoryRecyclerViewAdapter(getActivity(), searchHistory);
-        searchHistoryRecyclerViewAdapter.setClickListener(this);
-        rvSearchHistory.setAdapter(searchHistoryRecyclerViewAdapter);
+        searchHistoryRVAdapter = new SearchHistoryRVAdapter(getActivity(), searchHistory);
+        searchHistoryRVAdapter.setClickListener(this);
+        rvSearchHistory.setAdapter(searchHistoryRVAdapter);
 
         // init search suggestions RecyclerView
         // rvSearchSuggestions.setLayoutManager(new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false));
         rvSearchSuggestions.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        searchSuggestionsRecyclerViewAdapter = new SearchSuggestionsRecyclerViewAdapter(getActivity(), searchSuggestions);
-        searchSuggestionsRecyclerViewAdapter.setClickListener(this);
-        rvSearchSuggestions.setAdapter(searchSuggestionsRecyclerViewAdapter);
+        searchSuggestionRVAdapter = new SearchSuggestionRVAdapter(getActivity(), searchSuggestions);
+        searchSuggestionRVAdapter.setClickListener(this);
+        rvSearchSuggestions.setAdapter(searchSuggestionRVAdapter);
 
         // show keyboard
         // search.requestFocus();

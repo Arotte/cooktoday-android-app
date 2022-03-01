@@ -40,7 +40,7 @@ public class HotRecipesRVAdapter extends RecyclerView.Adapter<HotRecipesRVAdapte
         String name     = hotRecipes.get(position).getName();
         String imgURL   = hotRecipes.get(position).getImgUrl();
         String calories = hotRecipes.get(position).getCalories() + " kcal";
-        String time     = hotRecipes.get(position).getFullPrepTimePretty();
+        String time     = hotRecipes.get(position).getTimePretty(Recipe.TimeType.FULL_COOKING_TIME);
 
         // set recipe name
         holder.tvRecipeName.setText(name);

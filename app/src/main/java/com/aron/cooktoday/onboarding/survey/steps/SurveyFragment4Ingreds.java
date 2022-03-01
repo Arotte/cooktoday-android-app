@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aron.cooktoday.R;
-import com.aron.cooktoday.onboarding.survey.rvadapters.DietsRVAdapter;
 import com.aron.cooktoday.onboarding.survey.rvadapters.IngredientsRVAdapter;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class SurveyFragment4Ingreds extends Fragment implements IngredientsRVAda
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.fragment_survey_step4, container, false);
+        View layout = inflater.inflate(R.layout.fragment_survey_step4_ingreds, container, false);
 
         initAllergiesRV(layout);
         selected = new ArrayList<>();

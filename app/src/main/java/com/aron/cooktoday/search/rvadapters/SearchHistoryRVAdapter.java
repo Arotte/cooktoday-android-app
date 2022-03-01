@@ -1,4 +1,4 @@
-package com.aron.cooktoday.search;
+package com.aron.cooktoday.search.rvadapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,14 +12,14 @@ import com.aron.cooktoday.R;
 
 import java.util.List;
 
-public class SearchHistoryRecyclerViewAdapter extends RecyclerView.Adapter<SearchHistoryRecyclerViewAdapter.ViewHolder> {
+public class SearchHistoryRVAdapter extends RecyclerView.Adapter<SearchHistoryRVAdapter.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
-    private SearchHistoryRecyclerViewAdapter.ItemClickListener mClickListener;
+    private SearchHistoryRVAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public SearchHistoryRecyclerViewAdapter(Context context, List<String> data) {
+    public SearchHistoryRVAdapter(Context context, List<String> data) {
         // todo: remove public constructor -- not good
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -27,14 +27,14 @@ public class SearchHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Searc
 
     // inflates the row layout from xml when needed
     @Override
-    public SearchHistoryRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SearchHistoryRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.recyclerview_row_search_history, parent, false);
-        return new SearchHistoryRecyclerViewAdapter.ViewHolder(view);
+        return new SearchHistoryRVAdapter.ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(SearchHistoryRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(SearchHistoryRVAdapter.ViewHolder holder, int position) {
         String history = mData.get(position);
         holder.tvHistoryItem.setText(history);
     }
@@ -68,7 +68,7 @@ public class SearchHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Searc
     }
 
     // allows clicks events to be caught
-    public void setClickListener(SearchHistoryRecyclerViewAdapter.ItemClickListener itemClickListener) {
+    public void setClickListener(SearchHistoryRVAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

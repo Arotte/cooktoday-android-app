@@ -1,4 +1,4 @@
-package com.aron.cooktoday.search;
+package com.aron.cooktoday.search.rvadapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,14 +12,14 @@ import com.aron.cooktoday.R;
 
 import java.util.List;
 
-public class SearchSuggestionsRecyclerViewAdapter extends RecyclerView.Adapter<SearchSuggestionsRecyclerViewAdapter.ViewHolder> {
+public class SearchSuggestionRVAdapter extends RecyclerView.Adapter<SearchSuggestionRVAdapter.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
-    private SearchSuggestionsRecyclerViewAdapter.ItemClickListener mClickListener;
+    private SearchSuggestionRVAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public SearchSuggestionsRecyclerViewAdapter(Context context, List<String> data) {
+    public SearchSuggestionRVAdapter(Context context, List<String> data) {
         // todo: remove public constructor -- not good
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -27,14 +27,14 @@ public class SearchSuggestionsRecyclerViewAdapter extends RecyclerView.Adapter<S
 
     // inflates the row layout from xml when needed
     @Override
-    public SearchSuggestionsRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SearchSuggestionRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.recyclerview_row_search_suggestions, parent, false);
-        return new SearchSuggestionsRecyclerViewAdapter.ViewHolder(view);
+        return new SearchSuggestionRVAdapter.ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(SearchSuggestionsRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(SearchSuggestionRVAdapter.ViewHolder holder, int position) {
         String suggestion = mData.get(position);
         holder.myTv.setText(suggestion);
     }
@@ -68,7 +68,7 @@ public class SearchSuggestionsRecyclerViewAdapter extends RecyclerView.Adapter<S
     }
 
     // allows clicks events to be caught
-    public void setClickListener(SearchSuggestionsRecyclerViewAdapter.ItemClickListener itemClickListener) {
+    public void setClickListener(SearchSuggestionRVAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

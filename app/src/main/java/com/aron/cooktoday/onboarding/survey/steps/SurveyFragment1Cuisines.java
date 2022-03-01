@@ -42,7 +42,7 @@ public class SurveyFragment1Cuisines extends Fragment implements CuisinesRVAdapt
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_survey_step1, container, false);
+        View layout = inflater.inflate(R.layout.fragment_survey_step1_cuisines, container, false);
 
         initCuisinesRecyclerView(layout);
         selected = new ArrayList<>();

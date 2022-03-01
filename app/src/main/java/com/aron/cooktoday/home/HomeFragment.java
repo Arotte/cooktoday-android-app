@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.aron.cooktoday.R;
-import com.aron.cooktoday.RecipeDetailsActivity;
+import com.aron.cooktoday.recipedetails.RecipeDetailsActivity;
 import com.aron.cooktoday.home.rvadapters.HotRecipesRVAdapter;
 import com.aron.cooktoday.home.rvadapters.RecommedationCirclesRVAdapter;
 import com.aron.cooktoday.home.rvadapters.RecommendedRVAdapter;

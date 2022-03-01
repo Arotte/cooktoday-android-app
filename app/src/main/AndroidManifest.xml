@@ -29,7 +29,7 @@
             android:name=".upload.UploadActivity"
             android:exported="false" />
         <activity
-            android:name=".RecipeDetailsActivity"
+            android:name=".recipedetails.RecipeDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -45,7 +45,7 @@ public class SurveyFragment3Diets extends Fragment implements DietsRVAdapter.Ite
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.fragment_survey_step3, container, false);
+        View layout = inflater.inflate(R.layout.fragment_survey_step3_diets, container, false);
 
         initAllergiesRV(layout);
         selected = new ArrayList<>();

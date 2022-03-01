@@ -44,7 +44,7 @@ public class SurveyFragment2Allergies extends Fragment implements AllergiesRVAda
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.fragment_survey_step2, container, false);
+        View layout = inflater.inflate(R.layout.fragment_survey_step2_allergies, container, false);
 
         initAllergiesRV(layout);
         selected = new ArrayList<>();

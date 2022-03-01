@@ -1,4 +1,4 @@
-package com.aron.cooktoday.search;
+package com.aron.cooktoday.search.bottomsheet;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

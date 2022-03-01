@@ -13,8 +13,6 @@ import com.aron.cooktoday.R;
 import com.aron.cooktoday.models.Recipe;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdapter.ViewHolder> {
@@ -42,7 +40,7 @@ public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdap
         String name     = recipes.get(position).getName();
         String imgUrl   = recipes.get(position).getImgUrl();
         String calories = recipes.get(position).getCalories() + " kcal";
-        String time     = recipes.get(position).getFullPrepTimePretty();
+        String time     = recipes.get(position).getTimePretty(Recipe.TimeType.FULL_COOKING_TIME);
         String servings = recipes.get(position).getServings() + " servings";
 
         // set recipe name
