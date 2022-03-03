@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.aron.cooktoday.MainActivity;
 import com.aron.cooktoday.R;
 import com.aron.cooktoday.onboarding.registration.RegisterActivity;
+import com.aron.cooktoday.onboarding.forgotpassword.ForgotPassword;
 
 public class LogInActivity extends AppCompatActivity {
 
@@ -29,6 +30,17 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
+        // forgot password
+        Button btn2 = (Button)findViewById(R.id.btnLoginEmail_forgot_password);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LogInActivity.this, ForgotPassword.class));
+                // overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
+
         // go to sign up activity
         LinearLayout tvSignUp = findViewById(R.id.btnGoToRegisterFromLogin);
         tvSignUp.setOnClickListener(new View.OnClickListener() {
@@ -37,5 +49,7 @@ public class LogInActivity extends AppCompatActivity {
                 startActivity(new Intent(LogInActivity.this, RegisterActivity.class));
             }
         });
+
+
     }
 }

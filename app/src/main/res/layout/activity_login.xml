@@ -60,12 +60,13 @@
         android:layout_marginTop="20dp"/>
 
     <TextView
+        android:id="@+id/btnLoginEmail_forgot_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/signin_forgot_password"
         android:textAlignment="viewEnd"
         android:layout_marginTop="20dp"
-        />
+        android:padding="5dp"/>
 
 
     <com.google.android.material.button.MaterialButton

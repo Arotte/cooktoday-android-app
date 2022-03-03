@@ -44,3 +44,55 @@ This repository contains the source of the CookToday Android mobile application.
 ## Development Practices
 
 TODO
+
+### Working on your feature branch
+
+1. **Create a feature branch**
+
+TODO
+
+2. **Push your changes to GitHub**
+
+**If the `develop` branch has been changed:**
+
+```sh
+
+git status
+
+# 1. commit changes
+git add .
+git commit -m "your informative commit message"
+
+gitk
+git branch
+
+# 2. update develop branch
+git checkout develop
+git pull
+
+gitk
+git branch
+git status
+
+# 3. rebase feature branch
+git checkout your_feature_branch
+git rebase develop
+
+gitk
+git status
+
+# 4. push changes to github
+git push origin yout_feature_branch
+```
+
+**If the the develop branch hasn't been changed:**
+
+
+```sh
+git status
+git branch # check if you are in the correct branch
+# NOTE: if you are not on your feature branch, check it out with `git checkout your-feature-branch`
+git add .
+git commit -m "your informative commit message"
+git push origin your-feature-branch
+```
