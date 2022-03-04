@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aron.cooktoday.R;
-import com.aron.cooktoday.onboarding.login.LogInActivity;
+import com.aron.cooktoday.ui.login.LoginActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
         goToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, LogInActivity.class));
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
     }

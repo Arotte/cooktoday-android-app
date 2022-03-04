@@ -11,7 +11,8 @@ import android.widget.LinearLayout;
 import com.aron.cooktoday.MainActivity;
 import com.aron.cooktoday.R;
 import com.aron.cooktoday.onboarding.registration.RegisterActivity;
-import com.aron.cooktoday.onboarding.login.LogInActivity;
+import com.aron.cooktoday.ui.login.LoginActivity;
+
 
 public class ForgotPassword extends AppCompatActivity {
 
@@ -25,7 +26,7 @@ public class ForgotPassword extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ForgotPassword.this, LogInActivity.class));
+                startActivity(new Intent(ForgotPassword.this, LoginActivity.class));
                 // overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });

@@ -12,6 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CookToday">
         <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="false"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".ui.login.SampleLoginActivity"
+            android:exported="false"
+            android:label="@string/title_activity_sample_login" />
+        <activity
             android:name=".onboarding.forgotpassword.ForgotPassword"
             android:exported="false" />
         <activity
