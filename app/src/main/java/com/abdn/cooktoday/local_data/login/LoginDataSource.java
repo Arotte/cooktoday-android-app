@@ -2,6 +2,7 @@ package com.abdn.cooktoday.local_data.login;
 
 import com.abdn.cooktoday.api_connection.APIRepository;
 import com.abdn.cooktoday.api_connection.jsonmodels.UserJSONModel;
+import com.abdn.cooktoday.local_data.Result;
 import com.abdn.cooktoday.local_data.model.LoggedInUser;
 
 import java.io.IOException;

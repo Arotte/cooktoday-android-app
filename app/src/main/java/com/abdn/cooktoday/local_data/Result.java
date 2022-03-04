@@ -1,4 +1,4 @@
-package com.abdn.cooktoday.local_data.login;
+package com.abdn.cooktoday.local_data;
 
 /**
  * A generic class that holds a result success w/ data or an error exception.

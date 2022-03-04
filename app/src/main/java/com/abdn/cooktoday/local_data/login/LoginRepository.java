@@ -1,5 +1,6 @@
 package com.abdn.cooktoday.local_data.login;
 
+import com.abdn.cooktoday.local_data.Result;
 import com.abdn.cooktoday.local_data.model.LoggedInUser;
 
 /**

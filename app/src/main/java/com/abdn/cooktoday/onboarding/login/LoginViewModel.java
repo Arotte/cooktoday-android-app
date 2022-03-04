@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 import android.util.Patterns;
 
 import com.abdn.cooktoday.local_data.login.LoginRepository;
-import com.abdn.cooktoday.local_data.login.Result;
+import com.abdn.cooktoday.local_data.Result;
 import com.abdn.cooktoday.local_data.model.LoggedInUser;
 import com.abdn.cooktoday.R;
 
