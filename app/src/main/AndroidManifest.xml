@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.aron.cooktoday">
+    package="com.abdn.cooktoday">
     <!-- To access images stored on AWS -->
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,40 +12,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CookToday">
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".onboarding.login.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".ui.login.SampleLoginActivity"
-            android:exported="false"
-            android:label="@string/title_activity_sample_login" />
-        <activity
-            android:name=".onboarding.forgotpassword.ForgotPassword"
+            android:name="com.abdn.cooktoday.onboarding.forgotpassword.ForgotPassword"
             android:exported="false" />
         <activity
-            android:name=".onboarding.login.LogInActivity"
+            android:name="com.abdn.cooktoday.onboarding.registration.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".onboarding.registration.RegisterActivity"
+            android:name="com.abdn.cooktoday.onboarding.survey.SurveySlidePagerActivity"
             android:exported="false" />
         <activity
-            android:name=".onboarding.survey.SurveySlidePagerActivity"
+            android:name="com.abdn.cooktoday.onboarding.registration.RegisterEmailVerificationActivity"
             android:exported="false" />
         <activity
-            android:name=".onboarding.registration.RegisterEmailVerificationActivity"
+            android:name="com.abdn.cooktoday.upload_recipe.UploadActivity"
             android:exported="false" />
         <activity
-            android:name=".upload.UploadActivity"
+            android:name="com.abdn.cooktoday.recipedetails.RecipeDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".recipedetails.RecipeDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+            android:name="com.abdn.cooktoday.MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".onboarding.OnBoardingActivity"
+            android:name="com.abdn.cooktoday.onboarding.OnBoardingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
