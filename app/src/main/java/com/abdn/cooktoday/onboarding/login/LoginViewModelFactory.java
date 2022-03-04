@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
-import com.abdn.cooktoday.local_data.LoginDataSource;
-import com.abdn.cooktoday.local_data.LoginRepository;
+import com.abdn.cooktoday.local_data.login.LoginDataSource;
+import com.abdn.cooktoday.local_data.login.LoginRepository;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

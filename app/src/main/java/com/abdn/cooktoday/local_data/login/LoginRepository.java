@@ -1,4 +1,4 @@
-package com.abdn.cooktoday.local_data;
+package com.abdn.cooktoday.local_data.login;
 
 import com.abdn.cooktoday.local_data.model.LoggedInUser;
 
