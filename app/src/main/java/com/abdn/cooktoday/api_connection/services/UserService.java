@@ -1,5 +1,6 @@
 package com.abdn.cooktoday.api_connection.services;
 
+import com.abdn.cooktoday.api_connection.jsonmodels.LogoutMessageJSONModel;
 import com.abdn.cooktoday.api_connection.jsonmodels.UserJSONModel;
 import com.abdn.cooktoday.api_connection.jsonmodels.UserJSONModel__Outer;
 
@@ -19,6 +20,9 @@ public interface UserService {
     @FormUrlEncoded
     @POST("login/password/")
     Call<UserJSONModel__Outer> loginUser(@Field("email") String email, @Field("password") String password);
+
+    @POST("logout/")
+    Call<LogoutMessageJSONModel> logoutUser();
 
 //    @FormUrlEncoded
 //    @POST("users")
