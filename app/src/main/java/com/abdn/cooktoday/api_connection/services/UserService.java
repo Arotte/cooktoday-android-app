@@ -1,6 +1,7 @@
 package com.abdn.cooktoday.api_connection.services;
 
 import com.abdn.cooktoday.api_connection.jsonmodels.UserJSONModel;
+import com.abdn.cooktoday.api_connection.jsonmodels.UserJSONModel__Outer;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -17,7 +18,7 @@ public interface UserService {
      */
     @FormUrlEncoded
     @POST("login/password/")
-    Call<UserJSONModel> loginUser(@Field("email") String email, @Field("password") String password);
+    Call<UserJSONModel__Outer> loginUser(@Field("email") String email, @Field("password") String password);
 
 //    @FormUrlEncoded
 //    @POST("users")

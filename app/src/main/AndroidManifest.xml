@@ -16,29 +16,29 @@
             android:exported="false"
             android:label="@string/title_activity_login" />
         <activity
-            android:name="com.abdn.cooktoday.onboarding.forgotpassword.ForgotPassword"
+            android:name=".onboarding.forgotpassword.ForgotPassword"
             android:exported="false" />
         <activity
-            android:name="com.abdn.cooktoday.onboarding.registration.RegisterActivity"
+            android:name=".onboarding.registration.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name="com.abdn.cooktoday.onboarding.survey.SurveySlidePagerActivity"
+            android:name=".onboarding.survey.SurveySlidePagerActivity"
             android:exported="false" />
         <activity
-            android:name="com.abdn.cooktoday.onboarding.registration.RegisterEmailVerificationActivity"
+            android:name=".onboarding.registration.RegisterEmailVerificationActivity"
             android:exported="false" />
         <activity
-            android:name="com.abdn.cooktoday.upload_recipe.UploadActivity"
+            android:name=".upload_recipe.UploadActivity"
             android:exported="false" />
         <activity
-            android:name="com.abdn.cooktoday.recipedetails.RecipeDetailsActivity"
+            android:name=".recipedetails.RecipeDetailsActivity"
             android:exported="false" />
         <activity
-            android:name="com.abdn.cooktoday.MainActivity"
+            android:name=".MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.abdn.cooktoday.onboarding.OnBoardingActivity"
+            android:name=".onboarding.OnBoardingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
