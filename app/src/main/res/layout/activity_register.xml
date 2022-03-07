@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".onboarding.registration.RegisterActivity"
+    tools:context="com.abdn.cooktoday.onboarding.registration.RegisterActivity"
     android:layout_marginStart="30dp"
     android:layout_marginEnd="30dp">
 

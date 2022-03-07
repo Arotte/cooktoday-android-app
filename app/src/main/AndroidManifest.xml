@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.aron.cooktoday">
+    package="com.abdn.cooktoday">
     <!-- To access images stored on AWS -->
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,10 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CookToday">
         <activity
-            android:name=".onboarding.forgotpassword.ForgotPassword"
+            android:name=".onboarding.registration.RegistrationResultActivity"
             android:exported="false" />
         <activity
-            android:name=".onboarding.login.LogInActivity"
+            android:name=".onboarding.login.LoginActivity"
+            android:exported="false"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".onboarding.forgotpassword.ForgotPassword"
             android:exported="false" />
         <activity
             android:name=".onboarding.registration.RegisterActivity"
@@ -27,7 +31,7 @@
             android:name=".onboarding.registration.RegisterEmailVerificationActivity"
             android:exported="false" />
         <activity
-            android:name=".upload.UploadActivity"
+            android:name=".upload_recipe.UploadActivity"
             android:exported="false" />
         <activity
             android:name=".recipedetails.RecipeDetailsActivity"

@@ -6,7 +6,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.aron.cooktoday"
+        applicationId "com.abdn.cooktoday"
         minSdk 21
         targetSdk 31
         versionCode 1
@@ -25,6 +25,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -33,16 +36,26 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.annotation:annotation:1.3.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // 3rd party:
 
+    // Toggle Button Group: creates a toggle button group
     // Source: https://github.com/Bryanx/themed-toggle-button-group
     implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.1'
 
     // Picasso: loads images from web URLs
     // Source: https://square.github.io/picasso/
     implementation 'com.squareup.picasso:picasso:2.8'
+
+    // Retrofit, Gson, OkHttp3 are needed for server communication
+    // based on this tutorial: https://learntodroid.com/how-to-send-json-data-in-a-post-request-in-android/
+    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
 }
