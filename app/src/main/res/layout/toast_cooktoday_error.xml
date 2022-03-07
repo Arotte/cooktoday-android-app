@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/toastCookTodayDefault"
+    android:id="@+id/toastCookTodayError"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="12dp"
-    android:background="@drawable/shape_pill_green">
+    android:background="@drawable/shape_pill_red">
 
     <ImageView
-        android:id="@+id/ivToastCookTodayDefault"
+        android:id="@+id/ivToastCookTodayError"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginRight="7dp"
         android:src="@drawable/ic_check_active"/>
 
-    <TextView android:id="@+id/tvToastCookTodayDefault"
+    <TextView android:id="@+id/tvToastCookTodayError"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="Awesome, you can start cooking!"

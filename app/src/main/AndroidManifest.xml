@@ -23,7 +23,8 @@
             android:exported="false" />
         <activity
             android:name=".onboarding.registration.RegisterActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity
             android:name=".onboarding.survey.SurveySlidePagerActivity"
             android:exported="false" />

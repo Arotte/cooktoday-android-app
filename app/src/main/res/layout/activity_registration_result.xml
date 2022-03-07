@@ -58,14 +58,24 @@
                 android:textSize="13sp"/>
 
             <com.google.android.material.button.MaterialButton
-                android:layout_marginTop="20dp"
+                android:id="@+id/btnRegResultLetsGo"
+                android:layout_marginTop="22dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
+                android:backgroundTint="@color/primaryGreen"
+                android:checkable="false"
+                android:elegantTextHeight="false"
+                android:fontFamily="@font/interr"
+                android:hapticFeedbackEnabled="true"
+                android:stateListAnimator="@null"
                 android:text="Let's Go"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:cornerRadius="30dp"
                 app:icon="@drawable/ic_arrow___right_2"
                 app:iconGravity="textEnd"
-                app:cornerRadius="30dp"
-                android:padding="10dp"/>
+                app:rippleColor="@color/black"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

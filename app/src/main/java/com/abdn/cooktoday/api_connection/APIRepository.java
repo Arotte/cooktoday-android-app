@@ -30,7 +30,7 @@ public final class APIRepository {
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(APIEndpoints.BASE + APIEndpoints.AUTH)
+                .baseUrl(APIEndpoints.BASE)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

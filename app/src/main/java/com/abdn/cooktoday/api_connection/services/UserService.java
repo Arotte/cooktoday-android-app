@@ -18,11 +18,19 @@ public interface UserService {
      * @return The user in UserJSONModel format.
      */
     @FormUrlEncoded
-    @POST("login/password/")
+    @POST("auth/login/password/")
     Call<UserJSONModel__Outer> loginUser(@Field("email") String email, @Field("password") String password);
 
-    @POST("logout/")
+    @POST("auth/logout/")
     Call<LogoutMessageJSONModel> logoutUser();
+
+    @FormUrlEncoded
+    @POST("user/register/")
+    Call<UserJSONModel__Outer> registerUser(
+            @Field("email") String email,
+            @Field("password") String password,
+            @Field("firstName") String firstName,
+            @Field("lastName") String lastName);
 
 //    @FormUrlEncoded
 //    @POST("users")

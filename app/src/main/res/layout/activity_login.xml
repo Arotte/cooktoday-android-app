@@ -119,12 +119,12 @@
             android:id="@+id/icLoginSuccessIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_done_simple"
-            android:layout_gravity="right"
             android:layout_alignTop="@id/btnLoginLogin"
             android:layout_alignEnd="@id/btnLoginLogin"
             android:layout_alignBottom="@id/btnLoginLogin"
+            android:layout_gravity="right"
             android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_done_simple"
             app:tint="@color/white" />
     </RelativeLayout>
 

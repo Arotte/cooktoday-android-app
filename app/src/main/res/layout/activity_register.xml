@@ -14,23 +14,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_bold"
-        android:text="Let's set up your account"
+        android:text="Sign Up"
         android:translationZ="5dp"
         android:textAlignment="center"
         android:textColor="@color/textMain"
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="30dp"/>
 
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/etSignupNicknameField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_profile"
+        android:drawableTint="@color/textMain"
+        android:ems="10"
+        android:layout_marginTop="20dp"
+        android:hint="Nickname"
+        android:inputType="textEmailAddress"
+        android:fontFamily="@font/interr"
+        android:drawablePadding="12dp"
+        android:background="@drawable/custom_input"
+        android:layout_marginBottom="10dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp" />
+
+    <EditText
+        android:id="@+id/etSignupEmailField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/custom_ic_email"
         android:ems="10"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:hint="Email or phone number"
         android:inputType="textEmailAddress"
         android:fontFamily="@font/interr"
@@ -40,8 +59,7 @@
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:paddingTop="13dp"
-        android:paddingBottom="13dp"
-        />
+        android:paddingBottom="13dp" />
 
     <EditText
         android:id="@+id/etSignupPwField"
@@ -70,63 +88,138 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:orientation="horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ivPwReqMinChars"
-                android:layout_gravity="center_horizontal"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="At least 6 characters"
-                android:fontFamily="@font/interr"
-                android:textColor="@color/textSecondary"
-                android:layout_marginStart="7dp"
-                android:layout_gravity="center"
-                android:id="@+id/tvPwReqMinChars"/>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
-            <ImageView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ivPwReqContainsNum"
-                android:layout_gravity="center_horizontal"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Contains a number"
-                android:fontFamily="@font/interr"
-                android:textColor="@color/textSecondary"
-                android:layout_marginStart="7dp"
-                android:layout_gravity="center"
-                android:id="@+id/tvPwReqContainsNum"/>
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/ivPwReqMinChars"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Min. 6 chars"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/interr"
+                    android:textColor="@color/textSecondary"
+                    android:layout_marginStart="3dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/tvPwReqMinChars"/>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/ivPwReqUppercase"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Uppercase"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/interr"
+                    android:textColor="@color/textSecondary"
+                    android:layout_marginStart="3dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/tvPwReqUppercase"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/ivPwReqContainsNum"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Min. 2 numbers"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/interr"
+                    android:textColor="@color/textSecondary"
+                    android:layout_marginStart="3dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/tvPwReqContainsNum"/>
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCreateAccount_activity_signup"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="25dp"
-        android:backgroundTint="@color/primaryGreen"
-        android:fontFamily="@font/interr"
-        android:text="Create Account"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:cornerRadius="30dp"
-        app:rippleColor="@color/black"
-        android:stateListAnimator="@null"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCreateAccount_activity_signup"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/primaryGreen"
+            android:fontFamily="@font/interr"
+            android:stateListAnimator="@null"
+            android:text="Create Account"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:cornerRadius="30dp"
+            app:rippleColor="@color/black" />
+
+        <ProgressBar
+            android:indeterminate="true"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingEnd="5dp"
+            android:indeterminateTint="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pbRegister"
+            android:layout_gravity="right"
+            android:layout_alignTop="@id/btnCreateAccount_activity_signup"
+            android:layout_alignEnd="@id/btnCreateAccount_activity_signup"
+            android:layout_alignBottom="@id/btnCreateAccount_activity_signup"/>
+
+        <ImageView
+            android:id="@+id/icRegisterRegisterIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_login"
+            android:layout_gravity="right"
+            android:layout_alignTop="@id/btnCreateAccount_activity_signup"
+            android:layout_alignEnd="@id/btnCreateAccount_activity_signup"
+            android:layout_alignBottom="@id/btnCreateAccount_activity_signup"
+            app:tint="@color/white"
+            android:layout_marginEnd="20dp"/>
+
+        <ImageView
+            android:id="@+id/icRegisterSuccessIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/btnCreateAccount_activity_signup"
+            android:layout_alignEnd="@id/btnCreateAccount_activity_signup"
+            android:layout_alignBottom="@id/btnCreateAccount_activity_signup"
+            android:layout_gravity="right"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_done_simple"
+            app:tint="@color/white" />
+    </RelativeLayout>
 
     <View
         android:id="@+id/divider2"
@@ -134,85 +227,86 @@
         android:layout_height="1dp"
         android:layout_gravity="center"
         android:background="?android:attr/listDivider"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
+<!--    OAUTH CIRCLES-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:gravity="center_horizontal">-->
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:cornerRadius="30dp"
-            app:iconTint="@color/white"
-            app:icon="@drawable/ic_google"
-            app:iconSize="20dp"
-            android:backgroundTint="@color/google"
-            android:layout_margin="10dp"
-            android:stateListAnimator="@null"/>
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:layout_width="52dp"-->
+<!--            android:layout_height="52dp"-->
+<!--            android:insetLeft="0dp"-->
+<!--            android:insetTop="0dp"-->
+<!--            android:insetRight="0dp"-->
+<!--            android:insetBottom="0dp"-->
+<!--            app:iconGravity="textStart"-->
+<!--            app:iconPadding="0dp"-->
+<!--            app:cornerRadius="30dp"-->
+<!--            app:iconTint="@color/white"-->
+<!--            app:icon="@drawable/ic_google"-->
+<!--            app:iconSize="20dp"-->
+<!--            android:backgroundTint="@color/google"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:stateListAnimator="@null"/>-->
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:cornerRadius="30dp"
-            app:iconTint="@color/white"
-            app:icon="@drawable/ic_facebook_2"
-            android:backgroundTint="@color/facebook"
-            android:layout_margin="10dp"
-            android:stateListAnimator="@null"/>
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:layout_width="52dp"-->
+<!--            android:layout_height="52dp"-->
+<!--            android:insetLeft="0dp"-->
+<!--            android:insetTop="0dp"-->
+<!--            android:insetRight="0dp"-->
+<!--            android:insetBottom="0dp"-->
+<!--            app:iconGravity="textStart"-->
+<!--            app:iconPadding="0dp"-->
+<!--            app:cornerRadius="30dp"-->
+<!--            app:iconTint="@color/white"-->
+<!--            app:icon="@drawable/ic_facebook_2"-->
+<!--            android:backgroundTint="@color/facebook"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:stateListAnimator="@null"/>-->
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:cornerRadius="30dp"
-            app:iconTint="@color/white"
-            app:icon="@drawable/ic_twitter_2"
-            android:backgroundTint="@color/twitter"
-            android:layout_margin="10dp"
-            android:stateListAnimator="@null"/>
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:layout_width="52dp"-->
+<!--            android:layout_height="52dp"-->
+<!--            android:insetLeft="0dp"-->
+<!--            android:insetTop="0dp"-->
+<!--            android:insetRight="0dp"-->
+<!--            android:insetBottom="0dp"-->
+<!--            app:iconGravity="textStart"-->
+<!--            app:iconPadding="0dp"-->
+<!--            app:cornerRadius="30dp"-->
+<!--            app:iconTint="@color/white"-->
+<!--            app:icon="@drawable/ic_twitter_2"-->
+<!--            android:backgroundTint="@color/twitter"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:stateListAnimator="@null"/>-->
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:cornerRadius="30dp"
-            app:iconTint="@color/white"
-            app:icon="@drawable/ic_instagram_2"
-            android:backgroundTint="@color/instagram"
-            android:layout_margin="10dp"
-            android:stateListAnimator="@null"/>
-    </LinearLayout>
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:layout_width="52dp"-->
+<!--            android:layout_height="52dp"-->
+<!--            android:insetLeft="0dp"-->
+<!--            android:insetTop="0dp"-->
+<!--            android:insetRight="0dp"-->
+<!--            android:insetBottom="0dp"-->
+<!--            app:iconGravity="textStart"-->
+<!--            app:iconPadding="0dp"-->
+<!--            app:cornerRadius="30dp"-->
+<!--            app:iconTint="@color/white"-->
+<!--            app:icon="@drawable/ic_instagram_2"-->
+<!--            android:backgroundTint="@color/instagram"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:stateListAnimator="@null"/>-->
+<!--    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/goToLoginFromSignup"
         android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
+
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center">
@@ -223,8 +317,7 @@
             android:text="Already have an account?"
             android:textAlignment="center"
             android:textColor="@color/textMain"
-            android:layout_marginEnd="10dp"
-            />
+            android:layout_marginEnd="10dp" />
 
         <TextView
             android:layout_width="wrap_content"

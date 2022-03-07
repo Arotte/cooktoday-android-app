@@ -67,16 +67,16 @@ public class LoginActivity extends AppCompatActivity {
         forgotPw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
                 startActivity(new Intent(LoginActivity.this, ForgotPassword.class));
+                finish();
             }
         });
 
         goToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                finish();
             }
         });
     }
