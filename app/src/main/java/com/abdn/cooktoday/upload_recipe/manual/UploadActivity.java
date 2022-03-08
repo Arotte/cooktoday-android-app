@@ -1,4 +1,4 @@
-package com.abdn.cooktoday.upload_recipe;
+package com.abdn.cooktoday.upload_recipe.manual;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;

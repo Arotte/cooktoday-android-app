@@ -3,19 +3,31 @@ package com.abdn.cooktoday.cookbook;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.abdn.cooktoday.R;
-import com.abdn.cooktoday.upload_recipe.UploadActivity;
+import com.abdn.cooktoday.cookbook.bottomsheet.UploadTypeBottomSheet;
+import com.abdn.cooktoday.cookbook.rvadapters.CookBookRVAdapter;
+import com.abdn.cooktoday.recipedetails.RecipeDetailsActivity;
+import com.abdn.cooktoday.search.bottomsheet.SearchFilterBottomSheet;
+import com.abdn.cooktoday.upload_recipe.manual.UploadActivity;
+import com.abdn.cooktoday.local_data.model.Recipe;
+import com.abdn.cooktoday.utility.MockServer;
 
-public class CookbookFragment extends Fragment {
+import java.util.List;
 
-    ImageView ivUploadNew;
+
+public class CookbookFragment extends Fragment
+    implements CookBookRVAdapter.ItemClickListener{
+    CardView cvUploadNew;
+    CookBookRVAdapter cookbookRVAdapter;
 
     public CookbookFragment() {
         // required empty public constructor
@@ -38,14 +50,56 @@ public class CookbookFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cookbook, container, false);
 
-        ivUploadNew = (ImageView) view.findViewById(R.id.ivUploadNewRecipe);
-        ivUploadNew.setOnClickListener(new View.OnClickListener() {
+        cvUploadNew = (CardView) view.findViewById(R.id.cvUploadNewRecipe);
+        cvUploadNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), UploadActivity.class));
+                // show upload type bottom sheet
+                UploadTypeBottomSheet bottomSheet = new UploadTypeBottomSheet();
+                bottomSheet.show(getActivity().getSupportFragmentManager(), "ModalBottomSheet");
+
+                // startActivity(new Intent(getActivity(), UploadActivity.class));
             }
         });
-
+        setup(view);
         return view;
     }
+
+    /*
+    When user clicks a cookbook recipe
+     */
+    @Override
+    public void onRecItemClick(View view, int position) {
+        Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
+        intent.putExtra("RecipeObject", cookbookRVAdapter.getItem(position));
+        startActivity(intent);
+    }
+
+    private void setup(View layout) {
+
+        // cookbook recipes rv
+        RecyclerView cookbookRecipes = layout.findViewById(R.id.rvCookBookFragmentCookBookRecipes);
+        cookbookRecipes.setNestedScrollingEnabled(false);
+        cookbookRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        cookbookRVAdapter = new CookBookRVAdapter(getContext(), getCookBookRecipesFromServer());//don't know if work
+        cookbookRVAdapter.setClickListener(this);
+        cookbookRecipes.setAdapter(cookbookRVAdapter);
+
+
+    }
+
+
+
+/**
+ * Get a list of cookbook recipes from server
+ * and convert them to List<Recipe>
+ *
+ * @return a list of "cookbook" recipes from the server
+ */
+private List<Recipe> getCookBookRecipesFromServer() {
+    // TODO: actually get the recipes from the server
+
+    return MockServer.server().getRecipes("cookbook");
+}
+
 }

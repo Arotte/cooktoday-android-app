@@ -24,5 +24,8 @@
     <color name="instagram">#DD2A7B</color>
 
     <color name="imageOverlay">#6F000000</color>
+    <color name="imageOverlayBlack">#CB000000</color>
+    <color name="imageOverlayGreen">#C11FCC79</color>
+    <color name="imageOverlayWhite">#7EFFFFFF</color>
     <color name="inactiveStar">#D1D2D5</color>
 </resources>

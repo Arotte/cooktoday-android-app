@@ -27,6 +27,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.abdn.cooktoday.utility.MockServer;
+
+
 public class RecipeDetailsActivity extends AppCompatActivity
         implements IngredientItemRVAdapter.ItemClickListener, RecipeStepRVAdapter.ItemClickListener {
 
@@ -191,10 +194,16 @@ public class RecipeDetailsActivity extends AppCompatActivity
                     saveBtn.setText("Save");
                     saveBtn.setIcon(getResources().getDrawable(R.drawable.ic_bookmark));
                     isSaved = false;
+
+
+
                 } else {
                     saveBtn.setText("Saved");
                     saveBtn.setIcon(getResources().getDrawable(R.drawable.ic_bookmark_bold));
                     isSaved = true;
+
+
+
                 }
             }
         });

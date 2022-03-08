@@ -32,6 +32,7 @@ public class HomeFragment extends Fragment
     HotRecipesRVAdapter hotRecipesRVAdapter;
 
     public HomeFragment() {
+        // required empty public constructor
     }
 
     public static HomeFragment newInstance() {

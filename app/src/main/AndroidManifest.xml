@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CookToday">
         <activity
+            android:name=".upload_recipe.from_url.UploadFromUrlActivity"
+            android:exported="false" />
+        <activity
             android:name=".onboarding.registration.RegistrationResultActivity"
             android:exported="false" />
         <activity
@@ -24,7 +27,7 @@
         <activity
             android:name=".onboarding.registration.RegisterActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan|adjustResize"/>
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".onboarding.survey.SurveySlidePagerActivity"
             android:exported="false" />
@@ -32,7 +35,7 @@
             android:name=".onboarding.registration.RegisterEmailVerificationActivity"
             android:exported="false" />
         <activity
-            android:name=".upload_recipe.UploadActivity"
+            android:name=".upload_recipe.manual.UploadActivity"
             android:exported="false" />
         <activity
             android:name=".recipedetails.RecipeDetailsActivity"

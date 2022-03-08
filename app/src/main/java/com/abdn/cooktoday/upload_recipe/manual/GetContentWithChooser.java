@@ -1,4 +1,4 @@
-package com.abdn.cooktoday.upload_recipe;
+package com.abdn.cooktoday.upload_recipe.manual;
 
 import android.app.Activity;
 import android.content.Context;

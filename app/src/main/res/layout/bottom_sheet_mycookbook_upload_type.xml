@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:background="@drawable/shape_round">
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvCookbookAddRecipeManually"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            app:rippleColor="@color/imageOverlayBlack"
+            app:cardCornerRadius="20dp">
+            <ImageView
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/svg_undraw_hamburger"
+                android:scaleType="fitCenter"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/imageOverlayGreen"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Recipe Manually"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:fontFamily="@font/inter_extrabold"
+                android:textColor="@color/white"
+                android:textSize="25sp"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_marginTop="30dp"
+            app:rippleColor="@color/imageOverlayGreen"
+            android:id="@+id/cvCookbookAddRecipeFromURL"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            app:cardCornerRadius="20dp">
+            <ImageView
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/svg_undraw_share_link"
+                android:scaleType="fitCenter"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/imageOverlayBlack"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Recipe From URL"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:fontFamily="@font/inter_extrabold"
+                android:textColor="@color/white"
+                android:textSize="25sp"/>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -23,6 +23,7 @@ public class MockServer {
         return server;
     }
 
+
     // ==========================================
 
     public List<Recipe> getRecipes(String feedType) {
@@ -34,6 +35,13 @@ public class MockServer {
                         new Recipe("Sushi Better", SampleRecipeImgURLs.i().get(2)),
                         new Recipe("Pizza", SampleRecipeImgURLs.i().get(3)),
                         new Recipe("Some Food", SampleRecipeImgURLs.i().get(4))
+                ));
+            case "cookbook":
+                return new ArrayList<Recipe>(Arrays.asList(
+                        new Recipe("Delicious Pizza", SampleRecipeImgURLs.i().get(0)),
+                        new Recipe("Mustard Sushi", SampleRecipeImgURLs.i().get(1)),
+                        new Recipe("Funny Brownie", SampleRecipeImgURLs.i().get(2)),
+                        new Recipe("LS... Dish", SampleRecipeImgURLs.i().get(3))
                 ));
             case "recommend":
                 return new ArrayList<Recipe>(Arrays.asList(
