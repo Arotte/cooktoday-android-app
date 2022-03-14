@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="130dp"
             app:rippleColor="@color/imageOverlayBlack"
-            app:cardCornerRadius="20dp">
+            app:cardCornerRadius="40dp">
             <ImageView
                 android:padding="10dp"
                 android:layout_width="match_parent"
@@ -49,17 +49,18 @@
             android:id="@+id/cvCookbookAddRecipeFromURL"
             android:layout_width="match_parent"
             android:layout_height="130dp"
-            app:cardCornerRadius="20dp">
+            app:cardCornerRadius="40dp">
             <ImageView
                 android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/svg_undraw_share_link"
                 android:scaleType="fitCenter"/>
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/imageOverlayBlack"/>
+                android:background="@color/imageOverlayBlack" />
 
             <TextView
                 android:layout_width="match_parent"

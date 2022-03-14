@@ -1,6 +1,8 @@
 package com.abdn.cooktoday.local_data.model;
 
-public class Ingredient {
+import java.io.Serializable;
+
+public class Ingredient implements Serializable {
     // ============================================================
     // fields
     private String name;

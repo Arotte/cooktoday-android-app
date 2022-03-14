@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragmentBottomSheetUrlExtraction"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:gravity="center_horizontal"
+        android:background="@drawable/shape_round">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="7dp"
+            app:cardCornerRadius="5dp">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/imageOverlay"/>
+        </androidx.cardview.widget.CardView>
+        <RelativeLayout
+            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <EditText
+                android:id="@+id/etUploadFromUrlURL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_input_weblink"
+                android:drawableStart="@drawable/ic_discovery"
+                android:drawablePadding="12dp"
+                android:drawableTint="@color/textMain"
+                android:ems="10"
+                android:fontFamily="@font/interr"
+                android:hint="Recipe Website Link"
+                android:inputType="textUri"
+                android:paddingStart="12dp"
+                android:paddingTop="13dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="13dp"
+                android:textColorHint="@color/textSecondary"
+                android:translationZ="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddRecipeUrlPasteLink"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/textMain"
+                android:text="Paste"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:translationZ="1dp"
+                app:cornerRadius="20dp" />
+
+            <ImageView
+                android:id="@+id/icAddRecipeUrlRemoveUrl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/etUploadFromUrlURL"
+                android:layout_alignEnd="@id/etUploadFromUrlURL"
+                android:layout_alignBottom="@id/etUploadFromUrlURL"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_close_square"
+                android:translationZ="2dp"
+                app:tint="@color/textMain" />
+        </RelativeLayout>
+
+        <!-- ADD RECIPE BUTTON WITH STATUS ICONS -->
+        <RelativeLayout
+            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddRecipeUrl"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:backgroundTint="@color/primaryGreen"
+                android:fontFamily="@font/interr"
+                android:stateListAnimator="@null"
+                android:text="Add Recipe"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:cornerRadius="30dp"
+                app:rippleColor="@color/black" />
+
+            <ProgressBar
+                android:id="@+id/pbAddRecipeUrl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/btnAddRecipeUrl"
+                android:layout_alignEnd="@id/btnAddRecipeUrl"
+                android:layout_alignBottom="@id/btnAddRecipeUrl"
+                android:layout_gravity="end"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/white"
+                android:paddingTop="15dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="15dp" />
+
+            <ImageView
+                android:id="@+id/icAddRecipeUrlAddIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add"
+                android:layout_gravity="end"
+                android:layout_alignTop="@id/btnAddRecipeUrl"
+                android:layout_alignEnd="@id/btnAddRecipeUrl"
+                android:layout_alignBottom="@id/btnAddRecipeUrl"
+                app:tint="@color/white"
+                android:layout_marginEnd="20dp"/>
+
+            <ImageView
+                android:id="@+id/icAddRecipeUrlSuccess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/btnAddRecipeUrl"
+                android:layout_alignEnd="@id/btnAddRecipeUrl"
+                android:layout_alignBottom="@id/btnAddRecipeUrl"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_done_simple"
+                app:tint="@color/white" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

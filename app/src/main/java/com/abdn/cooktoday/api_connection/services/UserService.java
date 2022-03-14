@@ -25,7 +25,7 @@ public interface UserService {
     Call<LogoutMessageJSONModel> logoutUser();
 
     @FormUrlEncoded
-    @POST("user/register/")
+    @POST("user/")
     Call<UserJSONModel__Outer> registerUser(
             @Field("email") String email,
             @Field("password") String password,

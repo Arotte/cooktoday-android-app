@@ -27,5 +27,6 @@
     <color name="imageOverlayBlack">#CB000000</color>
     <color name="imageOverlayGreen">#C11FCC79</color>
     <color name="imageOverlayWhite">#7EFFFFFF</color>
+    <color name="imageOverlayWhiter">#D8FFFFFF</color>
     <color name="inactiveStar">#D1D2D5</color>
 </resources>

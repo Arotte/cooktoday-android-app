@@ -1,9 +1,285 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".upload_recipe.from_url.UploadFromUrlActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:id="@+id/scrollViewRecipePreview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/shape_round">
+
+            <ImageView
+                android:id="@+id/ivRecipePreview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/img_food3"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvRecipePreviewName"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/interr"
+                android:text="Cacao Maca Walnut Milk"
+                android:textColor="@color/textMain"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"/>
+
+            <TextView
+                android:id="@+id/tvRecipePreviewShortDescr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="40dp"
+                android:text="@string/lorem"
+                android:fontFamily="@font/interr"
+                android:textColor="@color/textSecondary"
+                android:layout_marginTop="10dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="20dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Prep Time"
+                        android:fontFamily="@font/interr"
+                        android:textSize="15sp"
+                        android:textColor="@color/textSecondary"/>
+
+                    <TextView
+                        android:id="@+id/tvRecipePreviewPrepT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="25m"
+                        android:textColor="@color/textMain"
+                        android:textSize="21sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cook Time"
+                        android:fontFamily="@font/interr"
+                        android:textSize="15sp"
+                        android:textColor="@color/textSecondary"/>
+                    <TextView
+                        android:id="@+id/tvRecipePreviewCookT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="45m"
+                        android:fontFamily="@font/inter_bold"
+                        android:textColor="@color/textMain"
+                        android:textSize="21sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total"
+                        android:fontFamily="@font/interr"
+                        android:textSize="15sp"
+                        android:textColor="@color/textSecondary"/>
+                    <TextView
+                        android:id="@+id/tvRecipePreviewTotalT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1h 10m"
+                        android:fontFamily="@font/inter_bold"
+                        android:textColor="@color/textMain"
+                        android:textSize="21sp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/interr"
+                android:text="Description"
+                android:textColor="@color/textSecondary"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvRecipePreviewLongDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/interr"
+                android:text="@string/loremx3"
+                android:textColor="@color/textMain"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+                <TextView
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/interr"
+                    android:text="Ingredients"
+                    android:textColor="@color/textMain"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvRecipePreviewServings"
+                    android:layout_marginStart="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2 servings"
+                    android:fontFamily="@font/inter_light"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_marginStart="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="•"
+                    android:fontFamily="@font/inter_light"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/tvRecipePreviewCals"
+                    android:layout_marginStart="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="432 kcal"
+                    android:fontFamily="@font/inter_light"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvRecipePreviewIngreds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp" />
+
+            <LinearLayout
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/interr"
+                    android:text="Directions"
+                    android:textColor="@color/textMain"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvRecipePreviewNSteps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="7 steps"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="14sp"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/interr"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPreviewRecipeSteps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="150dp"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btnRecipePreviewAddRecipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/scrollViewRecipePreview"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        app:tint="@color/white"
+        app:icon="@drawable/ic_add"
+        android:text="Add Recipe"
+        android:textColor="@color/white"
+        app:iconTint="@color/white"
+        android:backgroundTint="@color/primaryGreen"
+        android:stateListAnimator="@null"
+        android:textAllCaps="false"/>
+
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btnRecipePreviewDiscardRecipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/scrollViewRecipePreview"
+        app:layout_anchorGravity="bottom|start"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="20dp"
+        android:text="Discard"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:icon="@drawable/ic_delete"
+        app:iconTint="@color/white"
+        app:backgroundTint="@color/red"
+        android:stateListAnimator="@null" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

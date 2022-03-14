@@ -12,6 +12,8 @@ package com.abdn.cooktoday.local_data.model;
 import com.abdn.cooktoday.utility.SampleRecipeImgURLs;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Recipe implements Serializable {
@@ -54,6 +56,11 @@ public class Recipe implements Serializable {
     private int nSteps;
     private List<String> stepDescriptions;
 
+    // ingreds
+    private int nIngreds;
+    private List<Ingredient> ingredients; // TODO: list of Ingredient class
+
+
     // =====================================================
     // constructors
 
@@ -68,7 +75,23 @@ public class Recipe implements Serializable {
         this.prepTime = 22;
         this.cookTime = 51;
 
-        this.nSteps = 0;
+        this.stepDescriptions = new ArrayList<>(Arrays.asList(
+                "In a medium-size mixing bowl or large glass measuring cup, <b>whisk together</b> your dry ingredients.",
+                "Heat olive oil in a large, oven-proof non stick pan (or a well-seasoned cast iron skillet) over medium-high heat. Sear chicken thighs for 3 minutes each side, until the skin becomes golden and crisp. Leave 2 tablespoons of chicken juices in the pan for added flavour, and drain any excess.",
+                "Fry the garlic in the same pan around the chicken for 1 minute until fragrant. Add the honey, both mustards, and water to the pan, mixing well, and combine all around the chicken.",
+                "OPTIONAL: Remove from the oven after 30 minutes; add in the green beans (mixing them through the sauce), and return to the oven to bake for a further 15 minutes, or until the chicken is completely cooked through and no longer pink in the middle, and the potatoes are fork tender."
+        ));
+        this.nSteps = this.stepDescriptions.size();
+
+        this.ingredients = new ArrayList<>(Arrays.asList(
+            new Ingredient("Eggs", "2 pieces"),
+            new Ingredient("Bacon", "200g"),
+            new Ingredient("Water", "1l"),
+            new Ingredient("Weed", "10g"),
+            new Ingredient("Sliced bacon", "100g"),
+            new Ingredient("Salt", "to taste")
+        ));
+        this.nIngreds = this.ingredients.size();
     }
 
     public Recipe(
@@ -131,6 +154,31 @@ public class Recipe implements Serializable {
         this.nSteps = 0;
     }
 
+    public Recipe(String name,
+                  String shortDescription,
+                  String longDescription,
+                  String imgUrl,
+                  int servings,
+                  int calories,
+                  int prepTime,
+                  int cookTime,
+                  List<String> stepDescriptions,
+                  List<Ingredient> ingredients) {
+        this.name = name;
+        this.shortDescription = shortDescription;
+        this.longDescription = longDescription;
+        this.imgUrl = imgUrl;
+        this.servings = servings;
+        this.calories = calories;
+        this.prepTime = prepTime;
+        this.cookTime = cookTime;
+        this.fullCookTime = this.prepTime + this.cookTime;
+        this.stepDescriptions = stepDescriptions;
+        this.nSteps = stepDescriptions.size();
+        this.ingredients = ingredients;
+        this.nIngreds = ingredients.size();
+    }
+
     // =====================================================
     // getters & setters
 
@@ -164,6 +212,15 @@ public class Recipe implements Serializable {
     }
 
     // default
+
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
 
     public String getName() {
         return name;

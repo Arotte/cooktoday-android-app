@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CookToday">
+        android:theme="@style/Theme.CookToday"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".upload_recipe.from_url.UploadFromUrlActivity"
             android:exported="false" />
