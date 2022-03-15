@@ -28,6 +28,7 @@ public class CookbookFragment extends Fragment
     implements CookBookRVAdapter.ItemClickListener{
     CardView cvUploadNew;
     CookBookRVAdapter cookbookRVAdapter;
+    UploadTypeBottomSheet bottomSheet;
 
     public CookbookFragment() {
         // required empty public constructor
@@ -50,12 +51,13 @@ public class CookbookFragment extends Fragment
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cookbook, container, false);
 
+        bottomSheet = new UploadTypeBottomSheet();
+
         cvUploadNew = (CardView) view.findViewById(R.id.cvUploadNewRecipe);
         cvUploadNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // show upload type bottom sheet
-                UploadTypeBottomSheet bottomSheet = new UploadTypeBottomSheet();
                 bottomSheet.show(getActivity().getSupportFragmentManager(), "ModalBottomSheet");
 
                 // startActivity(new Intent(getActivity(), UploadActivity.class));

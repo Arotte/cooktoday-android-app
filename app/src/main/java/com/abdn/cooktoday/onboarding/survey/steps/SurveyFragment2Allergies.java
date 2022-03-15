@@ -86,7 +86,7 @@ public class SurveyFragment2Allergies extends Fragment implements AllergiesRVAda
             selected.remove(selected.indexOf(position));
         } else {
             overlay.setBackgroundColor(
-                    getResources().getColor(R.color.textMain));
+                    getResources().getColor(R.color.imageOverlayGreen));
             selected.add(position);
         }
     }

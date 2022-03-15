@@ -54,7 +54,6 @@ public class SurveyFragment1Cuisines extends Fragment implements CuisinesRVAdapt
     public void onCuisineItemClick(View view, int position) {
 
         FrameLayout overlay = (FrameLayout) view.findViewById(R.id.flSurveySelectableCircleImgOverlay);
-
         // change background of item
         if (selected.contains(position)) {
             overlay.setBackgroundColor(
@@ -62,7 +61,7 @@ public class SurveyFragment1Cuisines extends Fragment implements CuisinesRVAdapt
             selected.remove(selected.indexOf(position));
         } else {
             overlay.setBackgroundColor(
-                    getResources().getColor(R.color.textMain));
+                    getResources().getColor(R.color.imageOverlayGreen));
             selected.add(position);
         }
     }

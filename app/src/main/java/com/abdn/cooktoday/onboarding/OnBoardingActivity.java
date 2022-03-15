@@ -12,7 +12,6 @@ import com.abdn.cooktoday.MainActivity;
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.local_data.Cache;
 import com.abdn.cooktoday.onboarding.login.LoginActivity;
-import com.abdn.cooktoday.onboarding.registration.RegisterActivity;
 
 public class OnBoardingActivity extends AppCompatActivity {
 

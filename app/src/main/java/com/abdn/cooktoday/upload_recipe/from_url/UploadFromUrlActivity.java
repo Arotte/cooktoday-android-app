@@ -4,15 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,8 +20,6 @@ import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.recipedetails.rvadapters.RecipeStepRVAdapter;
-import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -38,6 +34,8 @@ public class UploadFromUrlActivity extends AppCompatActivity
     private RecipeStepRVAdapter recipeStepRVAdapter;
     private PasteUrlBottomSheet bottomSheet;
     private ScrollView outerScrollView;
+    private ExtendedFloatingActionButton saveBtn;
+    private ExtendedFloatingActionButton discardBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +45,10 @@ public class UploadFromUrlActivity extends AppCompatActivity
         outerScrollView = (ScrollView) findViewById(R.id.scrollViewRecipePreview);
         outerScrollView.setVisibility(View.INVISIBLE);
         bottomSheet = new PasteUrlBottomSheet();
+        // bottomSheet.setCancelable(false);
         showBottomSheet();
+        initActionButtons();
+        setActionButtonVisibility(View.INVISIBLE);
     }
 
     protected void getRecipeFromServer(String url, OnServerConnectionError errorCallback) {
@@ -106,10 +107,10 @@ public class UploadFromUrlActivity extends AppCompatActivity
     private void loadViews() {
         outerScrollView.setVisibility(View.VISIBLE);
         initRecipeDetailsViews();
-        initActionButtons();
         initRecipeDetailsViews();
         initIngredientsView();
         initStepsView();
+        setActionButtonVisibility(View.VISIBLE);
     }
 
     private void initIngredientsView() {
@@ -174,7 +175,8 @@ public class UploadFromUrlActivity extends AppCompatActivity
     }
 
     private void initActionButtons() {
-        ((ExtendedFloatingActionButton) findViewById(R.id.btnRecipePreviewAddRecipe)).setOnClickListener(new View.OnClickListener() {
+        discardBtn = (ExtendedFloatingActionButton) findViewById(R.id.btnRecipePreviewAddRecipe);
+        discardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO
@@ -182,13 +184,19 @@ public class UploadFromUrlActivity extends AppCompatActivity
             }
         });
 
-        ((ExtendedFloatingActionButton) findViewById(R.id.btnRecipePreviewDiscardRecipe)).setOnClickListener(new View.OnClickListener() {
+        saveBtn = (ExtendedFloatingActionButton) findViewById(R.id.btnRecipePreviewDiscardRecipe);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 outerScrollView.setVisibility(View.INVISIBLE);
                 showBottomSheet();
             }
         });
+    }
+
+    private void setActionButtonVisibility(int vis) {
+        saveBtn.setVisibility(vis);
+        discardBtn.setVisibility(vis);
     }
 
     @Override

@@ -4,6 +4,10 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -71,6 +75,14 @@ public class PasteUrlBottomSheet extends BottomSheetDialogFragment {
         deleteUrlButton.setVisibility(View.INVISIBLE);
         etURL.requestFocus();
 
+        // add fade
+//        etURL.measure(0, 0);
+//        Shader textShader=new LinearGradient(0, 0, etURL.getMeasuredWidth(), 0,
+//                new int[]{Color.BLACK, Color.WHITE},
+//                new float[]{0, 1}, Shader.TileMode.CLAMP);
+//        etURL.getPaint().setShader(textShader);
+
+
         // url edit text
         etURL.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -126,8 +138,23 @@ public class PasteUrlBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
+        // cancel button
+        ((ImageView) v.findViewById(R.id.ivAddUrlBottomSheetCancel)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
+
         // return inflated view
         return v;
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog)
+    {
+        super.onCancel(dialog);
+        // getActivity().finish();
     }
 
     private boolean checkUrl(String urlStr) {

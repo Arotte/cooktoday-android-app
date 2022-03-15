@@ -41,7 +41,7 @@ public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdap
         String imgUrl   = recipes.get(position).getImgUrl();
         String calories = recipes.get(position).getCalories() + " kcal";
         String time     = recipes.get(position).getTimePretty(Recipe.TimeType.FULL_COOKING_TIME);
-        String servings = recipes.get(position).getServings() + " servings";
+        String servings = recipes.get(position).getServings() + " ppl";
 
         // set recipe name
         holder.tvRecipeName.setText(name);

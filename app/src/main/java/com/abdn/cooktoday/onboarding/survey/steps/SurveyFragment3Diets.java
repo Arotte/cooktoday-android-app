@@ -85,7 +85,7 @@ public class SurveyFragment3Diets extends Fragment implements DietsRVAdapter.Ite
             selected.remove(selected.indexOf(position));
         } else {
             overlay.setBackgroundColor(
-                    getResources().getColor(R.color.textMain));
+                    getResources().getColor(R.color.imageOverlayGreen));
             selected.add(position);
         }
     }

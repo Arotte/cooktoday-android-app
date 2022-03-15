@@ -96,7 +96,7 @@ public class SurveyFragment4Ingreds extends Fragment implements IngredientsRVAda
             selected.remove(selected.indexOf(position));
         } else {
             overlay.setBackgroundColor(
-                    getResources().getColor(R.color.textMain));
+                    getResources().getColor(R.color.imageOverlayGreen));
             selected.add(position);
         }
     }

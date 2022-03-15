@@ -20,6 +20,8 @@ public class MainActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener
     {
 
+        private BottomNavigationView navigation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +31,7 @@ public class MainActivity
         loadFragment(new HomeFragment());
 
         // getting bottom navigation view and attaching the listener
-        BottomNavigationView navigation = findViewById(R.id.bottomNavigationView);
+        navigation = findViewById(R.id.bottomNavigationView);
         navigation.setOnNavigationItemSelectedListener(this);
 
         // fix shadow on bottom navbar
@@ -56,6 +58,10 @@ public class MainActivity
             return true;
         }
         return false;
+    }
+
+    public void setSelected(int id) {
+        navigation.setSelectedItemId(id);
     }
 
     @Override

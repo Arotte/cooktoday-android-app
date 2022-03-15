@@ -14,15 +14,32 @@
         android:gravity="center_horizontal"
         android:background="@drawable/shape_round">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="100dp"
-            android:layout_height="7dp"
-            app:cardCornerRadius="5dp">
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/imageOverlay"/>
-        </androidx.cardview.widget.CardView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <androidx.cardview.widget.CardView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="100dp"
+                android:layout_height="7dp"
+                app:cardCornerRadius="5dp">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/imageOverlay"/>
+            </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/ivAddUrlBottomSheetCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_close_square"
+                app:tint="@color/imageOverlay" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <RelativeLayout
             android:layout_marginTop="40dp"
             android:layout_width="wrap_content"
@@ -90,7 +107,7 @@
                 android:backgroundTint="@color/primaryGreen"
                 android:fontFamily="@font/interr"
                 android:stateListAnimator="@null"
-                android:text="Add Recipe"
+                android:text="Paste and Add"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textStyle="bold"

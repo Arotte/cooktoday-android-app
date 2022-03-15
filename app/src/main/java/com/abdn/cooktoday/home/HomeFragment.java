@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.abdn.cooktoday.MainActivity;
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.recipedetails.RecipeDetailsActivity;
 import com.abdn.cooktoday.home.rvadapters.HotRecipesRVAdapter;
@@ -115,6 +116,7 @@ public class HomeFragment extends Fragment
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity) getActivity()).setSelected(R.id.bottomNavbarSearch);
                 SearchFragment nextFragment = new SearchFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, nextFragment, "findThisFragment")

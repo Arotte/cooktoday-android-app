@@ -16,6 +16,7 @@
     <color name="textSecondary">#9FA5C0</color>
     <color name="form">#F4F5F7</color>
     <color name="red">#FF6464</color>
+    <color name="link">#1DA1F2</color>
 
 <!--    Brand colors-->
     <color name="google">#FF5842</color>

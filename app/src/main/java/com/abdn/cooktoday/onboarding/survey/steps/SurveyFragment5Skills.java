@@ -15,7 +15,14 @@ import com.google.android.material.card.MaterialCardView;
 
 public class SurveyFragment5Skills extends Fragment {
 
-    String selected;
+    public enum CookingSkill {
+        BEGINNER,
+        INTERMEDIATE,
+        ADVANCED,
+        _NONE
+    }
+
+    CookingSkill selected;
 
     public SurveyFragment5Skills() {
     }
@@ -37,8 +44,7 @@ public class SurveyFragment5Skills extends Fragment {
 
         View layout = inflater.inflate(R.layout.fragment_survey_step5_cooking_skills, container, false);
 
-        selected = "INTERMEDIATE";
-        select(layout, R.id.flSurveyStep5SkillsINTERMEDIATEOverlay, R.id.cvSurveyStep5SkillsINTERMEDIATE);
+        selected = CookingSkill._NONE;
         setOnClickListeners(layout);
 
         return layout;
@@ -51,7 +57,7 @@ public class SurveyFragment5Skills extends Fragment {
             public void onClick(View v) {
                 unselectAll(layout);
                 select(layout, R.id.flSurveyStep5SkillsBEGINNEROverlay, R.id.cvSurveyStep5SkillsBEGINNER);
-                selected = "BEGINNER";
+                selected = CookingSkill.BEGINNER;
             }
         });
 
@@ -61,7 +67,7 @@ public class SurveyFragment5Skills extends Fragment {
             public void onClick(View v) {
                 unselectAll(layout);
                 select(layout, R.id.flSurveyStep5SkillsINTERMEDIATEOverlay, R.id.cvSurveyStep5SkillsINTERMEDIATE);
-                selected = "INTERMEDIATE";
+                selected = CookingSkill.INTERMEDIATE;
             }
         });
 
@@ -72,7 +78,7 @@ public class SurveyFragment5Skills extends Fragment {
             public void onClick(View v) {
                 unselectAll(layout);
                 select(layout, R.id.flSurveyStep5SkillsADVANCEDOverlay, R.id.cvSurveyStep5SkillsADVANCED);
-                selected = "ADVANCED";
+                selected = CookingSkill.ADVANCED;
             }
         });
     }
@@ -90,6 +96,10 @@ public class SurveyFragment5Skills extends Fragment {
 
     private void select(View view, int buttonOverlay, int cvID) {
         ((FrameLayout) view.findViewById(buttonOverlay)).setBackgroundColor(
-                getResources().getColor(R.color.textMain));
+                getResources().getColor(R.color.imageOverlayGreen));
+    }
+
+    public CookingSkill getSelected() {
+        return selected;
     }
 }

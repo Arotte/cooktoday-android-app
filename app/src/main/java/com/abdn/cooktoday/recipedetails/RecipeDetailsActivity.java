@@ -172,7 +172,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
 
         // servings
         ((TextView) findViewById(R.id.tvRecipeDetailsServings)).setText(
-                this.recipe.getServings() + " servings");
+                this.recipe.getServings() + " ppl");
 
         // calories
         ((TextView) findViewById(R.id.tvRecipeDetailsCalories)).setText(
