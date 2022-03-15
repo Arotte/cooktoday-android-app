@@ -474,3 +474,265 @@ private void showAlert(String title,String message){
  }
 
 ```
+
+
+# Recipe Cooking Session Step Design
+
+```xml
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:cardCornerRadius="15dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="#D5F4E5"
+        app:cardElevation="0dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:translationZ="1dp"
+                android:id="@+id/llCookingSessStepAndCheckContainer"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Step 1"
+                    android:textColor="@color/textMain"
+                    android:fontFamily="@font/interr"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/ 7"
+                    android:fontFamily="@font/interr"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="14sp"
+                    android:layout_marginStart="7dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitEnd"
+                    android:src="@drawable/ic_check_inactive" />
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/llCookingSessStepAndCheckContainer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:cardCornerRadius="15dp"
+                app:strokeColor="@color/textSecondary"
+                app:strokeWidth="1dp">
+                <TextView
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Preparation"
+                    android:fontFamily="@font/interr"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="11sp"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <ProgressBar
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:translationZ="0dp"
+                android:progress="70"
+                android:progressTint="#D5F4E5"
+                android:progressBackgroundTint="@color/form"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:scaleY="40"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:cardCornerRadius="15dp"
+        android:backgroundTint="#D5F4E5"
+        app:strokeWidth="1dp"
+        app:strokeColor="#D5F4E5"
+        android:layout_marginTop="15dp"
+        app:cardElevation="0dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/llCookingSessStepAndCheckContainer2"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Step 2"
+                    android:textColor="@color/textMain"
+                    android:fontFamily="@font/interr"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/ 7"
+                    android:fontFamily="@font/interr"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="14sp"
+                    android:layout_marginStart="7dp"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_check_2"
+                    android:scaleType="fitEnd"/>
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/llCookingSessStepAndCheckContainer2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:cardCornerRadius="15dp"
+                android:elevation="0dp"
+                app:strokeColor="@color/textSecondary"
+                app:strokeWidth="1dp">
+                <TextView
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Preparation"
+                    android:fontFamily="@font/interr"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="11sp"/>
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:cardCornerRadius="15dp"
+        android:layout_marginTop="15dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="3dp"
+        app:strokeColor="@color/primaryGreen">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/llCookingSessStepAndCheckContainer3"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:translationZ="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Step 3"
+                    android:textColor="@color/textMain"
+                    android:fontFamily="@font/interr"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/ 7"
+                    android:fontFamily="@font/interr"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="14sp"
+                    android:layout_marginStart="7dp"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_check_inactive"
+                    android:scaleType="fitEnd"/>
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/llCookingSessStepAndCheckContainer3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:cardCornerRadius="15dp"
+                android:backgroundTint="@color/textMain">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:fontFamily="@font/interr"
+                    android:text="Cooking"
+                    android:textColor="@color/white"
+                    android:textSize="11sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <ProgressBar
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:translationZ="0dp"
+                android:progress="30"
+                android:progressTint="#D5F4E5"
+                android:progressBackgroundTint="@color/form"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:scaleY="40"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
+```

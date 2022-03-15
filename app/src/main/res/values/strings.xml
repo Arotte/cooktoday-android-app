@@ -26,4 +26,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_login">LoginActivity</string>
+
+    <string name="sample_recipe_step">Heat olive oil in a large, oven-proof non stick pan (or a well-seasoned cast iron skillet) over medium-high heat.\n\nSear chicken thighs for 3 minutes each side, until the skin becomes golden and crisp.\n\nLeave 2 tablespoons of chicken juices in the pan for added flavour, and drain any excess.</string>
+    <string name="sample_recipe_step_long">Heat olive oil in a large, oven-proof non stick pan (or a well-seasoned cast iron skillet) over medium-high heat.\n\nSear chicken thighs for 3 minutes each side, until the skin becomes golden and crisp.\n\nLeave 2 tablespoons of chicken juices in the pan for added flavour, and drain any excess.\n\nHeat olive oil in a large, oven-proof non stick pan (or a well-seasoned cast iron skillet) over medium-high heat.\n\nSear chicken thighs for 3 minutes each side, until the skin becomes golden and crisp.\n\nLeave 2 tablespoons of chicken juices in the pan for added flavour, and drain any excess.</string>
 </resources>

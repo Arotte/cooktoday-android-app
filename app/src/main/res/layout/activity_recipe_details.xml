@@ -380,13 +380,11 @@
         android:layout_marginRight="20dp"
         app:tint="@color/white"
         app:icon="@drawable/ic_play"
-        android:text="Cook This Dish"
+        android:text="Cook"
         android:textColor="@color/white"
         app:iconTint="@color/white"
-
         android:backgroundTint="@color/primaryGreen"
-        android:stateListAnimator="@null"
-        android:textAllCaps="false"/>
+        android:stateListAnimator="@null" />
 
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

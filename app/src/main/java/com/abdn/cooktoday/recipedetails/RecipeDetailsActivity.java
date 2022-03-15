@@ -4,18 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.transition.Fade;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abdn.cooktoday.R;
+import com.abdn.cooktoday.cooking_session.CookingSessionActivity;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.recipedetails.rvadapters.IngredientItemRVAdapter;
@@ -63,7 +66,12 @@ public class RecipeDetailsActivity extends AppCompatActivity
         initRecipeDetailsView();
         initSaveRecipeButton();
         initReviewStars();
-
+        ((Button) findViewById(R.id.fabtnRecipeDetailsCookDish)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RecipeDetailsActivity.this, CookingSessionActivity.class));
+            }
+        });
     }
 
     private void initReviewStars() {
