@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.abdn.cooktoday.local_data.model.User;
+
 /**
  * Manages the local cache using Android's
  * SharedPreferences feature.
@@ -30,6 +32,17 @@ public class Cache {
     {
         if(mSharedPref == null)
             mSharedPref = context.getSharedPreferences(context.getPackageName(), Activity.MODE_PRIVATE);
+    }
+
+    public static User read_logged_in_user() {
+        return new User(
+                read_string(KEY_USER_EMAIL, ""),
+                read_string(KEY_USER_ID, ""),
+                read_string(KEY_USER_FNAME, ""),
+                read_string(KEY_USER_LNAME, ""),
+                read_string(KEY_USER_ROLE, ""),
+                read_string(KEY_USER_SESSID, "")
+        );
     }
 
     public static String read_string(String key, String defValue) {

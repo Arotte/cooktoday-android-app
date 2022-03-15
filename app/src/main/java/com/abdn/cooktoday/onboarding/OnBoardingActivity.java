@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.abdn.cooktoday.MainActivity;
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.local_data.Cache;
+import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.onboarding.login.LoginActivity;
 
 public class OnBoardingActivity extends AppCompatActivity {
@@ -41,6 +42,7 @@ public class OnBoardingActivity extends AppCompatActivity {
         } else {
             // logged in
             Log.i("LoginActivity", "User already logged in. Skipping login flow.");
+            LoggedInUser.user().setUser(Cache.read_logged_in_user());
             startActivity(new Intent(OnBoardingActivity.this, MainActivity.class));
             finish();
         }

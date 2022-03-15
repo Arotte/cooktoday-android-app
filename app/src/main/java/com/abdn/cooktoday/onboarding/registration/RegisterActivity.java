@@ -25,6 +25,7 @@ import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.APIRepository;
 import com.abdn.cooktoday.api_connection.jsonmodels.UserJSONModel__Outer;
 import com.abdn.cooktoday.local_data.Cache;
+import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.User;
 import com.abdn.cooktoday.onboarding.login.LoginActivity;
 
@@ -209,6 +210,7 @@ public class RegisterActivity extends AppCompatActivity {
                             progressBar.setVisibility(View.INVISIBLE);
                             successIcon.setVisibility(View.VISIBLE);
 
+                            LoggedInUser.user().setUser(user);
                             finish();
                             startActivity(new Intent(RegisterActivity.this, RegistrationResultActivity.class));
                         } else {

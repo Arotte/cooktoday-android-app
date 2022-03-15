@@ -10,13 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.APIRepository;
 import com.abdn.cooktoday.api_connection.jsonmodels.LogoutMessageJSONModel;
-import com.abdn.cooktoday.api_connection.jsonmodels.UserJSONModel__Outer;
 import com.abdn.cooktoday.local_data.Cache;
-import com.abdn.cooktoday.local_data.model.User;
+import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.onboarding.OnBoardingActivity;
 
 import java.util.concurrent.Executor;
@@ -26,8 +26,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
-
-
     public ProfileFragment() {
         // required empty public constructor
     }
@@ -49,6 +47,13 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        // set username
+        String userFName = "Anakin";
+        String loggedInUserFName = LoggedInUser.user().getFistName();
+        if (!loggedInUserFName.equals(""))
+            userFName = loggedInUserFName;
+        ((TextView) layout.findViewById(R.id.tvHelloAnakin)).setText("Hello, " + userFName);
 
         handleLogoutClicked(layout);
 

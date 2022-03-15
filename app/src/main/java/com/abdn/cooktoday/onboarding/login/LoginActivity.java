@@ -20,6 +20,7 @@ import com.abdn.cooktoday.api_connection.APIRepository;
 import com.abdn.cooktoday.api_connection.jsonmodels.UserJSONModel;
 import com.abdn.cooktoday.api_connection.jsonmodels.UserJSONModel__Outer;
 import com.abdn.cooktoday.local_data.Cache;
+import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.User;
 import com.abdn.cooktoday.onboarding.forgotpassword.ForgotPassword;
 import com.abdn.cooktoday.onboarding.registration.RegisterActivity;
@@ -157,6 +158,7 @@ public class LoginActivity extends AppCompatActivity {
         successIcon.setVisibility(View.VISIBLE);
 
         saveLoggedInUserToCache(user);
+        LoggedInUser.user().setUser(user);
 
         finish();
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
