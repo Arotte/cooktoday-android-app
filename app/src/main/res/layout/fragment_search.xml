@@ -15,9 +15,26 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
 
+<!--        <EditText-->
+<!--            android:id="@+id/searchBar"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="3"-->
+<!--            android:background="@drawable/custom_input_search"-->
+<!--            android:drawableStart="@drawable/ic_search"-->
+<!--            android:drawablePadding="12dp"-->
+<!--            android:ems="10"-->
+<!--            android:focusableInTouchMode="true"-->
+<!--            android:fontFamily="@font/interr"-->
+<!--            android:hint="Search"-->
+<!--            android:paddingStart="12dp"-->
+<!--            android:paddingTop="13dp"-->
+<!--            android:paddingEnd="12dp"-->
+<!--            android:paddingBottom="13dp"-->
+<!--            android:transitionName="searchFade" />-->
         <EditText
             android:id="@+id/searchBar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:background="@drawable/custom_input_search"
@@ -27,12 +44,13 @@
             android:focusableInTouchMode="true"
             android:fontFamily="@font/interr"
             android:hint="Search"
-            android:inputType="textEmailAddress"
             android:paddingStart="12dp"
             android:paddingTop="13dp"
             android:paddingEnd="12dp"
             android:paddingBottom="13dp"
-            android:transitionName="searchFade" />
+            android:translationZ="0dp"
+            android:drawableEnd="@drawable/ic_close_square"
+            android:drawableTint="@color/textSecondary"/>
 
         <ImageView
             android:id="@+id/searchFilterIcon"
@@ -45,56 +63,79 @@
             android:layout_marginStart="5dp"/>
     </LinearLayout>
 
-    <View
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/form" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        >
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSearchHistory"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/llSearchInitialScreenContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <View
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/form" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/form" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_height="wrap_content"
-        android:text="Search Suggestions"
-        android:textColor="@color/textMain"
-        android:fontFamily="@font/inter_bold"
-        android:textSize="16sp"
-        android:layout_marginTop="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvSearchHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+
+            <View
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@color/form" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_height="wrap_content"
+                android:text="Search Suggestions"
+                android:textColor="@color/textMain"
+                android:fontFamily="@font/inter_bold"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"/>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="15dp"
-        android:requiresFadingEdge="horizontal"
-        android:overScrollMode="never"
-        android:id="@+id/rvSearchSuggestions"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="15dp"
+                android:requiresFadingEdge="horizontal"
+                android:overScrollMode="never"
+                android:id="@+id/rvSearchSuggestions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+        </LinearLayout>
 
-
+        <LinearLayout
+            android:id="@+id/llSearchAutocompleteSuggestions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/form" />
+            <ListView
+                android:id="@+id/lvSearchResults"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

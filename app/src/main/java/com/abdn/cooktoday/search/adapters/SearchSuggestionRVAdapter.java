@@ -1,4 +1,4 @@
-package com.abdn.cooktoday.search.rvadapters;
+package com.abdn.cooktoday.search.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,14 +12,14 @@ import com.abdn.cooktoday.R;
 
 import java.util.List;
 
-public class SearchHistoryRVAdapter extends RecyclerView.Adapter<SearchHistoryRVAdapter.ViewHolder> {
+public class SearchSuggestionRVAdapter extends RecyclerView.Adapter<SearchSuggestionRVAdapter.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
-    private SearchHistoryRVAdapter.ItemClickListener mClickListener;
+    private SearchSuggestionRVAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public SearchHistoryRVAdapter(Context context, List<String> data) {
+    public SearchSuggestionRVAdapter(Context context, List<String> data) {
         // todo: remove public constructor -- not good
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -27,16 +27,16 @@ public class SearchHistoryRVAdapter extends RecyclerView.Adapter<SearchHistoryRV
 
     // inflates the row layout from xml when needed
     @Override
-    public SearchHistoryRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerview_row_search_history, parent, false);
-        return new SearchHistoryRVAdapter.ViewHolder(view);
+    public SearchSuggestionRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = mInflater.inflate(R.layout.recyclerview_row_search_suggestions, parent, false);
+        return new SearchSuggestionRVAdapter.ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(SearchHistoryRVAdapter.ViewHolder holder, int position) {
-        String history = mData.get(position);
-        holder.tvHistoryItem.setText(history);
+    public void onBindViewHolder(SearchSuggestionRVAdapter.ViewHolder holder, int position) {
+        String suggestion = mData.get(position);
+        holder.myTv.setText(suggestion);
     }
 
     // total number of rows
@@ -48,17 +48,17 @@ public class SearchHistoryRVAdapter extends RecyclerView.Adapter<SearchHistoryRV
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tvHistoryItem;
+        TextView myTv;
 
         ViewHolder(View itemView) {
             super(itemView);
-            tvHistoryItem = itemView.findViewById(R.id.tvSearchHistory);
+            myTv = itemView.findViewById(R.id.tvSearchSuggestion);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onSearchHistoryItemClick(view, getAdapterPosition());
+            if (mClickListener != null) mClickListener.onSearchSuggestionItemClick(view, getAdapterPosition());
         }
     }
 
@@ -68,12 +68,12 @@ public class SearchHistoryRVAdapter extends RecyclerView.Adapter<SearchHistoryRV
     }
 
     // allows clicks events to be caught
-    public void setClickListener(SearchHistoryRVAdapter.ItemClickListener itemClickListener) {
+    public void setClickListener(SearchSuggestionRVAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onSearchHistoryItemClick(View view, int position);
+        void onSearchSuggestionItemClick(View view, int position);
     }
 }

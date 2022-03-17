@@ -5,11 +5,15 @@ import android.util.Log;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeStepJSON;
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON;
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON__Outer;
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchJSON;
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchResultItemJSON;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.Recipe;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -21,8 +25,97 @@ public class Server {
     private static final String TAG = "CookTodayServer";
 
     public interface RecipeExtractionResult {
-        public void success(Recipe recipe);
-        public void error(int errorCode);
+        void success(Recipe recipe);
+        void error(int errorCode);
+    }
+
+    public interface RecipeSearchResult {
+        void success(ArrayList<RecipeSearchResultItemJSON> recipes);
+        void error(int errorCode);
+    }
+
+    public interface GetRecipeResult {
+        void success(Recipe recipe);
+        void error(int errorCode);
+    }
+
+    public static void getRecipeById(String userSessId, String recipeId, GetRecipeResult resultCallback) {
+        Executor regExec = new Executor() {
+            @Override
+            public void execute(Runnable runnable) {
+                runnable.run();
+            }
+        };
+
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getRecipeService().getRecipeById(userSessId, recipeId).enqueue(new Callback<RecipeJSON__Outer>() {
+                    @Override
+                    public void onResponse(Call<RecipeJSON__Outer> call, Response<RecipeJSON__Outer> r) {
+                        if (r.code() == 200) {
+                            Log.i(TAG, "Got recipe!");
+                            RecipeJSON recipeJson = r.body().getRecipe();
+                            String recipeImgUrl = "";
+                            if (!recipeJson.getMedia().isEmpty())
+                                recipeImgUrl = recipeJson.getMedia().get(0);
+                            Recipe recipe = new Recipe(
+                                   recipeJson.getName(),
+                                   recipeJson.getShortDesc(),
+                                   recipeJson.getLongDesc(),
+                                   recipeImgUrl,
+                                   recipeJson.getPortionsNum(),
+                                   recipeJson.getCalories(),
+                                   recipeJson.getPrepTime(),
+                                   recipeJson.getCookingTime(),
+                                   recipeJson.getInstructionsStr(),
+                                   recipeJson.getIngredientsIngred());
+                            resultCallback.success(recipe);
+                        } else {
+                            resultCallback.error(r.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RecipeJSON__Outer> call, Throwable t) {
+                        Log.i(TAG, t.toString() + ", " + t.getMessage());
+                        resultCallback.error(-1);
+                    }
+                });
+            }
+        });
+    }
+
+    public static void searchRecipes(String userSessId, String query, RecipeSearchResult resultCallback) {
+        Executor regExec = new Executor() {
+            @Override
+            public void execute(Runnable runnable) {
+                runnable.run();
+            }
+        };
+
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getSearchService().searchRecipes(userSessId, query).enqueue(new Callback<RecipeSearchJSON>() {
+                    @Override
+                    public void onResponse(Call<RecipeSearchJSON> call, Response<RecipeSearchJSON> r) {
+                        if (r.code() == 200) {
+                            Log.i(TAG, "Recipe search successful!");
+                            resultCallback.success(r.body().getRecipes());
+                        } else {
+                            resultCallback.error(r.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RecipeSearchJSON> call, Throwable t) {
+                        Log.i(TAG, t.toString() + ", " + t.getMessage());
+                        resultCallback.error(-1);
+                    }
+                });
+            }
+        });
     }
 
     public static void extractRecipe(String url, RecipeExtractionResult resultCallback) {
@@ -30,8 +123,7 @@ public class Server {
             @Override
             public void execute(Runnable runnable) {
                 runnable.run();
-            }
-        };
+            }};
         regExec.execute(new Runnable() {
             @Override
             public void run() {

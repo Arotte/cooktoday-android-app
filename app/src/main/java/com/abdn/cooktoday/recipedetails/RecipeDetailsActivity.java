@@ -94,13 +94,15 @@ public class RecipeDetailsActivity extends AppCompatActivity
     private void initStepsView() {
         RecyclerView rvSteps = (RecyclerView) findViewById(R.id.rvRecipeDetailsRecipeStepsContainer);
 
-        List<String> steps = new ArrayList<>(Arrays.asList(
+        List<String> steps = recipe.getStepDescriptions();
+        if (steps == null) {
+            steps = new ArrayList<>(Arrays.asList(
                 "In a medium-size mixing bowl or large glass measuring cup, <b>whisk together</b> your dry ingredients.",
                 "Heat olive oil in a large, oven-proof non stick pan (or a well-seasoned cast iron skillet) over medium-high heat. Sear chicken thighs for 3 minutes each side, until the skin becomes golden and crisp. Leave 2 tablespoons of chicken juices in the pan for added flavour, and drain any excess.",
                 "Fry the garlic in the same pan around the chicken for 1 minute until fragrant. Add the honey, both mustards, and water to the pan, mixing well, and combine all around the chicken.",
                 "OPTIONAL: Remove from the oven after 30 minutes; add in the green beans (mixing them through the sauce), and return to the oven to bake for a further 15 minutes, or until the chicken is completely cooked through and no longer pink in the middle, and the potatoes are fork tender."
-        ));
-        // this.recipe.setStepDescriptions(steps);
+            ));
+        }
 
         rvSteps.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvSteps.setNestedScrollingEnabled(false);
@@ -114,14 +116,17 @@ public class RecipeDetailsActivity extends AppCompatActivity
     private void initIngredientsView() {
         RecyclerView rvIngredients = (RecyclerView) findViewById(R.id.rvRecipeDetailsIngredientsContainer);
 
-        List<Ingredient> ingredients = new ArrayList<>(Arrays.asList(
+        List<Ingredient> ingredients = this.recipe.getIngredients();
+        if (ingredients == null) {
+            ingredients = new ArrayList<>(Arrays.asList(
                 new Ingredient("Eggs", "2 pieces"),
                 new Ingredient("Bacon", "200g"),
                 new Ingredient("Water", "1l"),
                 new Ingredient("Weed", "10g"),
                 new Ingredient("Sliced bacon", "100g"),
                 new Ingredient("Salt", "to taste")
-        ));
+            ));
+        }
         nIngreds = ingredients.size();
 
         rvIngredients.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -162,9 +167,13 @@ public class RecipeDetailsActivity extends AppCompatActivity
 
     private void initRecipeDetailsView() {
         // recipe image
-        Picasso.get()
-                .load(this.recipe.getImgUrl())
-                .into((ImageView) findViewById(R.id.ivRecipeDetailsImg));
+        String imgUrl = this.recipe.getImgUrl();
+        ImageView img = (ImageView) findViewById(R.id.ivRecipeDetailsImg);
+        if (!imgUrl.isEmpty())
+            Picasso.get().load(imgUrl).into(img);
+        else
+            img.setImageDrawable(getResources().getDrawable(R.drawable.img_food2));
+
 
         // recipe name
         ((TextView) findViewById(R.id.tvRecipeDetailsRecipeName)).setText(
