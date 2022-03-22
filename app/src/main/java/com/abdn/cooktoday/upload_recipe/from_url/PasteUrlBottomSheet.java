@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.abdn.cooktoday.R;
+import com.abdn.cooktoday.utility.ToastMaker;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 
@@ -168,7 +169,7 @@ public class PasteUrlBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void showErrorToast(String msg) {
-        ((UploadFromUrlActivity) getActivity()).showErrorToast(msg);
+        ToastMaker.make(msg, ToastMaker.Type.ERROR, getActivity());
     }
 
     private void setButtonState(ButtonState state) {

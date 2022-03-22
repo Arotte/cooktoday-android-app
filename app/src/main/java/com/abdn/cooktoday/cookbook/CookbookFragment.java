@@ -3,7 +3,6 @@ package com.abdn.cooktoday.cookbook;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,17 +15,16 @@ import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.cookbook.bottomsheet.UploadTypeBottomSheet;
 import com.abdn.cooktoday.cookbook.rvadapters.CookBookRVAdapter;
 import com.abdn.cooktoday.recipedetails.RecipeDetailsActivity;
-import com.abdn.cooktoday.search.bottomsheet.SearchFilterBottomSheet;
-import com.abdn.cooktoday.upload_recipe.manual.UploadActivity;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.utility.MockServer;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.List;
 
 
 public class CookbookFragment extends Fragment
     implements CookBookRVAdapter.ItemClickListener{
-    CardView cvUploadNew;
+    ExtendedFloatingActionButton btnNewRecipe;
     CookBookRVAdapter cookbookRVAdapter;
     UploadTypeBottomSheet bottomSheet;
 
@@ -52,15 +50,15 @@ public class CookbookFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_cookbook, container, false);
 
         bottomSheet = new UploadTypeBottomSheet();
+        if (bottomSheet.isVisible())
+            bottomSheet.dismiss();
 
-        cvUploadNew = (CardView) view.findViewById(R.id.cvUploadNewRecipe);
-        cvUploadNew.setOnClickListener(new View.OnClickListener() {
+        btnNewRecipe = (ExtendedFloatingActionButton) view.findViewById(R.id.btnCookbookNewRecipe);
+        btnNewRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // show upload type bottom sheet
                 bottomSheet.show(getActivity().getSupportFragmentManager(), "ModalBottomSheet");
-
-                // startActivity(new Intent(getActivity(), UploadActivity.class));
             }
         });
         setup(view);
@@ -78,7 +76,6 @@ public class CookbookFragment extends Fragment
     }
 
     private void setup(View layout) {
-
         // cookbook recipes rv
         RecyclerView cookbookRecipes = layout.findViewById(R.id.rvCookBookFragmentCookBookRecipes);
         cookbookRecipes.setNestedScrollingEnabled(false);
@@ -86,8 +83,6 @@ public class CookbookFragment extends Fragment
         cookbookRVAdapter = new CookBookRVAdapter(getContext(), getCookBookRecipesFromServer());//don't know if work
         cookbookRVAdapter.setClickListener(this);
         cookbookRecipes.setAdapter(cookbookRVAdapter);
-
-
     }
 
 

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -17,16 +18,20 @@ import android.widget.Toast;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.local_data.Cache;
+import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.recipedetails.rvadapters.RecipeStepRVAdapter;
+import com.abdn.cooktoday.utility.ToastMaker;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class UploadFromUrlActivity extends AppCompatActivity
-        implements PreviewIngredientItemRVAdapter.ItemClickListener, RecipeStepRVAdapter.ItemClickListener{
+        implements PreviewIngredientItemRVAdapter.ItemClickListener, RecipeStepRVAdapter.ItemClickListener {
+    private static final String TAG = "UploadFromUrlActivity";
 
     private int nIngreds;
     private Recipe recipe;
@@ -63,41 +68,12 @@ public class UploadFromUrlActivity extends AppCompatActivity
             @Override
             public void error(int errorCode) {
                 if (errorCode == 400)
-                    showErrorToast("No recipe found on the website");
+                    ToastMaker.make("No recipe found on the website", ToastMaker.Type.ERROR, UploadFromUrlActivity.this);
                 else
-                    showErrorToast("Oops! Something went wrong");
+                    ToastMaker.make("Oops! Something went wrong", ToastMaker.Type.ERROR, UploadFromUrlActivity.this);
                 errorCallback.error();
             }
         });
-    }
-
-    protected void showErrorToast(String msg) {
-        LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.toast_cooktoday_error, (ViewGroup) findViewById(R.id.toastCookTodayError));
-
-        ImageView image = (ImageView) layout.findViewById(R.id.ivToastCookTodayError);
-        image.setImageResource(R.drawable.ic_info_circle);
-        image.setColorFilter(getResources().getColor(R.color.white));
-        TextView text = (TextView) layout.findViewById(R.id.tvToastCookTodayError);
-        text.setText(msg);
-
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.TOP, 0, 35);
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(layout);
-        toast.show();
-    }
-
-    private void handleUserResponse(boolean userWantsToDiscardRecipe) {
-
-        // TODO
-
-        if (userWantsToDiscardRecipe) {
-            // do nothing, set focus of main edittext, remove link
-
-        } else {
-            // add recipe to user's cookbook, return to previous screen
-        }
     }
 
     private void setRecipe(Recipe recipe) {
@@ -175,21 +151,40 @@ public class UploadFromUrlActivity extends AppCompatActivity
     }
 
     private void initActionButtons() {
-        discardBtn = (ExtendedFloatingActionButton) findViewById(R.id.btnRecipePreviewAddRecipe);
+        discardBtn = (ExtendedFloatingActionButton) findViewById(R.id.btnRecipePreviewDiscardRecipe);
         discardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
-                finish();
+                // show bottom sheet and hide created recipe
+                outerScrollView.setVisibility(View.INVISIBLE);
+                showBottomSheet();
             }
         });
 
-        saveBtn = (ExtendedFloatingActionButton) findViewById(R.id.btnRecipePreviewDiscardRecipe);
+        saveBtn = (ExtendedFloatingActionButton) findViewById(R.id.btnRecipePreviewAddRecipe);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                outerScrollView.setVisibility(View.INVISIBLE);
-                showBottomSheet();
+                // create new recipe on server
+                Server.createRecipe(LoggedInUser.user().getSessionID(), LoggedInUser.user().getServerID(), recipe, new Server.CreateRecipeResult() {
+                    @Override
+                    public void success(Recipe recipe) {
+                        // recipe was successfully created on the server
+                        Log.i(TAG, "Recipe creation successful!");
+                        ToastMaker.make("Recipe added!", ToastMaker.Type.SUCCESS, UploadFromUrlActivity.this);
+
+                        // TODO: add just created recipe to saved recipes of the user
+
+                        finish();
+                    }
+
+                    @Override
+                    public void error(int errorCode) {
+                        // error during the creation of the recipe on the server
+                        Log.i(TAG, "Error during creation of recipe! Error code: " + errorCode);
+                        ToastMaker.make("Oops! Something went wrong", ToastMaker.Type.ERROR, UploadFromUrlActivity.this);
+                    }
+                });
             }
         });
     }

@@ -23,6 +23,7 @@ import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.recipedetails.rvadapters.IngredientItemRVAdapter;
 import com.abdn.cooktoday.recipedetails.rvadapters.RecipeStepRVAdapter;
+import com.abdn.cooktoday.utility.ToastMaker;
 import com.google.android.material.button.MaterialButton;
 import com.squareup.picasso.Picasso;
 
@@ -155,7 +156,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
         // show "start cooking" prompt when all
         // ingredients are checked
         if (nIngredsChecked == nIngreds)
-            showStartCookingToast();
+            ToastMaker.make("Awesome, you can start cooking!", ToastMaker.Type.SUCCESS, RecipeDetailsActivity.this);
 
         // etc ...
 
@@ -211,36 +212,13 @@ public class RecipeDetailsActivity extends AppCompatActivity
                     saveBtn.setText("Save");
                     saveBtn.setIcon(getResources().getDrawable(R.drawable.ic_bookmark));
                     isSaved = false;
-
-
-
                 } else {
                     saveBtn.setText("Saved");
                     saveBtn.setIcon(getResources().getDrawable(R.drawable.ic_bookmark_bold));
                     isSaved = true;
-
-
-
                 }
             }
         });
-    }
-
-    private void showStartCookingToast() {
-        LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.toast_cooktoday_default,
-                (ViewGroup) findViewById(R.id.toastCookTodayDefault));
-
-        //ImageView image = (ImageView) layout.findViewById(R.id.ivToastCookTodayDefault);
-        //image.setImageResource(R.drawable.img_avatar);
-        //TextView text = (TextView) layout.findViewById(R.id.tvToastCookTodayDefault);
-        //text.setText("Hello! This is a custom toast!");
-
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.TOP, 0, 35);
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(layout);
-        toast.show();
     }
 
     private void navbarFix() {

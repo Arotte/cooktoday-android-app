@@ -7,64 +7,59 @@
     tools:context="com.abdn.cooktoday.cookbook.CookbookFragment">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/myCookbookCustomTopBar"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsvMyCookbook"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvUploadNewRecipe"
-                android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:backgroundTint="@color/primaryGreen"
-                android:clickable="true"
-                android:elevation="10dp"
-                android:focusable="true"
-                app:cardCornerRadius="30dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
+                android:orientation="vertical">
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/ic_add"
-                    app:tint="@color/white" />
-            </androidx.cardview.widget.CardView>
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="My Cookbook"
+                    android:textColor="@color/textMain"
+                    android:textSize="27sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/inter_bold"
-                android:text="My Cookbook"
-                android:textColor="@color/textMain"
-                android:textSize="27sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCookBookFragmentCookBookRecipes"
-            android:layout_width="match_parent"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCookBookFragmentCookBookRecipes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:overScrollMode="never"
+                    android:requiresFadingEdge="vertical"
+                    android:fadingEdgeLength="15dp"
+                    android:layout_marginTop="15dp"/>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/btnCookbookNewRecipe"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:overScrollMode="never"
-            android:requiresFadingEdge="horizontal"
-            android:fadingEdgeLength="15dp"
-            app:layout_constraintTop_toBottomOf="@id/myCookbookCustomTopBar"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_anchor="@id/nsvMyCookbook"
+            app:layout_anchorGravity="bottom|end"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            app:tint="@color/white"
+            app:icon="@drawable/ic_add"
+            android:text=""
+            android:textColor="@color/white"
+            app:iconTint="@color/white"
+            android:backgroundTint="@color/primaryGreen"
+            android:stateListAnimator="@null"
+            android:textAllCaps="false"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </FrameLayout>

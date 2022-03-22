@@ -182,6 +182,7 @@ public class Recipe implements Serializable {
     // =====================================================
     // getters & setters
 
+
     // custom
     public String getTimePretty(TimeType timeType) {
         int time = prepTime;
@@ -209,6 +210,32 @@ public class Recipe implements Serializable {
             int mins = time % 60;
             return whole + "h " + mins + "m";
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "name='" + name + '\'' +
+                ", shortDescription='" + shortDescription + '\'' +
+                ", longDescription='" + longDescription + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", servings=" + servings +
+                ", calories=" + calories +
+                ", fullCookTime=" + fullCookTime +
+                ", prepTime=" + prepTime +
+                ", cookTime=" + cookTime +
+                ", nSteps=" + nSteps +
+                ", stepDescriptions=" + stepDescriptions +
+                ", nIngreds=" + nIngreds +
+                ", ingredients=" + ingredients +
+                '}';
+    }
+
+    public List<String> getIngredientsStr() {
+        ArrayList<String> ret = new ArrayList<>();
+        for (Ingredient ingred : ingredients)
+            ret.add(ingred.getName());
+        return ret;
     }
 
     // default
