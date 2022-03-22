@@ -7,6 +7,7 @@ import android.content.Intent;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,7 +17,12 @@ import com.abdn.cooktoday.R;
 
 import android.widget.EditText;
 
+import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.local_data.LoggedInUser;
+import com.abdn.cooktoday.local_data.model.Ingredient;
+import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.utility.ProgressButtonHandler;
+import com.abdn.cooktoday.utility.ToastMaker;
 import com.google.android.material.button.MaterialButton;
 
 import android.net.Uri;
@@ -27,19 +33,26 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
+// TODO: send image to server
 public class UploadActivity extends AppCompatActivity {
+    private static final String TAG = "UploadActivity";
 
     int PICK_IMAGE = 100;
     ImageView imageView;
 
     EditText input;
+    EditText etRecipeName;
+    EditText etRecipeDesc;
+    EditText etServings;
+    EditText etCalories;
+
     ImageView enter;
     ListView listView;
-    ArrayList<String> items;
+    ArrayList<String> ingredients;
     ArrayAdapter<String> adapter;
 
     EditText input_step;
@@ -47,23 +60,52 @@ public class UploadActivity extends AppCompatActivity {
     ListView listViewSteps;
     ArrayList<String> steps;
     ArrayAdapter<String> adapter_steps;
-    Toast t;
     ProgressButtonHandler btnUploadHandler;
 
     int total_hrs = 0;
     int total_min = 0;
+    int cookingTime = 0;
+    int prepTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+        initViews();
+    }
+
+
+    private Recipe gatherRecipeDetails() {
+        List<Ingredient> ingreds = new ArrayList<>();
+        for (String ingredStr : ingredients)
+            ingreds.add(new Ingredient(ingredStr, ""));
+
+        return new Recipe(
+                etRecipeName.getText().toString(),
+                "",
+                etRecipeDesc.getText().toString(),
+                "",
+                Integer.parseInt(etServings.getText().toString()),
+                Integer.parseInt(etCalories.getText().toString()),
+                prepTime,
+                cookingTime,
+                steps,
+                ingreds);
+    }
+
+    private void initViews() {
         imageView = findViewById(R.id.imageViewUpload);
+
+        etRecipeName = (EditText) findViewById(R.id.etUploadRecipeName);
+        etRecipeDesc = (EditText) findViewById(R.id.etUploadRecipeDesc);
+        etCalories = (EditText) findViewById(R.id.etUploadCalories);
+        etServings = (EditText) findViewById(R.id.etUploadServings);
 
         enter = (ImageView) findViewById(R.id.add);
         listView = (ListView)findViewById(R.id.listView);
         input = (EditText)findViewById(R.id.input);
-        items = new ArrayList<>();
-        adapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1,items);
+        ingredients = new ArrayList<>();
+        adapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1, ingredients);
 
         enter_step = (ImageView) findViewById(R.id.add_step);
         listViewSteps = (ListView)findViewById(R.id.listViewSteps);
@@ -80,7 +122,7 @@ public class UploadActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String name = items.get(i);
+                String name = ingredients.get(i);
                 //makeToast(name);
             }
         });
@@ -160,12 +202,35 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
 
+        // UPLOAD RECIPE ACTION BUTTON
         MaterialButton uploadButton = (MaterialButton) findViewById(R.id.btn_mycookbook_upload);
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // call recipe creation endpoint on server
-                // TODO
+                // gather recipe details entered by the user
+                btnUploadHandler.setState(ProgressButtonHandler.State.LOADING);
+                Recipe recipe = gatherRecipeDetails();
+                // make recipe creation request to the server
+                Server.createRecipe(
+                        LoggedInUser.user().getSessionID(),
+                        LoggedInUser.user().getServerID(),
+                        recipe,
+                        new Server.CreateRecipeResult() {
+                            @Override
+                            public void success(Recipe recipe) {
+                                // recipe created on server
+                                btnUploadHandler.setState(ProgressButtonHandler.State.SUCCESS);
+                                Log.i(TAG, "Recipe successfully created!");
+                                ToastMaker.make("Recipe added!", ToastMaker.Type.SUCCESS, UploadActivity.this);
+                                finish();
+                            }
+                            @Override
+                            public void error(int errorCode) {
+                                // error while creating recipe on server
+                                btnUploadHandler.setState(ProgressButtonHandler.State.DEFAULT);
+                                Log.i(TAG, "Error while creating recipe on server! Error code: " + errorCode);
+                                ToastMaker.make("Oops! Something went wrong", ToastMaker.Type.ERROR, UploadActivity.this);
+                            }});
             }
         });
 
@@ -184,6 +249,7 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int duration,
                                           boolean fromUser) {
+                cookingTime = duration;
                 int hrs = duration / 60;
                 int min = (duration % 60);
                 String minutes = String.format("%02d", min);
@@ -208,7 +274,7 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int duration,
                                           boolean fromUser) {
-                // TODO Auto-generated method stub
+                prepTime = duration;
                 int hrs = duration / 60;
                 int min = (duration % 60);
                 total_hrs = hrs;
@@ -237,14 +303,8 @@ public class UploadActivity extends AppCompatActivity {
                 ((ImageView) findViewById(R.id.icCookbookSuccessIcon)));
     }
 
-    private void makeToast(String s){
-        if(t!=null) t.cancel();
-        t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG);
-        t.show();
-    }
-
     public void addItem(String item){
-        items.add(item);
+        ingredients.add(item);
         listView.setAdapter(adapter);
     }
 
@@ -254,7 +314,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     public void removeItem(int i){
-        items.remove(i);
+        ingredients.remove(i);
         adapter.notifyDataSetChanged();
     }
 
@@ -304,6 +364,4 @@ public class UploadActivity extends AppCompatActivity {
             }
         }
     }
-
-
 }
