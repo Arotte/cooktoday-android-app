@@ -43,6 +43,14 @@
                     android:outlineProvider="none"
                     android:layout_width="match_parent" >
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add New Recipe"
+                        android:fontFamily="@font/inter_medium"
+                        android:textColor="@color/textMain"
+                        android:textSize="19sp"/>
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnCancelUpload"
                         android:outlineProvider="none"
@@ -50,6 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/transparent"
+                        android:layout_gravity="right"
                         android:fontFamily="@font/interr"
                         android:outlineAmbientShadowColor="@color/transparent"
                         android:outlineSpotShadowColor="@color/transparent"
@@ -61,61 +70,413 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:rippleColor="@color/red" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:layout_gravity="right"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-
-                            android:fontFamily="@font/interr"
-                            android:text="1/"
-                            android:textColor="@color/textMain"
-                            android:textSize="17sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/textView12"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textView12"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/interr"
-                            android:text="2"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="17sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </LinearLayout>
-
-
-
                 </androidx.appcompat.widget.Toolbar>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:requiresFadingEdge="vertical"
+            android:fadingEdgeLength="10dp"
+            android:overScrollMode="never"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <FrameLayout
-                android:id="@+id/uploadStepsFragmentContainer"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="56dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingTop="50dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp">
+                <RelativeLayout
+                    android:id="@+id/uploadImageArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_edge"
+                    android:orientation="vertical">
 
+                    <ImageView
+                        android:id="@+id/imageViewIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="20dp"
+                        android:paddingTop="10dp"
+                        android:src="@drawable/ic_image_2"
+                        app:tint="@color/textSecondary" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="7dp"
+                        android:fontFamily="@font/inter_bold"
+                        android:paddingTop="100dp"
+                        android:text="Add Cover Photo"
+                        android:textAlignment="center"
+                        android:textColor="@color/textMain"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/interr"
+                        android:paddingTop="120dp"
+                        android:text="(up to 10 Mb)"
+                        android:textAlignment="center"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/imageViewUpload"
+                        android:layout_width="fill_parent"
+                        android:layout_height="160dp"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true" />
+                </RelativeLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Name"
+                    android:textColor="@color/textMain"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/custom_input"
+                    android:drawablePadding="12dp"
+                    android:ems="10"
+                    android:fontFamily="@font/interr"
+                    android:hint="Name of your dish"
+                    android:inputType="textPersonName"
+                    android:paddingStart="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="12dp"
+                    android:textColor="@color/textMain"
+                    android:textColorHint="@color/textSecondary"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Description"
+                    android:textColor="@color/textMain"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/editTextTextMultiLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/custom_input"
+                    android:drawablePadding="12dp"
+                    android:ems="10"
+                    android:fontFamily="@font/interr"
+                    android:gravity="start|top"
+                    android:hint="Describe your dish in a few sentences"
+                    android:inputType="textMultiLine"
+                    android:lines="5"
+                    android:paddingStart="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="12dp"
+                    android:textColor="@color/textMain"
+                    android:textColorHint="@color/textSecondary"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/interr"
+                        android:text="Prep Time"
+                        android:textColor="@color/textMain"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/PreparationTime"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/interr"
+                        android:gravity="end"
+                        android:text="0h 00m"
+                        android:textColor="@color/textMain"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <SeekBar
+                    android:id="@+id/sbPreparation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:max="20"
+                    android:progressDrawable="@drawable/custom_seekbar"
+                    android:thumb="@drawable/custom_seekbar_thumb"
+                    android:tickMarkTint="@color/textSecondary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/interr"
+                        android:text="Cooking Time"
+                        android:textColor="@color/textMain"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/DurationTime"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/interr"
+                        android:gravity="end"
+                        android:text="0h 00m"
+                        android:textColor="@color/textMain"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <SeekBar
+                    android:id="@+id/sbCookingDuration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:max="20"
+                    android:progressDrawable="@drawable/custom_seekbar"
+                    android:thumb="@drawable/custom_seekbar_thumb"
+                    android:tickMarkTint="@color/textSecondary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/interr"
+                        android:text="Total Time"
+                        android:textColor="@color/textMain"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/TotalTime"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/interr"
+                        android:gravity="end"
+                        android:paddingLeft="155dp"
+                        android:text="0h 00m"
+                        android:textColor="@color/textMain"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Ingredients"
+                    android:textColor="@color/textMain"
+                    android:textSize="16sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp">
+
+                    <EditText
+                        android:id="@+id/input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/custom_input_top"
+                        android:drawablePadding="12dp"
+                        android:ems="10"
+                        android:fontFamily="@font/interr"
+                        android:hint="Enter an ingredient"
+                        android:inputType="textPersonName"
+                        android:paddingStart="12dp"
+                        android:paddingTop="12dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="12dp"
+                        android:textColor="@color/textMain"
+                        android:textColorHint="@color/textSecondary"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/ic_add" />
+                </RelativeLayout>
+
+                <ListView
+                    android:id="@+id/listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@drawable/custom_input_bottom">
+                </ListView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="Steps"
+                    android:fontFamily="@font/inter_medium"
+                    android:textColor="@color/textMain"
+                    android:textSize="16sp" />
+
+                <RelativeLayout
+                    android:layout_marginTop="7dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ingr"
+                    android:background="@drawable/custom_input">
+
+                    <EditText
+                        android:id="@+id/input_step"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="0dp"
+                        android:background="@drawable/custom_input_top"
+                        android:ems="10"
+                        android:fontFamily="@font/interr"
+                        android:gravity="start|top"
+                        android:hint="Enter an instruction"
+                        android:inputType="textMultiLine"
+                        android:lines="5"
+                        android:paddingStart="12dp"
+                        android:paddingTop="12dp"
+                        android:paddingEnd="25dp"
+                        android:paddingBottom="12dp"
+                        android:textColor="@color/textMain"
+                        android:textColorHint="@color/textSecondary"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/add_step"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/ic_add" />
+                </RelativeLayout>
+
+                <ListView
+                    android:id="@+id/listViewSteps"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@drawable/custom_input_bottom"/>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_mycookbook_upload"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="20dp"
+                        android:backgroundTint="@color/primaryGreen"
+                        android:checkable="false"
+                        android:elegantTextHeight="false"
+                        android:fontFamily="@font/interr"
+                        android:hapticFeedbackEnabled="true"
+                        android:stateListAnimator="@null"
+                        android:text="Upload Recipe"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="30dp"
+                        app:rippleColor="@color/black" />
+
+                    <ProgressBar
+                        android:id="@+id/pbCookbook"
+                        android:indeterminate="true"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingEnd="5dp"
+                        android:indeterminateTint="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_alignTop="@id/btn_mycookbook_upload"
+                        android:layout_alignEnd="@id/btn_mycookbook_upload"
+                        android:layout_alignBottom="@id/btn_mycookbook_upload"/>
+
+                    <ImageView
+                        android:id="@+id/icCookbookDefaultIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_upload"
+                        android:layout_gravity="end"
+                        android:layout_alignTop="@id/btn_mycookbook_upload"
+                        android:layout_alignEnd="@id/btn_mycookbook_upload"
+                        android:layout_alignBottom="@id/btn_mycookbook_upload"
+                        app:tint="@color/white"
+                        android:layout_marginEnd="20dp"/>
+
+                    <ImageView
+                        android:id="@+id/icCookbookSuccessIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/btn_mycookbook_upload"
+                        android:layout_alignEnd="@id/btn_mycookbook_upload"
+                        android:layout_alignBottom="@id/btn_mycookbook_upload"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="20dp"
+                        android:src="@drawable/ic_done_simple"
+                        app:tint="@color/white" />
+                </RelativeLayout>
+
+            </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
