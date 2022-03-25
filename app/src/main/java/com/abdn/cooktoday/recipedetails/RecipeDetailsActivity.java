@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.cooking_session.CookingSessionActivity;
+import timer.TimerActivity;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.recipedetails.rvadapters.IngredientItemRVAdapter;
@@ -71,6 +72,12 @@ public class RecipeDetailsActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(RecipeDetailsActivity.this, CookingSessionActivity.class));
+            }
+        });
+        ((Button) findViewById(R.id.btntimer)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RecipeDetailsActivity.this, TimerActivity.class));
             }
         });
     }

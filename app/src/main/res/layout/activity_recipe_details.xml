@@ -386,6 +386,21 @@
         android:backgroundTint="@color/primaryGreen"
         android:stateListAnimator="@null" />
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btntimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/nSVRecipeDetail"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="150dp"
+        app:tint="@color/white"
+        app:icon="@drawable/ic_play"
+        android:text="Timer"
+        android:textColor="@color/white"
+        app:iconTint="@color/white"
+        android:backgroundTint="@color/red"
+        android:stateListAnimator="@null" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btnRecipeDetailsSave"
