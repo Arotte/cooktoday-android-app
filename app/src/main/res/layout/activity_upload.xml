@@ -16,10 +16,10 @@
             android:fitsSystemWindows="true"
             android:padding="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/transparent"
             android:outlineAmbientShadowColor="@color/transparent"
             android:outlineSpotShadowColor="@color/transparent"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:background="@drawable/topbar_background">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
@@ -79,8 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
-            android:requiresFadingEdge="vertical"
-            android:fadingEdgeLength="10dp"
             android:overScrollMode="never"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
