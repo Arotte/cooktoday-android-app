@@ -7,6 +7,7 @@ public class Ingredient implements Serializable {
     // fields
     private String name;
     private String quantity;
+    private boolean userHasIngred;
 
     // ============================================================
     // constructors
@@ -14,6 +15,7 @@ public class Ingredient implements Serializable {
     public Ingredient(String name, String quantity) {
         this.name = name;
         this.quantity = quantity;
+        this.userHasIngred = false;
     }
 
     // ============================================================

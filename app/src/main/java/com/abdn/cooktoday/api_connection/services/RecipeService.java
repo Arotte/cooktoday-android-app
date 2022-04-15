@@ -18,7 +18,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface RecipeService {
-    @GET("recipe/{id}")
+    @GET("recipe/id={id}")
     Call<RecipeJSON__Outer> getRecipeById(
             @Header("Cookie") String userSessId,
             @Path("id") String id);

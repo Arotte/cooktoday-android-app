@@ -1,6 +1,9 @@
 package com.abdn.cooktoday.local_data;
 
+import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.local_data.model.User;
+
+import java.util.List;
 
 public class LoggedInUser {
     private static LoggedInUser instance;
@@ -24,6 +27,7 @@ public class LoggedInUser {
     private String sessionID;
     private String role;
     private String email;
+    private List<Recipe> savedRecipes;
 
     public void setUser(User user) {
         fistName = user.getFirstName();
@@ -33,6 +37,10 @@ public class LoggedInUser {
         serverID = user.getServerId();
         sessionID = user.getSessionId();
     }
+
+    public void setSavedRecipes(List<Recipe> recipes) { this.savedRecipes = recipes; }
+    public Recipe getSavedRecipe(int idx) { return this.savedRecipes.get(idx); }
+    public List<Recipe> getSavedRecipes() { return this.savedRecipes; }
 
     public String getFistName() {
         return fistName;
