@@ -1,8 +1,6 @@
 package com.abdn.cooktoday.api_connection.services;
 
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeJSON;
-import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreatedInstructionJson;
-import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.SavedRecipesJson;
 

@@ -1,6 +1,7 @@
 package com.abdn.cooktoday.api_connection;
 
 import com.abdn.cooktoday.api_connection.services.ExtractedRecipeService;
+import com.abdn.cooktoday.api_connection.services.FeedService;
 import com.abdn.cooktoday.api_connection.services.RecipeService;
 import com.abdn.cooktoday.api_connection.services.SearchService;
 import com.abdn.cooktoday.api_connection.services.UserService;
@@ -22,6 +23,7 @@ public final class APIRepository {
     private final ExtractedRecipeService extractedRecipeService;
     private final SearchService searchService;
     private final RecipeService recipeService;
+    private final FeedService feedService;
 
     public static APIRepository getInstance() {
         if (instance == null) {
@@ -45,6 +47,7 @@ public final class APIRepository {
         extractedRecipeService = retrofit.create(ExtractedRecipeService.class);
         searchService = retrofit.create(SearchService.class);
         recipeService = retrofit.create(RecipeService.class);
+        feedService = retrofit.create(FeedService.class);
     }
 
     public UserService getUserService() {
@@ -59,4 +62,5 @@ public final class APIRepository {
     public RecipeService getRecipeService() {
         return recipeService;
     }
+    public FeedService getFeedService() { return feedService; }
 }

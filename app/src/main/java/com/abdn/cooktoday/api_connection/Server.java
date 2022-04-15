@@ -6,6 +6,7 @@ import com.abdn.cooktoday.api_connection.jsonmodels.UserPrefsJsonModel;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeStepJSON;
+import com.abdn.cooktoday.api_connection.jsonmodels.feed.RecommendedRecipesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreatedInstructionJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.InstructionJSON;
@@ -70,6 +71,52 @@ public class Server {
     public interface SaveRecipeResult {
         void success(Recipe recipe);
         void error(int errorCode);
+    }
+
+    public interface GetRecommendedRecipesResult {
+        void success(List<Recipe> recommendedRecipes);
+        void error(int errorCode);
+    }
+
+    /*
+    =============================================
+    GET RECOMMENDED RECIPES
+    ============================================= */
+    public static void getRecommendedRecipes(String userSessId, GetRecommendedRecipesResult resultCallback) {
+        Executor regExec = new Executor() {
+            @Override
+            public void execute(Runnable runnable) {
+                runnable.run();
+            }
+        };
+
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getFeedService()
+                    .getRecommendedRecipes(userSessId)
+                    .enqueue(new Callback<RecommendedRecipesJson>() {
+                        @Override
+                        public void onResponse(Call<RecommendedRecipesJson> call, Response<RecommendedRecipesJson> r) {
+                            if (r.code() == 200) {
+                                Log.i(TAG, "Successfully retrieved recommended recipes!");
+                                List<Recipe> recommendedRecipes = new ArrayList<>();
+                                for (RecipeJSON recipeJson : r.body().getRecommendedRecipes())
+                                    recommendedRecipes.add(new Recipe(recipeJson));
+                                resultCallback.success(recommendedRecipes);
+                            } else {
+                                resultCallback.error(r.code());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<RecommendedRecipesJson> call, Throwable t) {
+                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            resultCallback.error(-1);
+                        }
+                    });
+            }
+        });
     }
 
     /*
