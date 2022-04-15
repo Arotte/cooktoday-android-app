@@ -2,6 +2,7 @@ package com.abdn.cooktoday.api_connection;
 
 import android.util.Log;
 
+import com.abdn.cooktoday.api_connection.jsonmodels.UserPrefsJsonModel;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeStepJSON;
@@ -14,6 +15,7 @@ import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchJS
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchResultItemJSON;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.Recipe;
+import com.abdn.cooktoday.local_data.model.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,6 +30,11 @@ import retrofit2.Response;
 
 public class Server {
     private static final String TAG = "CookTodayServer";
+
+    /*
+    =============================================
+    RESULT CALLBACKS
+    ============================================= */
 
     public interface RecipeExtractionResult {
         void success(Recipe recipe);
@@ -49,6 +56,69 @@ public class Server {
         void error(int errorCode);
     }
 
+    public interface SaveUserPrefResult {
+        void success(UserPrefsJsonModel savedUserPrefs);
+        void error(int errorCode);
+    }
+
+    /*
+    =============================================
+    SAVE USER PREFERENCES
+    ============================================= */
+    public static void saveUserPrefs(
+            String userSessId,
+            List<String> dislikedIngreds,
+            List<String> cuisines,
+            List<String> allergies,
+            List<String> diet,
+            String cookingSkill,
+            SaveUserPrefResult resultCallback) {
+
+        UserPrefsJsonModel userPrefsJson = new UserPrefsJsonModel(
+                dislikedIngreds,
+                cuisines,
+                allergies,
+                diet,
+                cookingSkill
+        );
+
+        Executor regExec = new Executor() {
+            @Override
+            public void execute(Runnable runnable) {
+                runnable.run();
+            }
+        };
+
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getUserService()
+                    .saveUserPrefs(userSessId, userPrefsJson)
+                    .enqueue(new Callback<UserPrefsJsonModel>() {
+                        @Override
+                        public void onResponse(Call<UserPrefsJsonModel> call, Response<UserPrefsJsonModel> r) {
+                            if (r.code() == 200) {
+                                Log.i(TAG, "User preferences saved!");
+                                resultCallback.success(r.body());
+                            } else {
+                                resultCallback.error(r.code());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<UserPrefsJsonModel> call, Throwable t) {
+                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            resultCallback.error(-1);
+                        }
+                    });
+            }
+        });
+    }
+
+    /*
+    =============================================
+    CREATE NEW RECIPE
+    ============================================= */
     public static void createRecipe(String userSessId, String userId, Recipe recipe, CreateRecipeResult resultCallback) {
         ArrayList<CreatedInstructionJson> instructionsJson = new ArrayList<>();
         for (String instruction : recipe.getStepDescriptions())
@@ -90,6 +160,10 @@ public class Server {
         });
     }
 
+    /*
+    =============================================
+    GET RECIPE BY ID
+    ============================================= */
     public static void getRecipeById(String userSessId, String recipeId, GetRecipeResult resultCallback) {
         Executor regExec = new Executor() {
             @Override
@@ -137,6 +211,10 @@ public class Server {
         });
     }
 
+    /*
+    =============================================
+    SEARCH RECIPES
+    ============================================= */
     public static void searchRecipes(String userSessId, String query, RecipeSearchResult resultCallback) {
         Executor regExec = new Executor() {
             @Override
@@ -169,6 +247,10 @@ public class Server {
         });
     }
 
+    /*
+    =============================================
+    EXTRACT RECIPE FROM URL
+    ============================================= */
     public static void extractRecipe(String url, RecipeExtractionResult resultCallback) {
         Executor regExec = new Executor() {
             @Override

@@ -23,6 +23,7 @@ public class SurveyFragment3Diets extends Fragment implements DietsRVAdapter.Ite
 
     DietsRVAdapter dietsRVAdapter;
 
+    List<String> diets;
     List<Integer> selected;
 
     public SurveyFragment3Diets() {
@@ -55,7 +56,7 @@ public class SurveyFragment3Diets extends Fragment implements DietsRVAdapter.Ite
 
 
     private void initAllergiesRV(View layout) {
-        List<String> diets = new ArrayList<>(Arrays.asList(
+        diets = new ArrayList<>(Arrays.asList(
                 "Vegetarian\n(no meat,\nno eggs)",
                 "Vegetarian\n(no meat,\nno dairy)",
                 "Vegetarian",
@@ -88,5 +89,12 @@ public class SurveyFragment3Diets extends Fragment implements DietsRVAdapter.Ite
                     getResources().getColor(R.color.imageOverlayGreen));
             selected.add(position);
         }
+    }
+
+    public List<String> getSelected() {
+        List<String> selectedItems = new ArrayList<>();
+        for (int selectedIdx : this.selected)
+            selectedItems.add(diets.get(selectedIdx));
+        return selectedItems;
     }
 }

@@ -1,7 +1,9 @@
 package com.abdn.cooktoday.onboarding.survey;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +21,19 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.abdn.cooktoday.MainActivity;
 import com.abdn.cooktoday.R;
+import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.api_connection.jsonmodels.UserPrefsJsonModel;
+import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.onboarding.survey.steps.SurveyFragment1Cuisines;
 import com.abdn.cooktoday.onboarding.survey.steps.SurveyFragment2Allergies;
 import com.abdn.cooktoday.onboarding.survey.steps.SurveyFragment3Diets;
 import com.abdn.cooktoday.onboarding.survey.steps.SurveyFragment4Ingreds;
 import com.abdn.cooktoday.onboarding.survey.steps.SurveyFragment5Skills;
+import com.abdn.cooktoday.utility.ToastMaker;
 import com.google.android.material.button.MaterialButton;
 
 public class SurveySlidePagerActivity extends FragmentActivity {
+    private static final String TAG = "SurveySlidePagerActivity";
 
     private static final int NUM_PAGES = 5;
     private static final int LAST_PAGE = NUM_PAGES - 1;
@@ -88,12 +95,8 @@ public class SurveySlidePagerActivity extends FragmentActivity {
                     @Override
                     public void onClick(View v) {
                         if (surveyFragment5Skills.getSelected() != SurveyFragment5Skills.CookingSkill._NONE) {
-                            Intent intent = new Intent(SurveySlidePagerActivity.this, MainActivity.class);
-                            intent.putExtra("StartedFrom", "OnBoardingSurvey");
-                            // clear Activity stack
-                            intent.addFlags(
-                                    Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
+                            // save user preferences to server
+                            postUserPreferencesToServer();
                         } else {
                             makeSelectCookingSkillToast();
                         }
@@ -196,6 +199,41 @@ public class SurveySlidePagerActivity extends FragmentActivity {
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(layout);
         toast.show();
+    }
+
+    private void postUserPreferencesToServer() {
+        Server.saveUserPrefs(
+            LoggedInUser.user().getSessionID(),
+            surveyFragment4Ingreds.getSelected(),
+            surveyFragment1Cuisines.getSelected(),
+            surveyFragment2Allergies.getSelected(),
+            surveyFragment3Diets.getSelected(),
+            surveyFragment5Skills.getSelectedStr(),
+            new Server.SaveUserPrefResult() {
+                @SuppressLint("LongLogTag")
+                @Override
+                public void success(UserPrefsJsonModel savedUserPrefs) {
+                    // user preferences successfully saved on server
+                    Log.i(TAG, "Preferences successfully saved!");
+                    ToastMaker.make("Preferences successfully saved!", ToastMaker.Type.SUCCESS, SurveySlidePagerActivity.this);
+
+                    // clear Activity stack, start MainActivity
+                    Intent intent = new Intent(SurveySlidePagerActivity.this, MainActivity.class);
+                    intent.putExtra("StartedFrom", "OnBoardingSurvey");
+                    intent.addFlags(
+                            Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+
+                @SuppressLint("LongLogTag")
+                @Override
+                public void error(int errorCode) {
+                    // error during saving of user preferences
+                    Log.i(TAG, "ERROR during user pref saving! Error Code: " + errorCode);
+                    ToastMaker.make("Oops! Something went wrong!", ToastMaker.Type.SUCCESS, SurveySlidePagerActivity.this);
+                }
+            }
+        );
     }
 
 }

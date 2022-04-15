@@ -16,10 +16,19 @@ import com.google.android.material.card.MaterialCardView;
 public class SurveyFragment5Skills extends Fragment {
 
     public enum CookingSkill {
-        BEGINNER,
-        INTERMEDIATE,
-        ADVANCED,
-        _NONE
+        BEGINNER("beginner"),
+        INTERMEDIATE("intermediate"),
+        ADVANCED("advanced"),
+        _NONE("_none");
+
+        public final String label;
+        private CookingSkill(String label) {
+            this.label = label;
+        }
+        @Override
+        public String toString() {
+            return this.label;
+        }
     }
 
     CookingSkill selected;
@@ -102,4 +111,5 @@ public class SurveyFragment5Skills extends Fragment {
     public CookingSkill getSelected() {
         return selected;
     }
+    public String getSelectedStr() { return selected.toString(); }
 }

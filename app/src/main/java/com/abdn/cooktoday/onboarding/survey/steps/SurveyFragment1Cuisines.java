@@ -80,4 +80,11 @@ public class SurveyFragment1Cuisines extends Fragment implements CuisinesRVAdapt
         rvAdapterCuisines.setClickListener(this);
         rvContainer.setAdapter(rvAdapterCuisines);
     }
+
+    public List<String> getSelected() {
+        List<String> selectedItems = new ArrayList<>();
+        for (int selectedIdx : this.selected)
+            selectedItems.add(cuisineNames.get(selectedIdx));
+        return selectedItems;
+    }
 }
