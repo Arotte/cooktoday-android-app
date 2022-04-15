@@ -1,6 +1,7 @@
 package com.abdn.cooktoday.home.rvadapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdapter.ViewHolder> {
@@ -49,8 +51,17 @@ public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdap
         holder.tvKcal.setText(calories);
         holder.tvTime.setText(time);
         holder.tvServings.setText(servings);
+
         // download and show recipe img
-        Picasso.get().load(imgUrl).into(holder.ivRecipeImg);
+        if (imgUrl.isEmpty())
+            Picasso.get().load(getURLForResource(R.drawable.img_food_placeholder)).into(holder.ivRecipeImg);
+        else
+            Picasso.get().load(imgUrl).into(holder.ivRecipeImg);
+    }
+
+    public String getURLForResource (int resourceId) {
+        //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
+        return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
     }
 
     // total number of rows
