@@ -6,19 +6,26 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.transition.Fade;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.cookbook.CookbookFragment;
 import com.abdn.cooktoday.home.HomeFragment;
+import com.abdn.cooktoday.local_data.LoggedInUser;
+import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.profile.ProfileFragment;
 import com.abdn.cooktoday.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 public class MainActivity
         extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener
     {
+        private static final String TAG = "MainActivity";
 
         private BottomNavigationView navigation;
 
@@ -46,6 +53,20 @@ public class MainActivity
         fade.excludeTarget(android.R.id.navigationBarBackground, true);
         getWindow().setEnterTransition(fade);
         getWindow().setExitTransition(fade);
+
+        // retrieve saved recipes from server
+        Server.getAllSavedRecipes(LoggedInUser.user().getSessionID(), new Server.GetSavedRecipesResult() {
+            @Override
+            public void success(List<Recipe> recipes) {
+                Log.i(TAG, "Saved recipes successfully retrieved from server!");
+                LoggedInUser.user().setSavedRecipes(recipes);
+            }
+
+            @Override
+            public void error(int errorCode) {
+                Log.i(TAG, "Error while querying saved recipes from server (code: " + errorCode + ")!");
+            }
+        });
     }
 
     private boolean loadFragment(Fragment fragment) {

@@ -38,9 +38,14 @@ public class LoggedInUser {
         sessionID = user.getSessionId();
     }
 
+    /*
+    Saved recipe related functions
+     */
     public void setSavedRecipes(List<Recipe> recipes) { this.savedRecipes = recipes; }
     public Recipe getSavedRecipe(int idx) { return this.savedRecipes.get(idx); }
     public List<Recipe> getSavedRecipes() { return this.savedRecipes; }
+    public void addSavedRecipe(Recipe newRecipe) { this.savedRecipes.add(newRecipe); }
+    public int nSavedRecipes() { return this.savedRecipes.size(); }
 
     public String getFistName() {
         return fistName;

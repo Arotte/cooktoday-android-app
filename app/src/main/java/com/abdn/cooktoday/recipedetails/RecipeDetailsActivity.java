@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.Fade;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abdn.cooktoday.R;
+import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.cooking_session.CookingSessionActivity;
+import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.recipedetails.rvadapters.IngredientItemRVAdapter;
@@ -36,6 +39,7 @@ import com.abdn.cooktoday.utility.MockServer;
 
 public class RecipeDetailsActivity extends AppCompatActivity
         implements IngredientItemRVAdapter.ItemClickListener, RecipeStepRVAdapter.ItemClickListener {
+    private static final String TAG = "RecipeDetailsActivity";
 
     Recipe recipe;
     int nIngreds; // TODO: IMPORTANT! add this to the Ingredient class!
@@ -209,13 +213,27 @@ public class RecipeDetailsActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 if (isSaved) {
-                    saveBtn.setText("Save");
-                    saveBtn.setIcon(getResources().getDrawable(R.drawable.ic_bookmark));
-                    isSaved = false;
+                    // can't "unsave" a recipe as of yet, so this
+                    // is not implemented
                 } else {
-                    saveBtn.setText("Saved");
-                    saveBtn.setIcon(getResources().getDrawable(R.drawable.ic_bookmark_bold));
-                    isSaved = true;
+                    // post save recipe request to server
+                    Server.saveRecipe(LoggedInUser.user().getSessionID(), recipe.getServerId(), new Server.SaveRecipeResult() {
+                        @Override
+                        public void success(Recipe recipe) {
+                            Log.i(TAG, "Recipe " + recipe.getServerId() + " successfully saved to user's cookbook!");
+                            ToastMaker.make("Recipe saved to Cookbook!", ToastMaker.Type.SUCCESS, RecipeDetailsActivity.this);
+                            LoggedInUser.user().addSavedRecipe(recipe);
+
+                            saveBtn.setText("Saved");
+                            saveBtn.setIcon(getResources().getDrawable(R.drawable.ic_bookmark_bold));
+                            isSaved = true;
+                        }
+
+                        @Override
+                        public void error(int errorCode) {
+                            Log.i(TAG, "Error while saving recipe " + recipe.getServerId() + " to user's cookbook!");
+                        }
+                    });
                 }
             }
         });

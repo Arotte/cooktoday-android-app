@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.cookbook.bottomsheet.UploadTypeBottomSheet;
 import com.abdn.cooktoday.cookbook.rvadapters.CookBookRVAdapter;
+import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.recipedetails.RecipeDetailsActivity;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.utility.MockServer;
@@ -23,10 +24,13 @@ import java.util.List;
 
 
 public class CookbookFragment extends Fragment
-    implements CookBookRVAdapter.ItemClickListener{
-    ExtendedFloatingActionButton btnNewRecipe;
-    CookBookRVAdapter cookbookRVAdapter;
-    UploadTypeBottomSheet bottomSheet;
+    implements CookBookRVAdapter.ItemClickListener {
+
+    private ExtendedFloatingActionButton btnNewRecipe;
+    private CookBookRVAdapter cookbookRVAdapter;
+    private UploadTypeBottomSheet bottomSheet;
+
+    private int nSavedRecipesDisplayed;
 
     public CookbookFragment() {
         // required empty public constructor
@@ -61,6 +65,7 @@ public class CookbookFragment extends Fragment
                 bottomSheet.show(getActivity().getSupportFragmentManager(), "ModalBottomSheet");
             }
         });
+
         setup(view);
         return view;
     }
@@ -76,27 +81,17 @@ public class CookbookFragment extends Fragment
     }
 
     private void setup(View layout) {
+        List<Recipe> savedRecipes = LoggedInUser.user().getSavedRecipes();
+        this.nSavedRecipesDisplayed = LoggedInUser.user().nSavedRecipes();
+
         // cookbook recipes rv
         RecyclerView cookbookRecipes = layout.findViewById(R.id.rvCookBookFragmentCookBookRecipes);
         cookbookRecipes.setNestedScrollingEnabled(false);
         cookbookRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        cookbookRVAdapter = new CookBookRVAdapter(getContext(), getCookBookRecipesFromServer());//don't know if work
+        cookbookRVAdapter = new CookBookRVAdapter(getContext(), savedRecipes);
         cookbookRVAdapter.setClickListener(this);
         cookbookRecipes.setAdapter(cookbookRVAdapter);
     }
 
-
-
-/**
- * Get a list of cookbook recipes from server
- * and convert them to List<Recipe>
- *
- * @return a list of "cookbook" recipes from the server
- */
-private List<Recipe> getCookBookRecipesFromServer() {
-    // TODO: actually get the recipes from the server
-
-    return MockServer.server().getRecipes("cookbook");
-}
 
 }
