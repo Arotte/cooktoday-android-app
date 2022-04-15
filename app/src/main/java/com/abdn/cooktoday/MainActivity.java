@@ -53,29 +53,15 @@ public class MainActivity
         fade.excludeTarget(android.R.id.navigationBarBackground, true);
         getWindow().setEnterTransition(fade);
         getWindow().setExitTransition(fade);
-
-        // retrieve saved recipes from server
-        Server.getAllSavedRecipes(LoggedInUser.user().getSessionID(), new Server.GetSavedRecipesResult() {
-            @Override
-            public void success(List<Recipe> recipes) {
-                Log.i(TAG, "Saved recipes successfully retrieved from server!");
-                LoggedInUser.user().setSavedRecipes(recipes);
-            }
-
-            @Override
-            public void error(int errorCode) {
-                Log.i(TAG, "Error while querying saved recipes from server (code: " + errorCode + ")!");
-            }
-        });
     }
 
     private boolean loadFragment(Fragment fragment) {
         //switching fragment
         if (fragment != null) {
             getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .commit();
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
             return true;
         }
         return false;

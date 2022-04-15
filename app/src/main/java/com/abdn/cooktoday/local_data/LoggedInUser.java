@@ -28,6 +28,7 @@ public class LoggedInUser {
     private String role;
     private String email;
     private List<Recipe> savedRecipes;
+    private List<Recipe> recommendedRecipes;
 
     public void setUser(User user) {
         fistName = user.getFirstName();
@@ -46,6 +47,13 @@ public class LoggedInUser {
     public List<Recipe> getSavedRecipes() { return this.savedRecipes; }
     public void addSavedRecipe(Recipe newRecipe) { this.savedRecipes.add(newRecipe); }
     public int nSavedRecipes() { return this.savedRecipes.size(); }
+
+    /*
+    Recommended recipes related functions
+     */
+    public List<Recipe> getRecommendedRecipes() { return this.recommendedRecipes; }
+    public void setRecommendedRecipes(List<Recipe> recipes) { this.recommendedRecipes = recipes; }
+
 
     public String getFistName() {
         return fistName;
