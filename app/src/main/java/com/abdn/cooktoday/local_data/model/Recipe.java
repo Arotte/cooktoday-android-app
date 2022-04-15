@@ -9,6 +9,7 @@
 
 package com.abdn.cooktoday.local_data.model;
 
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON;
 import com.abdn.cooktoday.utility.SampleRecipeImgURLs;
 
 import java.io.Serializable;
@@ -42,6 +43,8 @@ public class Recipe implements Serializable {
     // =====================================================
     // fields
 
+    private String serverId;
+
     private String name;
     private String shortDescription;
     private String longDescription;
@@ -64,7 +67,29 @@ public class Recipe implements Serializable {
     // =====================================================
     // constructors
 
+    public Recipe(RecipeJSON recipeJson) {
+        String recipeImgUrl = "";
+        if (!recipeJson.getMedia().isEmpty())
+            recipeImgUrl = recipeJson.getMedia().get(0);
+
+        this.serverId = recipeJson.getId();
+        this.name = recipeJson.getName();
+        this.shortDescription = recipeJson.getShortDesc();
+        this.longDescription = recipeJson.getLongDesc();
+        this.imgUrl = recipeImgUrl;
+        this.servings = recipeJson.getPortionsNum();
+        this.calories = recipeJson.getCalories();
+        this.prepTime = recipeJson.getPrepTime();
+        this.cookTime = recipeJson.getCookingTime();
+        this.fullCookTime = this.prepTime + this.cookTime;
+        this.stepDescriptions = recipeJson.getInstructionsStr();
+        this.nSteps = stepDescriptions.size();
+        this.ingredients = recipeJson.getIngredientsIngred();
+        this.nIngreds = ingredients.size();
+    }
+
     public Recipe() {
+        this.serverId = "";
         this.name = "Sample Recipe";
         this.shortDescription = "Short recipe description.";
         this.longDescription = "Long recipe description. Long recipe description. Long recipe description. Long recipe description. Long recipe description.";
@@ -97,6 +122,7 @@ public class Recipe implements Serializable {
     public Recipe(
             String name,
             String imgUrl) {
+        this.serverId = "";
         this.name = name;
         this.imgUrl = imgUrl;
 
@@ -117,6 +143,7 @@ public class Recipe implements Serializable {
             int servings,
             int calories,
             int fullPrepTime) {
+        this.serverId = "";
         this.name = name;
         this.imgUrl = imgUrl;
         this.servings = servings;
@@ -141,6 +168,7 @@ public class Recipe implements Serializable {
             int cookTime,
             String shortDescription,
             String longDescription) {
+        this.serverId = "";
         this.name = name;
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
@@ -164,6 +192,7 @@ public class Recipe implements Serializable {
                   int cookTime,
                   List<String> stepDescriptions,
                   List<Ingredient> ingredients) {
+        this.serverId = "";
         this.name = name;
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
@@ -240,6 +269,9 @@ public class Recipe implements Serializable {
 
     // default
 
+    public String getServerId() {
+        return serverId;
+    }
 
     public List<Ingredient> getIngredients() {
         return ingredients;

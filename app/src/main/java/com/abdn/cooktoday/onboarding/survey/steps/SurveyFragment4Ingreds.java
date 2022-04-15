@@ -22,6 +22,7 @@ public class SurveyFragment4Ingreds extends Fragment implements IngredientsRVAda
 
     IngredientsRVAdapter ingredsRVAdapter;
 
+    List<String> ingreds;
     List<Integer> selected;
 
     public SurveyFragment4Ingreds() {
@@ -54,7 +55,7 @@ public class SurveyFragment4Ingreds extends Fragment implements IngredientsRVAda
 
 
     private void initAllergiesRV(View layout) {
-        List<String> diets = new ArrayList<>(Arrays.asList(
+        ingreds = new ArrayList<>(Arrays.asList(
                 "Alcohol",
                 "Avocado",
                 "Bacon",
@@ -80,7 +81,7 @@ public class SurveyFragment4Ingreds extends Fragment implements IngredientsRVAda
         RecyclerView rvContainer = layout.findViewById(R.id.rvSurveyStep4ExcludedIngredients);
         rvContainer.setNestedScrollingEnabled(false);
         rvContainer.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        ingredsRVAdapter = new IngredientsRVAdapter(getActivity(), diets);
+        ingredsRVAdapter = new IngredientsRVAdapter(getActivity(), ingreds);
         ingredsRVAdapter.setClickListener(this);
         rvContainer.setAdapter(ingredsRVAdapter);
     }
@@ -99,5 +100,12 @@ public class SurveyFragment4Ingreds extends Fragment implements IngredientsRVAda
                     getResources().getColor(R.color.imageOverlayGreen));
             selected.add(position);
         }
+    }
+
+    public List<String> getSelected() {
+        List<String> selectedItems = new ArrayList<>();
+        for (int selectedIdx : this.selected)
+            selectedItems.add(ingreds.get(selectedIdx));
+        return selectedItems;
     }
 }

@@ -11,6 +11,7 @@
     <color name="transparent">#00000000</color>
     <!-- From Figma -->
     <color name="primaryGreen">#1FCC79</color>
+    <color name="secondaryGreen">#8B15E47F</color>
     <color name="outlineLightGray">#D0DBEA</color>
     <color name="textMain">#2E3E5C</color>
     <color name="textSecondary">#9FA5C0</color>

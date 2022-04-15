@@ -22,6 +22,7 @@ public class SurveyFragment2Allergies extends Fragment implements AllergiesRVAda
 
     AllergiesRVAdapter allergiesRVAdapter;
 
+    List<String> allergies;
     List<Integer> selected;
 
     public SurveyFragment2Allergies() {
@@ -54,7 +55,7 @@ public class SurveyFragment2Allergies extends Fragment implements AllergiesRVAda
 
 
     private void initAllergiesRV(View layout) {
-        List<String> allergies = new ArrayList<>(Arrays.asList(
+        allergies = new ArrayList<>(Arrays.asList(
                 "Egg-free",
                 "Gluten-free",
                 "Seafood-free",
@@ -89,5 +90,12 @@ public class SurveyFragment2Allergies extends Fragment implements AllergiesRVAda
                     getResources().getColor(R.color.imageOverlayGreen));
             selected.add(position);
         }
+    }
+
+    public List<String> getSelected() {
+        List<String> selectedItems = new ArrayList<>();
+        for (int selectedIdx : this.selected)
+            selectedItems.add(allergies.get(selectedIdx));
+        return selectedItems;
     }
 }

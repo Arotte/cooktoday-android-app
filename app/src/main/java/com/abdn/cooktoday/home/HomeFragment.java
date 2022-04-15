@@ -1,5 +1,6 @@
 package com.abdn.cooktoday.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,9 @@ import android.widget.EditText;
 
 import com.abdn.cooktoday.MainActivity;
 import com.abdn.cooktoday.R;
+import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.home.rvadapters.LoadingRecommendedRVAdapter;
+import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.recipedetails.RecipeDetailsActivity;
 import com.abdn.cooktoday.home.rvadapters.HotRecipesRVAdapter;
 import com.abdn.cooktoday.home.rvadapters.RecommedationCirclesRVAdapter;
@@ -27,10 +32,12 @@ import java.util.List;
 
 public class HomeFragment extends Fragment
         implements RecommendedRVAdapter.ItemClickListener, RecommedationCirclesRVAdapter.ItemClickListener, HotRecipesRVAdapter.ItemClickListener {
+    private static final String TAG = "HomeFragment";
 
-    RecommendedRVAdapter recommendedRVAdapter;
-    RecommedationCirclesRVAdapter circlesRVAdapter;
-    HotRecipesRVAdapter hotRecipesRVAdapter;
+    private RecommedationCirclesRVAdapter circlesRVAdapter;
+    private HotRecipesRVAdapter hotRecipesRVAdapter;
+    private RecommendedRVAdapter recommendedRVAdapter;
+    private RecyclerView rvRecommendedRecipes;
 
     public HomeFragment() {
         // required empty public constructor
@@ -51,11 +58,8 @@ public class HomeFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View layout = inflater.inflate(R.layout.fragment_home, container, false);
-
         setup(layout);
-
         return layout;
     }
 
@@ -96,13 +100,14 @@ public class HomeFragment extends Fragment
         circlesRVAdapter.setClickListener(this);
         recyclerView.setAdapter(circlesRVAdapter);
 
-        // recommended recipes rv
-        RecyclerView recommendedRecipes = layout.findViewById(R.id.rvHomeFragmentRecommendedRecipes);
-        recommendedRecipes.setNestedScrollingEnabled(false);
-        recommendedRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recommendedRVAdapter = new RecommendedRVAdapter(getContext(), getRecommendedRecipesFromServer());
+        rvRecommendedRecipes = layout.findViewById(R.id.rvHomeFragmentRecommendedRecipes);
+        rvRecommendedRecipes.setNestedScrollingEnabled(false);
+        rvRecommendedRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        // this line displays a loading animation of the recommended recipes cards:
+        // rvRecommendedRecipes.setAdapter(new LoadingRecommendedRVAdapter(getContext()));
+        recommendedRVAdapter = new RecommendedRVAdapter(getContext(), LoggedInUser.user().getRecommendedRecipes());
         recommendedRVAdapter.setClickListener(this);
-        recommendedRecipes.setAdapter(recommendedRVAdapter);
+        rvRecommendedRecipes.setAdapter(recommendedRVAdapter);
 
         // hot recipes rv
         RecyclerView rvHotRecipes = layout.findViewById(R.id.rvHomeFragmentHotRecipes);
@@ -119,9 +124,9 @@ public class HomeFragment extends Fragment
                 ((MainActivity) getActivity()).setSelected(R.id.bottomNavbarSearch);
                 SearchFragment nextFragment = new SearchFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, nextFragment, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
+                    .replace(R.id.fragment_container, nextFragment, "findThisFragment")
+                    .addToBackStack(null)
+                    .commit();
             }
         });
     }
@@ -137,19 +142,4 @@ public class HomeFragment extends Fragment
 
         return MockServer.server().getRecipes("hot");
     }
-
-    /**
-     * Get a list of recommended recipes from server
-     * and convert them to List<Recipe>
-     *
-     * @return a list of "recommended" recipes from the server
-     */
-    private List<Recipe> getRecommendedRecipesFromServer() {
-        // TODO: actually get the recipes from the server
-
-        return MockServer.server().getRecipes("recommend");
-    }
-
-
-
 }
