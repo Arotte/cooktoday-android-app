@@ -50,7 +50,6 @@ public class UploadActivity extends AppCompatActivity implements IngredientRVAda
     int PICK_IMAGE = 100;
     ImageView imageView;
 
-    EditText input;
     EditText etRecipeName;
     EditText etRecipeDesc;
     EditText etServings;
@@ -116,8 +115,6 @@ public class UploadActivity extends AppCompatActivity implements IngredientRVAda
         etRecipeDesc = (EditText) findViewById(R.id.etUploadRecipeDesc);
         etCalories = (EditText) findViewById(R.id.etUploadCalories);
         etServings = (EditText) findViewById(R.id.etUploadServings);
-
-        input = (EditText)findViewById(R.id.input);
 
         enter_step = (ImageView) findViewById(R.id.add_step);
         listViewSteps = (ListView)findViewById(R.id.listViewSteps);
