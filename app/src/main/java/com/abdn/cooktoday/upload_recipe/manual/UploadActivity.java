@@ -17,6 +17,7 @@ import com.abdn.cooktoday.R;
 import android.widget.EditText;
 
 import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.api_connection.jsonmodels.media.AwsUploadedFilesJson;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.NerredIngred;
@@ -39,6 +40,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +59,8 @@ public class UploadActivity extends AppCompatActivity
     EditText etCalories;
 
     ProgressButtonHandler btnUploadHandler;
+    String uploadedImageUrl;
+    File imageFile;
 
     int total_hrs = 0;
     int total_min = 0;
@@ -103,7 +107,7 @@ public class UploadActivity extends AppCompatActivity
                 etRecipeName.getText().toString(),
                 "",
                 etRecipeDesc.getText().toString(),
-                "",
+                uploadedImageUrl,
                 Integer.parseInt(etServings.getText().toString()),
                 Integer.parseInt(etCalories.getText().toString()),
                 prepTime,
@@ -145,28 +149,45 @@ public class UploadActivity extends AppCompatActivity
             public void onClick(View v) {
                 // gather recipe details entered by the user
                 btnUploadHandler.setState(ProgressButtonHandler.State.LOADING);
-                Recipe recipe = gatherRecipeDetails();
-                // make recipe creation request to the server
-                Server.createRecipe(
-                        LoggedInUser.user().getSessionID(),
-                        LoggedInUser.user().getServerID(),
-                        recipe,
-                        new Server.CreateRecipeResult() {
-                            @Override
-                            public void success(Recipe recipe) {
-                                // recipe created on server
-                                btnUploadHandler.setState(ProgressButtonHandler.State.SUCCESS);
-                                Log.i(TAG, "Recipe successfully created!");
-                                ToastMaker.make("Recipe added!", ToastMaker.Type.SUCCESS, UploadActivity.this);
-                                finish();
-                            }
-                            @Override
-                            public void error(int errorCode) {
-                                // error while creating recipe on server
-                                btnUploadHandler.setState(ProgressButtonHandler.State.DEFAULT);
-                                Log.i(TAG, "Error while creating recipe on server! Error code: " + errorCode);
-                                ToastMaker.make("Oops! Something went wrong", ToastMaker.Type.ERROR, UploadActivity.this);
-                            }});
+
+                // 1.) upload image to AWS
+                if (imageFile != null) {
+                    Server.uploadRecipeImageToAws(LoggedInUser.user().getSessionID(), imageFile, new Server.AwsRecipeImgUploadResult() {
+                        @Override
+                        public void success(AwsUploadedFilesJson files) {
+                            uploadedImageUrl = files.getFiles().get(0);
+                            Log.i(TAG, "File successfully uploaded to AWS! Link: " + uploadedImageUrl);
+
+                            // 2.) post recipe creation request to API
+                            Recipe recipe = gatherRecipeDetails();
+                            Server.createRecipe(
+                                LoggedInUser.user().getSessionID(),
+                                LoggedInUser.user().getServerID(),
+                                recipe,
+                                new Server.CreateRecipeResult() {
+                                    @Override
+                                    public void success(Recipe recipe) {
+                                        // recipe created on server
+                                        btnUploadHandler.setState(ProgressButtonHandler.State.SUCCESS);
+                                        Log.i(TAG, "Recipe successfully created!");
+                                        ToastMaker.make("Recipe added!", ToastMaker.Type.SUCCESS, UploadActivity.this);
+                                        finish();
+                                    }
+                                    @Override
+                                    public void error(int errorCode) {
+                                        // error while creating recipe on server
+                                        btnUploadHandler.setState(ProgressButtonHandler.State.DEFAULT);
+                                        Log.i(TAG, "Error while creating recipe on server! Error code: " + errorCode);
+                                        ToastMaker.make("Oops! Something went wrong", ToastMaker.Type.ERROR, UploadActivity.this);
+                                    }});
+                        }
+
+                        @Override
+                        public void error(int errorCode) {
+
+                        }
+                    });
+                }
             }
         });
 
@@ -273,6 +294,7 @@ public class UploadActivity extends AppCompatActivity
                 if (null != selectedImageUri) {
                     // update the preview image in the layout
                     imageView.setImageURI(selectedImageUri);
+                    imageFile = new File(selectedImageUri.getPath());
                     // make relative layout transparent
                     View relativeLayout = findViewById(R.id.uploadImageArea);
                     relativeLayout.setBackgroundResource(R.color.transparent);

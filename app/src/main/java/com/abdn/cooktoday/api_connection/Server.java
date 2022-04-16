@@ -8,6 +8,7 @@ import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRe
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeStepJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.feed.RecommendedRecipesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingred_ner.IngredientNerJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.media.AwsUploadedFilesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreatedInstructionJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.InstructionJSON;
@@ -21,6 +22,7 @@ import com.abdn.cooktoday.local_data.model.NerredIngred;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.local_data.model.User;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +30,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Executor;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -85,6 +90,50 @@ public class Server {
         void error(int errorCode);
     }
 
+    public interface AwsRecipeImgUploadResult {
+        void success(AwsUploadedFilesJson files);
+        void error(int errorCode);
+    }
+
+    /*
+    =============================================
+    PERFORM NER ON AN INGREDIENT STRING
+    ============================================= */
+    public static void uploadRecipeImageToAws(String userSessId, File recipeImage, AwsRecipeImgUploadResult resultCallback) {
+        MultipartBody.Part fileForUpload = MultipartBody.Part.createFormData("file", recipeImage.getName(), RequestBody.create(MediaType.parse("image/*"), recipeImage));
+
+        Executor regExec = new Executor() {
+            @Override
+            public void execute(Runnable runnable) {
+                runnable.run();
+            }
+        };
+
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getMediaService()
+                    .uploadRecipeImagesToAws(userSessId, fileForUpload)
+                    .enqueue(new Callback<AwsUploadedFilesJson>() {
+                        @Override
+                        public void onResponse(Call<AwsUploadedFilesJson> call, Response<AwsUploadedFilesJson> r) {
+                            if (r.code() == 200) {
+                                Log.i(TAG, "File(s) successfully uploaded to AWS!");
+                                resultCallback.success(r.body());
+                            } else {
+                                resultCallback.error(r.code());
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<AwsUploadedFilesJson> call, Throwable t) {
+                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            resultCallback.error(-1);
+                        }
+                    });
+            }
+        });
+    }
+
     /*
     =============================================
     PERFORM NER ON AN INGREDIENT STRING
@@ -101,24 +150,24 @@ public class Server {
             @Override
             public void run() {
                 APIRepository.getInstance().getNerService()
-                        .performNerOnIngred(userSessId, ingredStr)
-                        .enqueue(new Callback<IngredientNerJson>() {
-                            @Override
-                            public void onResponse(Call<IngredientNerJson> call, Response<IngredientNerJson> r) {
-                                if (r.code() == 200) {
-                                    Log.i(TAG, "Successfully performed NER on ingredient '" + ingredStr + "'");
-                                    resultCallback.success(new NerredIngred(r.body()));
-                                } else {
-                                    resultCallback.error(r.code());
-                                }
+                    .performNerOnIngred(userSessId, ingredStr)
+                    .enqueue(new Callback<IngredientNerJson>() {
+                        @Override
+                        public void onResponse(Call<IngredientNerJson> call, Response<IngredientNerJson> r) {
+                            if (r.code() == 200) {
+                                Log.i(TAG, "Successfully performed NER on ingredient '" + ingredStr + "'");
+                                resultCallback.success(new NerredIngred(r.body()));
+                            } else {
+                                resultCallback.error(r.code());
                             }
+                        }
 
-                            @Override
-                            public void onFailure(Call<IngredientNerJson> call, Throwable t) {
-                                Log.i(TAG, t.toString() + ", " + t.getMessage());
-                                resultCallback.error(-1);
-                            }
-                        });
+                        @Override
+                        public void onFailure(Call<IngredientNerJson> call, Throwable t) {
+                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            resultCallback.error(-1);
+                        }
+                    });
             }
         });
     }
