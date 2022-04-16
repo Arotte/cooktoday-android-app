@@ -141,10 +141,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
-                    android:fontFamily="@font/inter_medium"
                     android:text="Name"
                     android:textColor="@color/textMain"
-                    android:textSize="16sp" />
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/etUploadRecipeName"
@@ -173,14 +173,13 @@
                     android:fontFamily="@font/inter_medium"
                     android:text="Description"
                     android:textColor="@color/textMain"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/etUploadRecipeDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
-                    android:layout_marginBottom="10dp"
                     android:background="@drawable/custom_input"
                     android:drawablePadding="12dp"
                     android:ems="10"
@@ -200,16 +199,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="35dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/interr"
+                        android:fontFamily="@font/inter_medium"
                         android:text="Prep Time"
                         android:textColor="@color/textMain"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/PreparationTime"
@@ -242,10 +241,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/interr"
+                        android:fontFamily="@font/inter_medium"
                         android:text="Cooking Time"
                         android:textColor="@color/textMain"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/DurationTime"
@@ -278,10 +277,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/interr"
+                        android:fontFamily="@font/inter_medium"
                         android:text="Total Time"
                         android:textColor="@color/textMain"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/TotalTime"
@@ -299,11 +298,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/interr"
+                    android:fontFamily="@font/inter_medium"
                     android:text="Servings"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="35dp"
                     android:textColor="@color/textMain"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
                 <EditText
                     android:id="@+id/etUploadServings"
                     android:layout_width="match_parent"
@@ -327,11 +326,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/interr"
+                    android:fontFamily="@font/inter_medium"
                     android:text="Calories"
                     android:layout_marginTop="12dp"
                     android:textColor="@color/textMain"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
                 <EditText
                     android:id="@+id/etUploadCalories"
                     android:layout_width="match_parent"
@@ -351,14 +350,40 @@
                     android:textColorHint="@color/textSecondary"
                     android:textSize="15sp" />
 
-                <TextView
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:fontFamily="@font/inter_medium"
-                    android:text="Ingredients"
-                    android:textColor="@color/textMain"
-                    android:textSize="16sp" />
+                    android:layout_marginTop="35dp">
+                    <TextView
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        android:text="Ingredients"
+                        android:textColor="@color/textMain"
+                        android:textSize="18sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCreateRecipeAddIngred"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:tint="@color/white"
+                        app:icon="@drawable/ic_add"
+                        android:text="Add"
+                        android:textColor="@color/white"
+                        app:iconTint="@color/white"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/primaryGreen"
+                        app:cornerRadius="20dp"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -403,14 +428,36 @@
                     android:background="@drawable/custom_input_bottom">
                 </ListView>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:text="Steps"
-                    android:fontFamily="@font/inter_medium"
-                    android:textColor="@color/textMain"
-                    android:textSize="16sp" />
+                    android:layout_marginTop="35dp">
+                    <TextView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Steps"
+                        android:fontFamily="@font/inter_medium"
+                        android:textColor="@color/textMain"
+                        android:textSize="18sp" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCreateRecipeAddStep"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:tint="@color/white"
+                        app:icon="@drawable/ic_add"
+                        android:text="Add"
+                        android:textColor="@color/white"
+                        app:iconTint="@color/white"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/primaryGreen"
+                        app:cornerRadius="20dp"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
                     android:layout_marginTop="7dp"
