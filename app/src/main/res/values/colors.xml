@@ -11,6 +11,7 @@
     <color name="transparent">#00000000</color>
     <!-- From Figma -->
     <color name="primaryGreen">#1FCC79</color>
+    <color name="primaryGreen_tp">#801FCC79</color>
     <color name="secondaryGreen">#8B15E47F</color>
     <color name="outlineLightGray">#D0DBEA</color>
     <color name="textMain">#2E3E5C</color>
@@ -21,7 +22,9 @@
 
 <!--    Brand colors-->
     <color name="google">#FF5842</color>
+    <color name="google_tp">#80FF5842</color>
     <color name="facebook">#4267B2</color>
+    <color name="facebook_tp">#804267B2</color>
     <color name="twitter">#1DA1F2</color>
     <color name="instagram">#DD2A7B</color>
 

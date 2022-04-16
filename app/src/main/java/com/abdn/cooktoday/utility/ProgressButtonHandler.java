@@ -1,6 +1,7 @@
 package com.abdn.cooktoday.utility;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -42,5 +43,10 @@ public class ProgressButtonHandler {
             default:
                 break;
         }
+    }
+
+    public void setStateChangeTxt(State state, String newBtnLabel, Button btn) {
+        setState(state);
+        btn.setText(newBtnLabel);
     }
 }

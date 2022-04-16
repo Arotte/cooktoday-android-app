@@ -7,6 +7,7 @@ import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRe
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeStepJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.feed.RecommendedRecipesJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingred_ner.IngredientNerJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreatedInstructionJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.InstructionJSON;
@@ -16,6 +17,7 @@ import com.abdn.cooktoday.api_connection.jsonmodels.recipe.SavedRecipesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchResultItemJSON;
 import com.abdn.cooktoday.local_data.model.Ingredient;
+import com.abdn.cooktoday.local_data.model.NerredIngred;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.local_data.model.User;
 
@@ -76,6 +78,49 @@ public class Server {
     public interface GetRecommendedRecipesResult {
         void success(List<Recipe> recommendedRecipes);
         void error(int errorCode);
+    }
+
+    public interface IngredientNerResult {
+        void success(NerredIngred ingredient);
+        void error(int errorCode);
+    }
+
+    /*
+    =============================================
+    PERFORM NER ON AN INGREDIENT STRING
+    ============================================= */
+    public static void performNerOnIngred(String userSessId, String ingredStr, IngredientNerResult resultCallback) {
+        Executor regExec = new Executor() {
+            @Override
+            public void execute(Runnable runnable) {
+                runnable.run();
+            }
+        };
+
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getNerService()
+                        .performNerOnIngred(userSessId, ingredStr)
+                        .enqueue(new Callback<IngredientNerJson>() {
+                            @Override
+                            public void onResponse(Call<IngredientNerJson> call, Response<IngredientNerJson> r) {
+                                if (r.code() == 200) {
+                                    Log.i(TAG, "Successfully performed NER on ingredient '" + ingredStr + "'");
+                                    resultCallback.success(new NerredIngred(r.body()));
+                                } else {
+                                    resultCallback.error(r.code());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<IngredientNerJson> call, Throwable t) {
+                                Log.i(TAG, t.toString() + ", " + t.getMessage());
+                                resultCallback.error(-1);
+                            }
+                        });
+            }
+        });
     }
 
     /*

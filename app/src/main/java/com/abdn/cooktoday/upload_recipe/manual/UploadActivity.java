@@ -2,6 +2,8 @@ package com.abdn.cooktoday.upload_recipe.manual;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 
@@ -20,7 +22,11 @@ import android.widget.EditText;
 import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
+import com.abdn.cooktoday.local_data.model.NerredIngred;
 import com.abdn.cooktoday.local_data.model.Recipe;
+import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.AddIngredBottomSheet;
+import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.AddIngredFinishedCallback;
+import com.abdn.cooktoday.upload_recipe.manual.rvadapters.IngredientRVAdapter;
 import com.abdn.cooktoday.utility.ProgressButtonHandler;
 import com.abdn.cooktoday.utility.ToastMaker;
 import com.google.android.material.button.MaterialButton;
@@ -38,7 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // TODO: send image to server
-public class UploadActivity extends AppCompatActivity {
+public class UploadActivity extends AppCompatActivity implements IngredientRVAdapter.ItemClickListener {
     private static final String TAG = "UploadActivity";
 
     int PICK_IMAGE = 100;
@@ -49,11 +55,6 @@ public class UploadActivity extends AppCompatActivity {
     EditText etRecipeDesc;
     EditText etServings;
     EditText etCalories;
-
-    ImageView enter;
-    ListView lvIngreds;
-    ArrayList<String> ingredients;
-    ArrayAdapter<String> adapter;
 
     EditText input_step;
     ImageView enter_step;
@@ -67,18 +68,33 @@ public class UploadActivity extends AppCompatActivity {
     int cookingTime = 0;
     int prepTime = 0;
 
+    // adding new ingredients
+    RecyclerView rvIngreds;
+    IngredientRVAdapter rvAdapterIngreds;
+    MaterialButton btnAddNewIngred;
+    List<NerredIngred> ingredients;
+    AddIngredBottomSheet addIngredBottomSheet;
+    private int quantityColor;
+    private int unitColor;
+    private int nameColor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
-        initViews();
-    }
 
+        quantityColor = getResources().getColor(R.color.facebook_tp);
+        unitColor = getResources().getColor(R.color.google_tp);
+        nameColor = getResources().getColor(R.color.primaryGreen_tp);
+
+        initViews();
+        ingredAdditionSetup();
+    }
 
     private Recipe gatherRecipeDetails() {
         List<Ingredient> ingreds = new ArrayList<>();
-        for (String ingredStr : ingredients)
-            ingreds.add(new Ingredient(ingredStr, ""));
+        for (NerredIngred nerIngred : ingredients)
+            ingreds.add(new Ingredient(nerIngred.getOriginal(), nerIngred.getQuantity()));
 
         return new Recipe(
                 etRecipeName.getText().toString(),
@@ -101,11 +117,7 @@ public class UploadActivity extends AppCompatActivity {
         etCalories = (EditText) findViewById(R.id.etUploadCalories);
         etServings = (EditText) findViewById(R.id.etUploadServings);
 
-        enter = (ImageView) findViewById(R.id.add);
-        lvIngreds = (ListView)findViewById(R.id.lvCreateRecipeIngreds);
         input = (EditText)findViewById(R.id.input);
-        ingredients = new ArrayList<>();
-        adapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1, ingredients);
 
         enter_step = (ImageView) findViewById(R.id.add_step);
         listViewSteps = (ListView)findViewById(R.id.listViewSteps);
@@ -113,28 +125,9 @@ public class UploadActivity extends AppCompatActivity {
         steps = new ArrayList<>();
         adapter_steps = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1,steps);
 
-        ViewCompat.setNestedScrollingEnabled(lvIngreds, true);
         ViewCompat.setNestedScrollingEnabled(listViewSteps, true);
 
-        lvIngreds.setAdapter(adapter);
         listViewSteps.setAdapter(adapter_steps);
-
-        lvIngreds.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String name = ingredients.get(i);
-                //makeToast(name);
-            }
-        });
-
-        lvIngreds.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //makeToast("Removed: " + items.get(i));
-                removeIngredItem(i);
-                return false;
-            }
-        });
 
         listViewSteps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -150,21 +143,6 @@ public class UploadActivity extends AppCompatActivity {
                 //makeToast("Removed: " + steps.get(i));
                 removeStepItem(i);
                 return false;
-            }
-        });
-
-        enter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String text = input.getText().toString();
-                if(text == null || text.length() == 0){
-                    //makeToast("Enter an item.");
-                }else{
-                    input.setText("");
-                    addIngredItem(text);
-                    //makeToast("Added: " + text);
-                    adapter.notifyDataSetChanged();
-                }
             }
         });
 
@@ -302,20 +280,9 @@ public class UploadActivity extends AppCompatActivity {
                 ((ImageView) findViewById(R.id.icCookbookDefaultIcon)),
                 ((ImageView) findViewById(R.id.icCookbookSuccessIcon)));
     }
-
-    public void addIngredItem(String item){
-        ingredients.add(item);
-        lvIngreds.setAdapter(adapter);
-    }
-
     public void addStepItem(String item){
         steps.add(item);
         listViewSteps.setAdapter(adapter_steps);
-    }
-
-    public void removeIngredItem(int i){
-        ingredients.remove(i);
-        adapter.notifyDataSetChanged();
     }
 
     public void removeStepItem(int i){
@@ -364,4 +331,70 @@ public class UploadActivity extends AppCompatActivity {
             }
         }
     }
+
+    // =============================================================================
+    // INGREDIENT ADDITIONS
+    // =============================================================================
+
+    private void ingredAdditionSetup() {
+        // ingredients recyclerview
+        rvIngreds = (RecyclerView) findViewById(R.id.rvCreateRecipeIngreds);
+        rvIngreds.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvIngreds.setNestedScrollingEnabled(false);
+
+        ingredients = new ArrayList<>();
+        rvAdapterIngreds = new IngredientRVAdapter(this, ingredients, quantityColor, unitColor, nameColor);
+        rvAdapterIngreds.setClickListener(this);
+
+        rvIngreds.setAdapter(rvAdapterIngreds);
+
+        // bottom sheet
+        addIngredBottomSheet = new AddIngredBottomSheet(new AddIngredFinishedCallback() {
+            @Override
+            public void success(NerredIngred ingred) {
+                onAddIngredFinished(ingred);
+            }
+        }, quantityColor, unitColor, nameColor);
+
+        if (addIngredBottomSheet.isVisible())
+            addIngredBottomSheet.dismiss();
+
+        // add new ingred button
+        btnAddNewIngred = (MaterialButton) findViewById(R.id.btnCreateRecipeAddIngred);
+        btnAddNewIngred.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAddNewIngredBtnClick();
+            }
+        });
+    }
+
+    private void onAddNewIngredBtnClick() {
+        // show ingred addition bottom sheet
+        showIngredBottomSheet();
+    }
+
+    @Override
+    public void onIngredItemClick(View view, int position) {
+    }
+
+    @Override
+    public void onIngredItemLongClick(View view, int position) {
+        // delete item
+        ingredients.remove(position);
+        rvAdapterIngreds.notifyItemRemoved(position);
+    }
+
+
+    private void showIngredBottomSheet() {
+        addIngredBottomSheet.show(UploadActivity.this.getSupportFragmentManager(), "ModalBottomSheet");
+    }
+
+    private void onAddIngredFinished(NerredIngred ingred) {
+        // insert new ingredient
+        ingredients.add(ingred);
+        rvAdapterIngreds.notifyItemInserted(ingredients.size() - 1);
+    }
+
+    // =============================================================================
 }
