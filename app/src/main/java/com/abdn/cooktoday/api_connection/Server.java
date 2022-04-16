@@ -1,5 +1,7 @@
 package com.abdn.cooktoday.api_connection;
 
+import android.net.Uri;
+import android.os.FileUtils;
 import android.util.Log;
 
 import com.abdn.cooktoday.api_connection.jsonmodels.UserPrefsJsonModel;
@@ -23,6 +25,7 @@ import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.local_data.model.User;
 
 import java.io.File;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -99,39 +102,44 @@ public class Server {
     =============================================
     PERFORM NER ON AN INGREDIENT STRING
     ============================================= */
-    public static void uploadRecipeImageToAws(String userSessId, File recipeImage, AwsRecipeImgUploadResult resultCallback) {
-        MultipartBody.Part fileForUpload = MultipartBody.Part.createFormData("file", recipeImage.getName(), RequestBody.create(MediaType.parse("image/*"), recipeImage));
+    public static void uploadRecipeImageToAws(String userSessId, InputStream imgIs, String imgName, AwsRecipeImgUploadResult resultCallback) {
+        // TODO
+        resultCallback.success(new AwsUploadedFilesJson(new ArrayList<>(Arrays.asList("https://assets-cooktoday.fra1.cdn.digitaloceanspaces.com/recipes/sample_food.jpg"))));
 
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
-
-        regExec.execute(new Runnable() {
-            @Override
-            public void run() {
-                APIRepository.getInstance().getMediaService()
-                    .uploadRecipeImagesToAws(userSessId, fileForUpload)
-                    .enqueue(new Callback<AwsUploadedFilesJson>() {
-                        @Override
-                        public void onResponse(Call<AwsUploadedFilesJson> call, Response<AwsUploadedFilesJson> r) {
-                            if (r.code() == 200) {
-                                Log.i(TAG, "File(s) successfully uploaded to AWS!");
-                                resultCallback.success(r.body());
-                            } else {
-                                resultCallback.error(r.code());
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<AwsUploadedFilesJson> call, Throwable t) {
-                            Log.i(TAG, t.toString() + ", " + t.getMessage());
-                            resultCallback.error(-1);
-                        }
-                    });
-            }
-        });
+//        MultipartBody.Part fileForUpload = MultipartBody.Part.createFormData(
+//                "file", imgName,
+//                RequestBody.create(MediaType.parse("image/*"), imgIs.toString()));
+//
+//        Executor regExec = new Executor() {
+//            @Override
+//            public void execute(Runnable runnable) {
+//                runnable.run();
+//            }
+//        };
+//
+//        regExec.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                APIRepository.getInstance().getMediaService()
+//                    .uploadRecipeImagesToAws(userSessId, fileForUpload)
+//                    .enqueue(new Callback<AwsUploadedFilesJson>() {
+//                        @Override
+//                        public void onResponse(Call<AwsUploadedFilesJson> call, Response<AwsUploadedFilesJson> r) {
+//                            if (r.code() == 200) {
+//                                Log.i(TAG, "File(s) successfully uploaded to AWS!");
+//                                resultCallback.success(r.body());
+//                            } else {
+//                                resultCallback.error(r.code());
+//                            }
+//                        }
+//                        @Override
+//                        public void onFailure(Call<AwsUploadedFilesJson> call, Throwable t) {
+//                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+//                            resultCallback.error(-1);
+//                        }
+//                    });
+//            }
+//        });
     }
 
     /*
