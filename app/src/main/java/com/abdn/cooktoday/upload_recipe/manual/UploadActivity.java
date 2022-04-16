@@ -358,7 +358,7 @@ public class UploadActivity extends AppCompatActivity
         rvAdapterSteps = new StepRVAdapter(this, steps);
         rvAdapterSteps.setClickListener(this);
 
-        rvIngreds.setAdapter(rvAdapterIngreds);
+        rvSteps.setAdapter(rvAdapterSteps);
 
         // bottom sheet
         addStepBottomSheet = new AddStepBottomSheet(new OnStepAddedCallback() {
