@@ -1,7 +1,6 @@
 package com.abdn.cooktoday.upload_recipe.manual;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,8 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.abdn.cooktoday.R;
@@ -25,8 +22,11 @@ import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.NerredIngred;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.AddIngredBottomSheet;
-import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.AddIngredFinishedCallback;
+import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.OnIngredientAddedCallback;
+import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.AddStepBottomSheet;
+import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.OnStepAddedCallback;
 import com.abdn.cooktoday.upload_recipe.manual.rvadapters.IngredientRVAdapter;
+import com.abdn.cooktoday.upload_recipe.manual.rvadapters.StepRVAdapter;
 import com.abdn.cooktoday.utility.ProgressButtonHandler;
 import com.abdn.cooktoday.utility.ToastMaker;
 import com.google.android.material.button.MaterialButton;
@@ -34,7 +34,6 @@ import com.google.android.material.button.MaterialButton;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -44,7 +43,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 // TODO: send image to server
-public class UploadActivity extends AppCompatActivity implements IngredientRVAdapter.ItemClickListener {
+public class UploadActivity extends AppCompatActivity
+        implements IngredientRVAdapter.ItemClickListener, StepRVAdapter.ItemClickListener {
+
     private static final String TAG = "UploadActivity";
 
     int PICK_IMAGE = 100;
@@ -55,11 +56,6 @@ public class UploadActivity extends AppCompatActivity implements IngredientRVAda
     EditText etServings;
     EditText etCalories;
 
-    EditText input_step;
-    ImageView enter_step;
-    ListView listViewSteps;
-    ArrayList<String> steps;
-    ArrayAdapter<String> adapter_steps;
     ProgressButtonHandler btnUploadHandler;
 
     int total_hrs = 0;
@@ -77,6 +73,13 @@ public class UploadActivity extends AppCompatActivity implements IngredientRVAda
     private int unitColor;
     private int nameColor;
 
+    // adding new steps
+    RecyclerView rvSteps;
+    StepRVAdapter rvAdapterSteps;
+    MaterialButton btnAddNewStep;
+    List<String> steps;
+    AddStepBottomSheet addStepBottomSheet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +91,7 @@ public class UploadActivity extends AppCompatActivity implements IngredientRVAda
 
         initViews();
         ingredAdditionSetup();
+        stepAdditionSetup();
     }
 
     private Recipe gatherRecipeDetails() {
@@ -116,48 +120,6 @@ public class UploadActivity extends AppCompatActivity implements IngredientRVAda
         etCalories = (EditText) findViewById(R.id.etUploadCalories);
         etServings = (EditText) findViewById(R.id.etUploadServings);
 
-        enter_step = (ImageView) findViewById(R.id.add_step);
-        listViewSteps = (ListView)findViewById(R.id.listViewSteps);
-        input_step = (EditText)findViewById(R.id.input_step);
-        steps = new ArrayList<>();
-        adapter_steps = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1,steps);
-
-        ViewCompat.setNestedScrollingEnabled(listViewSteps, true);
-
-        listViewSteps.setAdapter(adapter_steps);
-
-        listViewSteps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String name = steps.get(i);
-                //makeToast(name);
-            }
-        });
-
-        listViewSteps.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //makeToast("Removed: " + steps.get(i));
-                removeStepItem(i);
-                return false;
-            }
-        });
-
-        enter_step.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String text = input_step.getText().toString();
-                if(text == null || text.length() == 0){
-                    //makeToast("Enter an item.");
-                }else{
-                    input_step.setText("");
-                    addStepItem(text);
-                    //makeToast("Added: " + text);
-                    adapter_steps.notifyDataSetChanged();
-                }
-            }
-        });
-
         Button cancel = findViewById(R.id.btnCancelUpload);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +127,6 @@ public class UploadActivity extends AppCompatActivity implements IngredientRVAda
                 finish();
             }
         });
-
 
         // set up image chooser area
         View imgUploadArea = (RelativeLayout) findViewById(R.id.uploadImageArea);
@@ -277,15 +238,6 @@ public class UploadActivity extends AppCompatActivity implements IngredientRVAda
                 ((ImageView) findViewById(R.id.icCookbookDefaultIcon)),
                 ((ImageView) findViewById(R.id.icCookbookSuccessIcon)));
     }
-    public void addStepItem(String item){
-        steps.add(item);
-        listViewSteps.setAdapter(adapter_steps);
-    }
-
-    public void removeStepItem(int i){
-        steps.remove(i);
-        adapter_steps.notifyDataSetChanged();
-    }
 
     public static void sumTime(int h1, int h2, int m1, int m2, TextView totalTime){
         int minSum = m1 + m2;
@@ -346,7 +298,7 @@ public class UploadActivity extends AppCompatActivity implements IngredientRVAda
         rvIngreds.setAdapter(rvAdapterIngreds);
 
         // bottom sheet
-        addIngredBottomSheet = new AddIngredBottomSheet(new AddIngredFinishedCallback() {
+        addIngredBottomSheet = new AddIngredBottomSheet(new OnIngredientAddedCallback() {
             @Override
             public void success(NerredIngred ingred) {
                 onAddIngredFinished(ingred);
@@ -394,4 +346,50 @@ public class UploadActivity extends AppCompatActivity implements IngredientRVAda
     }
 
     // =============================================================================
+    // STEP ADDITIONS
+    // =============================================================================
+
+    private void stepAdditionSetup() {
+        steps = new ArrayList<>();
+        rvSteps = (RecyclerView) findViewById(R.id.rvCreateRecipeSteps);
+        rvSteps.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvSteps.setNestedScrollingEnabled(false);
+
+        rvAdapterSteps = new StepRVAdapter(this, steps);
+        rvAdapterSteps.setClickListener(this);
+
+        rvIngreds.setAdapter(rvAdapterIngreds);
+
+        // bottom sheet
+        addStepBottomSheet = new AddStepBottomSheet(new OnStepAddedCallback() {
+            @Override
+            public void success(String stepDesc) {
+                // add step to recyclerview
+                steps.add(stepDesc);
+                rvAdapterSteps.notifyItemInserted(steps.size() - 1);
+            }
+        });
+
+        if (addStepBottomSheet.isVisible())
+            addStepBottomSheet.dismiss();
+
+        // add new step button
+        btnAddNewStep = (MaterialButton) findViewById(R.id.btnCreateRecipeAddStep);
+        btnAddNewStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // show step addition bottom sheet
+                addStepBottomSheet.show(UploadActivity.this.getSupportFragmentManager(), "ModalBottomSheet");
+            }
+        });
+
+    }
+
+    @Override
+    public void onStepItemClick(View view, int position) {
+    }
+
+    @Override
+    public void onStepItemLongClick(View view, int position) {
+    }
 }

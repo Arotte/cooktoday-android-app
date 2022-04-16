@@ -40,12 +40,12 @@ public class AddIngredBottomSheet extends BottomSheetDialogFragment {
 
     private boolean editAfterResult;
 
-    private AddIngredFinishedCallback callback;
+    private OnIngredientAddedCallback callback;
     private int quantityColor;
     private int unitColor;
     private int nameColor;
 
-    public AddIngredBottomSheet(AddIngredFinishedCallback cb,
+    public AddIngredBottomSheet(OnIngredientAddedCallback cb,
                                 int quantityColor,
                                 int unitColor,
                                 int nameColor) {
