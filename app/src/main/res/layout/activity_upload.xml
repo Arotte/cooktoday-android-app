@@ -422,9 +422,9 @@
                 </RelativeLayout>
 
                 <ListView
-                    android:id="@+id/listView"
+                    android:id="@+id/lvCreateRecipeIngreds"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/custom_input_bottom">
                 </ListView>
 

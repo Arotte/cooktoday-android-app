@@ -51,7 +51,7 @@ public class UploadActivity extends AppCompatActivity {
     EditText etCalories;
 
     ImageView enter;
-    ListView listView;
+    ListView lvIngreds;
     ArrayList<String> ingredients;
     ArrayAdapter<String> adapter;
 
@@ -102,7 +102,7 @@ public class UploadActivity extends AppCompatActivity {
         etServings = (EditText) findViewById(R.id.etUploadServings);
 
         enter = (ImageView) findViewById(R.id.add);
-        listView = (ListView)findViewById(R.id.listView);
+        lvIngreds = (ListView)findViewById(R.id.lvCreateRecipeIngreds);
         input = (EditText)findViewById(R.id.input);
         ingredients = new ArrayList<>();
         adapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1, ingredients);
@@ -113,17 +113,26 @@ public class UploadActivity extends AppCompatActivity {
         steps = new ArrayList<>();
         adapter_steps = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1,steps);
 
-        ViewCompat.setNestedScrollingEnabled(listView, true);
+        ViewCompat.setNestedScrollingEnabled(lvIngreds, true);
         ViewCompat.setNestedScrollingEnabled(listViewSteps, true);
 
-        listView.setAdapter(adapter);
+        lvIngreds.setAdapter(adapter);
         listViewSteps.setAdapter(adapter_steps);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvIngreds.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String name = ingredients.get(i);
                 //makeToast(name);
+            }
+        });
+
+        lvIngreds.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //makeToast("Removed: " + items.get(i));
+                removeIngredItem(i);
+                return false;
             }
         });
 
@@ -135,20 +144,11 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //makeToast("Removed: " + items.get(i));
-                removeItem(i);
-                return false;
-            }
-        });
-
         listViewSteps.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //makeToast("Removed: " + steps.get(i));
-                removeStep(i);
+                removeStepItem(i);
                 return false;
             }
         });
@@ -161,7 +161,7 @@ public class UploadActivity extends AppCompatActivity {
                     //makeToast("Enter an item.");
                 }else{
                     input.setText("");
-                    addItem(text);
+                    addIngredItem(text);
                     //makeToast("Added: " + text);
                     adapter.notifyDataSetChanged();
                 }
@@ -176,7 +176,7 @@ public class UploadActivity extends AppCompatActivity {
                     //makeToast("Enter an item.");
                 }else{
                     input_step.setText("");
-                    addStep(text);
+                    addStepItem(text);
                     //makeToast("Added: " + text);
                     adapter_steps.notifyDataSetChanged();
                 }
@@ -303,22 +303,22 @@ public class UploadActivity extends AppCompatActivity {
                 ((ImageView) findViewById(R.id.icCookbookSuccessIcon)));
     }
 
-    public void addItem(String item){
+    public void addIngredItem(String item){
         ingredients.add(item);
-        listView.setAdapter(adapter);
+        lvIngreds.setAdapter(adapter);
     }
 
-    public void addStep(String item){
+    public void addStepItem(String item){
         steps.add(item);
         listViewSteps.setAdapter(adapter_steps);
     }
 
-    public void removeItem(int i){
+    public void removeIngredItem(int i){
         ingredients.remove(i);
         adapter.notifyDataSetChanged();
     }
 
-    public void removeStep(int i){
+    public void removeStepItem(int i){
         steps.remove(i);
         adapter_steps.notifyDataSetChanged();
     }
