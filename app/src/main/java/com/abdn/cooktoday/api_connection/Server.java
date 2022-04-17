@@ -1,8 +1,8 @@
 package com.abdn.cooktoday.api_connection;
 
-import android.net.Uri;
-import android.os.FileUtils;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.abdn.cooktoday.api_connection.jsonmodels.UserPrefsJsonModel;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON;
@@ -13,7 +13,6 @@ import com.abdn.cooktoday.api_connection.jsonmodels.ingred_ner.IngredientNerJson
 import com.abdn.cooktoday.api_connection.jsonmodels.media.AwsUploadedFilesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreatedInstructionJson;
-import com.abdn.cooktoday.api_connection.jsonmodels.recipe.InstructionJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.SavedRecipesJson;
@@ -22,19 +21,24 @@ import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchRe
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.NerredIngred;
 import com.abdn.cooktoday.local_data.model.Recipe;
-import com.abdn.cooktoday.local_data.model.User;
+import com.abdn.cooktoday.utility.Util;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
-import java.io.InputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Executor;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -102,44 +106,61 @@ public class Server {
     =============================================
     PERFORM NER ON AN INGREDIENT STRING
     ============================================= */
-    public static void uploadRecipeImageToAws(String userSessId, InputStream imgIs, String imgName, AwsRecipeImgUploadResult resultCallback) {
-        // TODO
-        resultCallback.success(new AwsUploadedFilesJson(new ArrayList<>(Arrays.asList("https://assets-cooktoday.fra1.cdn.digitaloceanspaces.com/recipes/sample_food.jpg"))));
+    public static void uploadRecipeImageToAws(String userSessId, File imgFile, AwsRecipeImgUploadResult resultCallback) {
+        Executor regExec = new Executor() {
+            @Override
+            public void execute(Runnable runnable) {
+                runnable.run();
+            }
+        };
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpClient client = new OkHttpClient().newBuilder()
+                        .build();
+                MediaType mediaType = MediaType.parse("text/plain");
+                RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("media",imgFile.getName() + "_" + Util.getUniqueIdFromDate(),
+                                RequestBody.create(MediaType.parse("application/octet-stream"),
+                                        imgFile))
+                        .build();
+                Request request = new Request.Builder()
+                        .url( APIEndpoints.BASE + "media/recipe" )
+                        .method("POST", body)
+                        .addHeader("Cookie", userSessId)
+                        .build();
+                try {
+                    okhttp3.Call call = client.newCall(request);
+                    call.enqueue(new okhttp3.Callback() {
+                        @Override
+                        public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
+                            Log.i(TAG, "ERROR UPLOADING IMAGE TO AWS ====");
+                            e.printStackTrace();
+                        }
 
-//        MultipartBody.Part fileForUpload = MultipartBody.Part.createFormData(
-//                "file", imgName,
-//                RequestBody.create(MediaType.parse("image/*"), imgIs.toString()));
-//
-//        Executor regExec = new Executor() {
-//            @Override
-//            public void execute(Runnable runnable) {
-//                runnable.run();
-//            }
-//        };
-//
-//        regExec.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                APIRepository.getInstance().getMediaService()
-//                    .uploadRecipeImagesToAws(userSessId, fileForUpload)
-//                    .enqueue(new Callback<AwsUploadedFilesJson>() {
-//                        @Override
-//                        public void onResponse(Call<AwsUploadedFilesJson> call, Response<AwsUploadedFilesJson> r) {
-//                            if (r.code() == 200) {
-//                                Log.i(TAG, "File(s) successfully uploaded to AWS!");
-//                                resultCallback.success(r.body());
-//                            } else {
-//                                resultCallback.error(r.code());
-//                            }
-//                        }
-//                        @Override
-//                        public void onFailure(Call<AwsUploadedFilesJson> call, Throwable t) {
-//                            Log.i(TAG, t.toString() + ", " + t.getMessage());
-//                            resultCallback.error(-1);
-//                        }
-//                    });
-//            }
-//        });
+                        @Override
+                        public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws IOException {
+                            if (response.code() == 200) {
+                                String responsejsonstr =response.body().string();
+                                Log.i(TAG, "SUCCESS UPLOADING IMAGE TO AWS! ====== " + response.toString() + " ==== " + responsejsonstr);
+                                try {
+                                    JSONObject responseJson = new JSONObject(responsejsonstr);
+                                    JSONArray fileUrls = responseJson.getJSONArray("files");
+                                    resultCallback.success(new AwsUploadedFilesJson(fileUrls));
+                                } catch (JSONException e) {
+                                    Log.i(TAG, "aaaaaaaaaaaaaaaaaaaa");
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                Log.i(TAG, "ERROR UPLOADING IMAGE TO AWS! ====== " + response.toString());
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /*
@@ -232,7 +253,6 @@ public class Server {
                 runnable.run();
             }
         };
-
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -275,42 +295,42 @@ public class Server {
             @Override
             public void run() {
                 APIRepository.getInstance().getRecipeService()
-                        .getSavedRecipes(userSessId)
-                        .enqueue(new Callback<SavedRecipesJson>() {
-                            @Override
-                            public void onResponse(Call<SavedRecipesJson> call, Response<SavedRecipesJson> r) {
-                                if (r.code() == 200) {
-                                    Log.i(TAG, "Saved recipe IDs retrieved!");
-                                    SavedRecipesJson savedRecipeIds = r.body();
-                                    List<Recipe> savedRecipes = new ArrayList<>();
+                    .getSavedRecipes(userSessId)
+                    .enqueue(new Callback<SavedRecipesJson>() {
+                        @Override
+                        public void onResponse(Call<SavedRecipesJson> call, Response<SavedRecipesJson> r) {
+                            if (r.code() == 200) {
+                                Log.i(TAG, "Saved recipe IDs retrieved!");
+                                SavedRecipesJson savedRecipeIds = r.body();
+                                List<Recipe> savedRecipes = new ArrayList<>();
 
-                                    // get recipes by ID from server one by one
-                                    for (String savedRecipeId : savedRecipeIds.getSavedRecipes()) {
-                                        getRecipeById(userSessId, savedRecipeId, new GetRecipeResult() {
-                                            @Override
-                                            public void success(Recipe recipe) {
-                                                Log.i(TAG, "Recipe " + savedRecipeId + " successfully retrieved from server!");
-                                                savedRecipes.add(recipe);
-                                            }
-                                            @Override
-                                            public void error(int errorCode) {
-                                                Log.i(TAG, "Error retrieving recipe " + savedRecipeId + " from server (code: " + errorCode + ")!");
-                                            }
-                                        });
-                                    }
-
-                                    resultCallback.success(savedRecipes);
-                                } else {
-                                    resultCallback.error(r.code());
+                                // get recipes by ID from server one by one
+                                for (String savedRecipeId : savedRecipeIds.getSavedRecipes()) {
+                                    getRecipeById(userSessId, savedRecipeId, new GetRecipeResult() {
+                                        @Override
+                                        public void success(Recipe recipe) {
+                                            Log.i(TAG, "Recipe " + savedRecipeId + " successfully retrieved from server!");
+                                            savedRecipes.add(recipe);
+                                        }
+                                        @Override
+                                        public void error(int errorCode) {
+                                            Log.i(TAG, "Error retrieving recipe " + savedRecipeId + " from server (code: " + errorCode + ")!");
+                                        }
+                                    });
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<SavedRecipesJson> call, Throwable t) {
-                                Log.i(TAG, t.toString() + ", " + t.getMessage());
-                                resultCallback.error(-1);
+                                resultCallback.success(savedRecipes);
+                            } else {
+                                resultCallback.error(r.code());
                             }
-                        });
+                        }
+
+                        @Override
+                        public void onFailure(Call<SavedRecipesJson> call, Throwable t) {
+                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            resultCallback.error(-1);
+                        }
+                    });
             }
         });
     }

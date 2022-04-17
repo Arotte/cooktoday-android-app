@@ -42,6 +42,8 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -123,6 +125,25 @@ public class UploadActivity extends AppCompatActivity
             ingreds);
     }
 
+    private File createFileFromIs(InputStream is) {
+        File file = new File("data/data/com.abdn.cooktoday/temp.jpg");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try( OutputStream outputStream = new FileOutputStream(file) ) {
+            IOUtils.copy(is, outputStream);
+        } catch (FileNotFoundException e) {
+            // handle exception here
+        } catch (IOException e) {
+            // handle exception here
+        }
+        return file;
+    }
+
     private void initViews() {
         imageView = findViewById(R.id.imageViewUpload);
 
@@ -155,20 +176,16 @@ public class UploadActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 btnUploadHandler.setState(ProgressButtonHandler.State.LOADING);
-
                 // 1.) upload image to AWS
                 if (recipeImageFileUri != null) {
-
                     try {
                         InputStream fin = getContentResolver().openInputStream(recipeImageFileUri);
-                        String imgName = "asdasdasd";
-
-                        Server.uploadRecipeImageToAws(LoggedInUser.user().getSessionID(), fin, imgName, new Server.AwsRecipeImgUploadResult() {
+                        File imageFile = createFileFromIs(fin);
+                        Server.uploadRecipeImageToAws(LoggedInUser.user().getSessionID(), imageFile, new Server.AwsRecipeImgUploadResult() {
                             @Override
                             public void success(AwsUploadedFilesJson files) {
                                 uploadedImageUrl = files.getFiles().get(0);
                                 Log.i(TAG, "File successfully uploaded to AWS! Link: " + uploadedImageUrl);
-
                                 // 2.) post recipe creation request to API
                                 Recipe recipe = gatherRecipeDetails();
                                 Server.createRecipe(
@@ -192,7 +209,6 @@ public class UploadActivity extends AppCompatActivity
                                             ToastMaker.make("Oops! Something went wrong", ToastMaker.Type.ERROR, UploadActivity.this);
                                         }});
                             }
-
                             @Override
                             public void error(int errorCode) {
                                 btnUploadHandler.setState(ProgressButtonHandler.State.DEFAULT);

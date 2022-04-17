@@ -19,8 +19,9 @@ public class CreateRecipeJSON {
     private ArrayList<CreatedInstructionJson> instructions;
     private ArrayList<String> ingredients;
     private int calories;
+    private String cuisine;
 
-    public CreateRecipeJSON(String name, String shortDesc, int cookingTime, int prepTime, int portionsNum, String dateOfCreation, String authorId, ArrayList<String> media, ArrayList<CreatedInstructionJson> instructions, ArrayList<String> ingredients, int calories, String longDesc) {
+    public CreateRecipeJSON(String name, String shortDesc, int cookingTime, int prepTime, int portionsNum, String dateOfCreation, String authorId, ArrayList<String> media, ArrayList<CreatedInstructionJson> instructions, ArrayList<String> ingredients, int calories, String longDesc, String cuisine) {
         this.name = name;
         this.shortDesc = shortDesc;
         this.cookingTime = cookingTime;
@@ -33,6 +34,7 @@ public class CreateRecipeJSON {
         this.ingredients = ingredients;
         this.calories = calories;
         this.longDesc = longDesc;
+        this.cuisine = cuisine;
     }
     public CreateRecipeJSON(Recipe recipe, String dateOfCreation, String authorId) {
         this.dateOfCreation = dateOfCreation;
@@ -46,11 +48,17 @@ public class CreateRecipeJSON {
         this.ingredients = (ArrayList<String>) recipe.getIngredientsStr();
         this.calories = recipe.getCalories();
         this.longDesc = recipe.getLongDescription();
+        this.cuisine = "test123"; // TODO!!!!!!!
 
         this.instructions = new ArrayList<>();
         for (String stepStr : recipe.getStepDescriptions())
             this.instructions.add(new CreatedInstructionJson(stepStr, new ArrayList<String>()));
     }
+
+    public String getCuisine() {
+        return cuisine;
+    }
+
     public String getLongDesc() {
         return longDesc;
     }
