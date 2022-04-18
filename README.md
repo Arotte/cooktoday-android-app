@@ -1,3 +1,5 @@
+[![Android CI](https://github.com/UoA-Software-Engineering/Alpha-21-22-FE/actions/workflows/android.yml/badge.svg)](https://github.com/UoA-Software-Engineering/Alpha-21-22-FE/actions/workflows/android.yml)
+
 # CookToday Android Application
 
 This repository contains the source of the CookToday Android mobile application.
