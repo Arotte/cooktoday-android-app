@@ -21,32 +21,55 @@ public class OnBoardingDataRetrieval {
     /**
      * Retrieve data from server.
      *
-     * 1. Load user's saved recipes from server.
-     * 2. Load recommended recipes from server.
-     * 3. Call success callback.
+     * 1. Load users' saved recipes from server.
+     * 2. Load users' recipes (recipes created by user).
+     * 3. Load users' cooked recipes.
+     * 4. Load recommended recipes from server.
+     * 5. Call success callback.
      */
     public static void retrieve(String logTAG, RetrievalResult resultCallback) {
+        String userSessId = LoggedInUser.user().getSessionID();
+
         // 1.) retrieve saved recipes from server, and save them locally
-        Server.getAllSavedRecipes(LoggedInUser.user().getSessionID(), new Server.GetSavedRecipesResult() {
+        Server.getAllSavedRecipes(userSessId, new Server.GetSavedRecipesResult() {
             @Override
-            public void success(List<Recipe> recipes) {
+            public void success(List<Recipe> savedRecipes) {
                 Log.i(logTAG, "Saved recipes successfully retrieved from server!");
-                LoggedInUser.user().setSavedRecipes(recipes);
-
-                // 2.) retrieve recommended recipes from server, and save them
-                Server.getRecommendedRecipes(LoggedInUser.user().getSessionID(), new Server.GetRecommendedRecipesResult() {
+                LoggedInUser.user().setSavedRecipes(savedRecipes);
+                // 2.) get all recipes created by user
+                Server.getAllOwnRecipes(userSessId, new Server.ListOfRecipesCallback() {
                     @Override
-                    public void success(List<Recipe> recommendedRecipes) {
-                        Log.i(logTAG, "Successfully retrieved recommended recipes from server!");
-                        LoggedInUser.user().setRecommendedRecipes(recommendedRecipes);
-
-                        // 3.) call success result callback
-                        resultCallback.success();
+                    public void success(List<Recipe> createdRecipes) {
+                        LoggedInUser.user().setMyRecipes(createdRecipes);
+                        // 3.) get all recipes cooked by user
+                        Server.getAllCookedRecipes(userSessId, new Server.ListOfRecipesCallback() {
+                            @Override
+                            public void success(List<Recipe> cookedRecipes) {
+                                LoggedInUser.user().setCookedRecipes(cookedRecipes);
+                                // 4.) retrieve recommended recipes from server, and save them
+                                Server.getRecommendedRecipes(userSessId, new Server.GetRecommendedRecipesResult() {
+                                    @Override
+                                    public void success(List<Recipe> recommendedRecipes) {
+                                        Log.i(logTAG, "Successfully retrieved recommended recipes from server!");
+                                        LoggedInUser.user().setRecommendedRecipes(recommendedRecipes);
+                                        LoggedInUser.user().normalizeRecipes();
+                                        // 5.) call success result callback
+                                        resultCallback.success();
+                                    }
+                                    @Override
+                                    public void error(int errorCode) {
+                                        Log.i(logTAG, "Error (" + errorCode + ") while retrieving recommended recipes from server!");
+                                        resultCallback.error(2, "Getting recommended recipes from server", errorCode);
+                                    }
+                                });
+                            }
+                            @Override
+                            public void error(int errorCode) {
+                            }
+                        });
                     }
                     @Override
                     public void error(int errorCode) {
-                        Log.i(logTAG, "Error (" + errorCode + ") while retrieving recommended recipes from server!");
-                        resultCallback.error(2, "Getting recommended recipes from server", errorCode);
                     }
                 });
             }

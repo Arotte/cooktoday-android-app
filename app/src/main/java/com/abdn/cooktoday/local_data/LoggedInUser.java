@@ -3,6 +3,7 @@ package com.abdn.cooktoday.local_data;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.local_data.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoggedInUser {
@@ -29,6 +30,8 @@ public class LoggedInUser {
     private String email;
     private List<Recipe> savedRecipes;
     private List<Recipe> recommendedRecipes;
+    private List<Recipe> myRecipes;
+    private List<Recipe> cookedRecipes;
 
     public void setUser(User user) {
         fistName = user.getFirstName();
@@ -37,6 +40,62 @@ public class LoggedInUser {
         email = user.getEmail();
         serverID = user.getServerId();
         sessionID = user.getSessionId();
+    }
+
+    /**
+     *
+     */
+    public void normalizeRecipes() {
+        if (savedRecipes == null || recommendedRecipes == null || myRecipes == null || cookedRecipes == null)
+           return;
+
+        // -----------------
+
+        List<String> cookedRecipeIds = new ArrayList<>();
+        for (Recipe cookedRecipe : cookedRecipes)
+           cookedRecipeIds.add(cookedRecipe.getServerId());
+
+        for (Recipe savedRecipe : savedRecipes) {
+           // if recipe is cooked
+           String savedRecipeId = savedRecipe.getServerId();
+           if (cookedRecipeIds.contains(savedRecipeId)) {
+               savedRecipe.setCookedByUser(true);
+               removeByIdFromCooked(savedRecipeId);
+           } else
+               savedRecipe.setCookedByUser(false);
+        }
+
+        for (Recipe recommendedRecipe : recommendedRecipes)
+           recommendedRecipe.setCookedByUser(cookedRecipeIds.contains(recommendedRecipe.getServerId()));
+
+        for (Recipe myRecipe : myRecipes) {
+           myRecipe.setCookedByUser(cookedRecipeIds.contains(myRecipe.getServerId()));
+           String myRecipeId = myRecipe.getServerId();
+           if (cookedRecipeIds.contains(myRecipeId)) {
+               myRecipe.setCookedByUser(true);
+               removeByIdFromCooked(myRecipeId);
+           } else
+               myRecipe.setCookedByUser(false);
+        }
+
+        // -----------------
+
+//        List<String> myRecipeIds = new ArrayList<>();
+//        for (Recipe myRecipe : myRecipes)
+//            myRecipeIds.add(myRecipe.getServerId());
+//
+//
+    }
+
+    private void removeByIdFromCooked(String recipeId) {
+        Recipe target = null;
+        for (Recipe rec : cookedRecipes)
+            if (rec.getServerId().equals(recipeId)) {
+                target = rec;
+                break;
+            }
+        if (target != null)
+            cookedRecipes.remove(target);
     }
 
     /*
@@ -53,6 +112,15 @@ public class LoggedInUser {
      */
     public List<Recipe> getRecommendedRecipes() { return this.recommendedRecipes; }
     public void setRecommendedRecipes(List<Recipe> recipes) { this.recommendedRecipes = recipes; }
+
+
+    /*
+    Own & cooked recipes related functions
+     */
+    public void setMyRecipes(List<Recipe> recipes) { this.myRecipes = recipes; }
+    public void setCookedRecipes(List<Recipe> cookedRecipes) {
+        this.cookedRecipes = cookedRecipes;
+    }
 
 
     public String getFistName() {

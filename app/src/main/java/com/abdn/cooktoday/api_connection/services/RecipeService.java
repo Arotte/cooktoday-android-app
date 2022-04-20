@@ -1,6 +1,7 @@
 package com.abdn.cooktoday.api_connection.services;
 
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeJSON;
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe.ListOfRecipesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.SavedRecipesJson;
 
@@ -31,6 +32,16 @@ public interface RecipeService {
 
     @GET("recipe/save")
     Call<SavedRecipesJson> getSavedRecipes(
+            @Header("Cookie") String userSessId
+    );
+
+    @GET("recipe/mine")
+    Call<ListOfRecipesJson> getRecipesOfUser(
+            @Header("Cookie") String userSessId
+    );
+
+    @GET("recipe/cooked")
+    Call<ListOfRecipesJson> getRecipesCookedByUser(
             @Header("Cookie") String userSessId
     );
 

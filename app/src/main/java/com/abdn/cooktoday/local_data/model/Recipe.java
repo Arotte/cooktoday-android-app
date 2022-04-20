@@ -55,6 +55,9 @@ public class Recipe implements Serializable {
     private int prepTime;
     private int cookTime;
 
+    private boolean cookedByUser;
+    private boolean isSaved;
+
     // steps:
     private int nSteps;
     private List<String> stepDescriptions;
@@ -86,6 +89,8 @@ public class Recipe implements Serializable {
         this.nSteps = stepDescriptions.size();
         this.ingredients = recipeJson.getIngredientsIngred();
         this.nIngreds = ingredients.size();
+        this.cookedByUser = false;
+        this.isSaved = false;
     }
 
     public Recipe() {
@@ -117,6 +122,8 @@ public class Recipe implements Serializable {
             new Ingredient("Salt", "to taste")
         ));
         this.nIngreds = this.ingredients.size();
+        this.cookedByUser = false;
+        this.isSaved = false;
     }
 
     public Recipe(
@@ -135,6 +142,8 @@ public class Recipe implements Serializable {
         this.cookTime = 51;
 
         this.nSteps = 0;
+        this.cookedByUser = false;
+        this.isSaved = false;
     }
 
     public Recipe(
@@ -156,6 +165,8 @@ public class Recipe implements Serializable {
         this.longDescription = "Long recipe description. Long recipe description. Long recipe description. Long recipe description. Long recipe description.";
 
         this.nSteps = 0;
+        this.cookedByUser = false;
+        this.isSaved = false;
     }
 
     public Recipe(
@@ -180,6 +191,8 @@ public class Recipe implements Serializable {
         this.cookTime = cookTime;
 
         this.nSteps = 0;
+        this.cookedByUser = false;
+        this.isSaved = false;
     }
 
     public Recipe(String name,
@@ -206,6 +219,8 @@ public class Recipe implements Serializable {
         this.nSteps = stepDescriptions.size();
         this.ingredients = ingredients;
         this.nIngreds = ingredients.size();
+        this.cookedByUser = false;
+        this.isSaved = false;
     }
 
     // =====================================================
@@ -268,6 +283,23 @@ public class Recipe implements Serializable {
     }
 
     // default
+
+
+    public boolean isSaved() {
+        return isSaved;
+    }
+
+    public void setSaved(boolean saved) {
+        isSaved = saved;
+    }
+
+    public boolean isCookedByUser() {
+        return cookedByUser;
+    }
+
+    public void setCookedByUser(boolean cookedByUser) {
+        this.cookedByUser = cookedByUser;
+    }
 
     public String getServerId() {
         return serverId;

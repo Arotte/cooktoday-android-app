@@ -59,11 +59,9 @@ public class RecipeDetailsActivity extends AppCompatActivity
 
         // get the recipe
         this.recipe = (Recipe) getIntent().getSerializableExtra("RecipeObject");
-        isSaved = false; // TODO: get this info from server
+        this.isSaved = recipe.isSaved();
         nIngreds = 0;
         nIngredsChecked = 0;
-        // get ingreds
-        // TODO: from server
         initIngredientsView();
         initStepsView();
 
@@ -209,6 +207,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
 
     private void initSaveRecipeButton() {
         saveBtn = (MaterialButton) findViewById(R.id.btnRecipeDetailsSave);
+        updateSaveBtnView();
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,10 +222,8 @@ public class RecipeDetailsActivity extends AppCompatActivity
                             Log.i(TAG, "Recipe " + recipe.getServerId() + " successfully saved to user's cookbook!");
                             ToastMaker.make("Recipe saved to Cookbook!", ToastMaker.Type.SUCCESS, RecipeDetailsActivity.this);
                             LoggedInUser.user().addSavedRecipe(recipe);
-
-                            saveBtn.setText("Saved");
-                            saveBtn.setIcon(getResources().getDrawable(R.drawable.ic_bookmark_bold));
                             isSaved = true;
+                            updateSaveBtnView();
                         }
 
                         @Override
@@ -237,6 +234,16 @@ public class RecipeDetailsActivity extends AppCompatActivity
                 }
             }
         });
+    }
+
+    private void updateSaveBtnView() {
+        if (isSaved) {
+            saveBtn.setText("Saved");
+            saveBtn.setIcon(getResources().getDrawable(R.drawable.ic_bookmark_bold));
+        } else {
+            saveBtn.setText("Save");
+            saveBtn.setIcon(getResources().getDrawable(R.drawable.ic_bookmark));
+        }
     }
 
     private void navbarFix() {

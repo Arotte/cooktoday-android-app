@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +44,8 @@ public class CookBookRVAdapter extends RecyclerView.Adapter<CookBookRVAdapter.Vi
         String calories = recipes.get(position).getCalories() + " kcal";
         String time     = recipes.get(position).getTimePretty(Recipe.TimeType.FULL_COOKING_TIME);
         String servings = recipes.get(position).getServings() + " ppl";
+        boolean isCooked = recipes.get(position).isCookedByUser();
+        boolean isSaved  = recipes.get(position).isSaved();
 
         // set recipe name
         holder.tvRecipeName.setText(name);
@@ -50,6 +53,8 @@ public class CookBookRVAdapter extends RecyclerView.Adapter<CookBookRVAdapter.Vi
         holder.tvKcal.setText(calories);
         holder.tvTime.setText(time);
         holder.tvServings.setText(servings);
+        holder.cookedBadge.setVisibility(isCooked ? View.VISIBLE : View.GONE);
+        holder.llIsSaved.setVisibility(isSaved ? View.VISIBLE : View.GONE);
 
         // download and show recipe img
         if (imgUrl.isEmpty())
@@ -77,6 +82,8 @@ public class CookBookRVAdapter extends RecyclerView.Adapter<CookBookRVAdapter.Vi
         TextView    tvTime;
         TextView    tvServings;
         ImageView   ivRecipeImg;
+        LinearLayout cookedBadge;
+        LinearLayout llIsSaved;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -85,6 +92,8 @@ public class CookBookRVAdapter extends RecyclerView.Adapter<CookBookRVAdapter.Vi
             tvServings     = itemView.findViewById(R.id.tvRecipeCardV2Servings);
             tvTime         = itemView.findViewById(R.id.tvRecipeCardV2CookingTime);
             ivRecipeImg    = itemView.findViewById(R.id.ivRecipeCardV2RecipeImg);
+            cookedBadge    = itemView.findViewById(R.id.llCookedBadge);
+            llIsSaved      = itemView.findViewById(R.id.llSavedBadge);
             itemView.setOnClickListener(this);
         }
 

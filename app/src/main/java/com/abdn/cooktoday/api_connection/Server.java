@@ -13,6 +13,7 @@ import com.abdn.cooktoday.api_connection.jsonmodels.ingred_ner.IngredientNerJson
 import com.abdn.cooktoday.api_connection.jsonmodels.media.AwsUploadedFilesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreatedInstructionJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe.ListOfRecipesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.SavedRecipesJson;
@@ -46,6 +47,15 @@ import retrofit2.Response;
 
 public class Server {
     private static final String TAG = "CookTodayServer";
+
+    private static Executor getExec() {
+        return new Executor() {
+            @Override
+            public void execute(Runnable runnable) {
+                runnable.run();
+            }
+        };
+    }
 
     /*
     =============================================
@@ -102,17 +112,83 @@ public class Server {
         void error(int errorCode);
     }
 
+    public interface ListOfRecipesCallback {
+        void success(List<Recipe> recipes);
+        void error(int errorCode);
+    }
+    
+    
+    public static void getAllOwnRecipes(String userSessId, ListOfRecipesCallback callback) {
+        Executor regExec = getExec();
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getRecipeService()
+                    .getRecipesOfUser(userSessId)
+                    .enqueue(new Callback<ListOfRecipesJson>() {
+                        @Override
+                        public void onResponse(Call<ListOfRecipesJson> call, Response<ListOfRecipesJson> r) {
+                            if (r.code() == 200) {
+                                Log.i(TAG, "Recipes created by user successfully retrieved from server!");
+
+                                List<Recipe> recipes = new ArrayList<>();
+                                for (RecipeJSON recipeJson : r.body().getRecipes())
+                                    recipes.add(new Recipe(recipeJson));
+
+                                callback.success(recipes);
+                            } else {
+                                callback.error(r.code());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ListOfRecipesJson> call, Throwable t) {
+                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            callback.error(-1);
+                        }
+                    });
+            }
+        });
+    }
+    public static void getAllCookedRecipes(String userSessId, ListOfRecipesCallback callback) {
+        Executor regExec = getExec();
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getRecipeService()
+                    .getRecipesCookedByUser(userSessId)
+                    .enqueue(new Callback<ListOfRecipesJson>() {
+                        @Override
+                        public void onResponse(Call<ListOfRecipesJson> call, Response<ListOfRecipesJson> r) {
+                            if (r.code() == 200) {
+                                Log.i(TAG, "Recipes cooked by user successfully retrieved from server!");
+
+                                List<Recipe> recipes = new ArrayList<>();
+                                for (RecipeJSON recipeJson : r.body().getRecipes())
+                                    recipes.add(new Recipe(recipeJson));
+
+                                callback.success(recipes);
+                            } else {
+                                callback.error(r.code());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ListOfRecipesJson> call, Throwable t) {
+                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            callback.error(-1);
+                        }
+                    });
+            }
+        });
+    }
+
     /*
     =============================================
     PERFORM NER ON AN INGREDIENT STRING
     ============================================= */
     public static void uploadRecipeImageToAws(String userSessId, File imgFile, AwsRecipeImgUploadResult resultCallback) {
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -168,13 +244,7 @@ public class Server {
     PERFORM NER ON AN INGREDIENT STRING
     ============================================= */
     public static void performNerOnIngred(String userSessId, String ingredStr, IngredientNerResult resultCallback) {
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
-
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -206,13 +276,7 @@ public class Server {
     GET RECOMMENDED RECIPES
     ============================================= */
     public static void getRecommendedRecipes(String userSessId, GetRecommendedRecipesResult resultCallback) {
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
-
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -247,12 +311,7 @@ public class Server {
     SAVE A RECIPE
     ============================================= */
     public static void saveRecipe(String userSessId, String recipeId, SaveRecipeResult resultCallback) {
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -284,13 +343,7 @@ public class Server {
     GET ALL SAVED RECIPES OF USER
     ============================================= */
     public static void getAllSavedRecipes(String userSessId, GetSavedRecipesResult resultCallback) {
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
-
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -356,13 +409,7 @@ public class Server {
                 cookingSkill
         );
 
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
-
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -402,12 +449,7 @@ public class Server {
         String dateOfCreation = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());;
         CreateRecipeJSON recipeJson = new CreateRecipeJSON(recipe, dateOfCreation, userId);
 
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -439,13 +481,7 @@ public class Server {
     GET RECIPE BY ID
     ============================================= */
     public static void getRecipeById(String userSessId, String recipeId, GetRecipeResult resultCallback) {
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
-
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -475,13 +511,7 @@ public class Server {
     SEARCH RECIPES
     ============================================= */
     public static void searchRecipes(String userSessId, String query, RecipeSearchResult resultCallback) {
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
-
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -511,11 +541,7 @@ public class Server {
     EXTRACT RECIPE FROM URL
     ============================================= */
     public static void extractRecipe(String url, RecipeExtractionResult resultCallback) {
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }};
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
