@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ import com.abdn.cooktoday.cookbook.rvadapters.CookBookRVAdapter;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.recipedetails.RecipeDetailsActivity;
 import com.abdn.cooktoday.local_data.model.Recipe;
-import com.abdn.cooktoday.utility.MockServer;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.List;
@@ -25,6 +25,7 @@ import java.util.List;
 
 public class CookbookFragment extends Fragment
     implements CookBookRVAdapter.ItemClickListener {
+    private static final String TAG = "CookbookFragment";
 
     private ExtendedFloatingActionButton btnNewRecipe;
     private CookBookRVAdapter cookbookRVAdapter;
@@ -46,11 +47,14 @@ public class CookbookFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Log.i(TAG, "TEST - onCreate called");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i(TAG, "TEST - onCreateView called");
+
         View view = inflater.inflate(R.layout.fragment_cookbook, container, false);
 
         bottomSheet = new UploadTypeBottomSheet();

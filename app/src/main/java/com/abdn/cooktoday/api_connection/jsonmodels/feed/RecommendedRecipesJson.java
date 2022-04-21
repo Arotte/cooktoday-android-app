@@ -1,19 +1,19 @@
 package com.abdn.cooktoday.api_connection.jsonmodels.feed;
 
-import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON;
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJson;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class RecommendedRecipesJson {
     @SerializedName("recommended_recipes")
-    private List<RecipeJSON> recommendedRecipes;
+    private List<RecipeJson> recommendedRecipes;
 
-    public RecommendedRecipesJson(List<RecipeJSON> recommendedRecipes) {
+    public RecommendedRecipesJson(List<RecipeJson> recommendedRecipes) {
         this.recommendedRecipes = recommendedRecipes;
     }
 
-    public List<RecipeJSON> getRecommendedRecipes() {
+    public List<RecipeJson> getRecommendedRecipes() {
         return recommendedRecipes;
     }
 }

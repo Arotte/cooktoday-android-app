@@ -3,12 +3,10 @@ package com.abdn.cooktoday.local_data.model;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.abdn.cooktoday.api_connection.jsonmodels.ingred_ner.IngredientNerJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.ingred_ner.IngredientNerJson;
 
 public class NerredIngred {
 

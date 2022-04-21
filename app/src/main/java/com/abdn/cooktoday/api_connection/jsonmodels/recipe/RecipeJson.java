@@ -1,12 +1,13 @@
 package com.abdn.cooktoday.api_connection.jsonmodels.recipe;
 
-import com.abdn.cooktoday.local_data.model.Recipe;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.RecipeIngredientJson;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class CreateRecipeJSON {
+public class RecipeJson {
+    @SerializedName("_id")
+    private String id;
     private String name;
     private String shortDesc;
     private String longDesc;
@@ -16,14 +17,16 @@ public class CreateRecipeJSON {
     private String dateOfCreation;
     private String authorId;
     private ArrayList<String> media;
-    private ArrayList<CreatedInstructionJson> instructions;
-    private ArrayList<String> ingredients;
+    private ArrayList<InstructionJson> instructions;
+    private ArrayList<RecipeIngredientJson> ingredients;
     private int calories;
     private String cuisine;
 
-    public CreateRecipeJSON(String name, String shortDesc, int cookingTime, int prepTime, int portionsNum, String dateOfCreation, String authorId, ArrayList<String> media, ArrayList<CreatedInstructionJson> instructions, ArrayList<String> ingredients, int calories, String longDesc, String cuisine) {
+    public RecipeJson(String id, String name, String shortDesc, String longDesc, int cookingTime, int prepTime, int portionsNum, String dateOfCreation, String authorId, ArrayList<String> media, ArrayList<InstructionJson> instructions, ArrayList<RecipeIngredientJson> ingredients, int calories, String cuisine) {
+        this.id = id;
         this.name = name;
         this.shortDesc = shortDesc;
+        this.longDesc = longDesc;
         this.cookingTime = cookingTime;
         this.prepTime = prepTime;
         this.portionsNum = portionsNum;
@@ -33,34 +36,15 @@ public class CreateRecipeJSON {
         this.instructions = instructions;
         this.ingredients = ingredients;
         this.calories = calories;
-        this.longDesc = longDesc;
         this.cuisine = cuisine;
-    }
-    public CreateRecipeJSON(Recipe recipe, String dateOfCreation, String authorId) {
-        this.dateOfCreation = dateOfCreation;
-        this.name = recipe.getName();
-        this.shortDesc = recipe.getShortDescription();
-        this.cookingTime = recipe.getCookTime();
-        this.prepTime = recipe.getPrepTime();
-        this.portionsNum = recipe.getServings();
-        this.authorId = authorId;
-        this.media = new ArrayList<>(Arrays.asList(recipe.getImgUrl()));
-        this.ingredients = (ArrayList<String>) recipe.getIngredientsStr();
-        this.calories = recipe.getCalories();
-        this.longDesc = recipe.getLongDescription();
-        this.cuisine = "test123"; // TODO!!!!!!!
-
-        this.instructions = new ArrayList<>();
-        for (String stepStr : recipe.getStepDescriptions())
-            this.instructions.add(new CreatedInstructionJson(stepStr, new ArrayList<String>()));
-    }
-
-    public String getCuisine() {
-        return cuisine;
     }
 
     public String getLongDesc() {
         return longDesc;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -95,15 +79,28 @@ public class CreateRecipeJSON {
         return media;
     }
 
-    public ArrayList<CreatedInstructionJson> getInstructions() {
+    public ArrayList<InstructionJson> getInstructions() {
         return instructions;
     }
 
-    public ArrayList<String> getIngredients() {
+    public ArrayList<RecipeIngredientJson> getIngredients() {
         return ingredients;
     }
 
     public int getCalories() {
         return calories;
+    }
+
+    public String getCuisine() {
+        return cuisine;
+    }
+
+    public ArrayList<String> getInstructionsStr() {
+        ArrayList<String> ret = new ArrayList<>();
+        for (InstructionJson instructionJson : instructions) {
+            if (instructionJson != null)
+                ret.add(instructionJson.getText());
+        }
+        return ret;
     }
 }

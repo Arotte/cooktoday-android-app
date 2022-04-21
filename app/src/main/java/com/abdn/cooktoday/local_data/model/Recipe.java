@@ -9,12 +9,14 @@
 
 package com.abdn.cooktoday.local_data.model;
 
-import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON;
-import com.abdn.cooktoday.utility.SampleRecipeImgURLs;
+import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.RecipeIngredientJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJson;
+import com.abdn.cooktoday.local_data.LoggedInUser;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Recipe implements Serializable {
@@ -70,7 +72,7 @@ public class Recipe implements Serializable {
     // =====================================================
     // constructors
 
-    public Recipe(RecipeJSON recipeJson) {
+    public Recipe(RecipeJson recipeJson) {
         String recipeImgUrl = "";
         if (!recipeJson.getMedia().isEmpty())
             recipeImgUrl = recipeJson.getMedia().get(0);
@@ -87,112 +89,13 @@ public class Recipe implements Serializable {
         this.fullCookTime = this.prepTime + this.cookTime;
         this.stepDescriptions = recipeJson.getInstructionsStr();
         this.nSteps = stepDescriptions.size();
-        this.ingredients = recipeJson.getIngredientsIngred();
+        this.cookedByUser = false;
+        this.isSaved = false;
+
+        this.ingredients = new ArrayList<>();
+        for (RecipeIngredientJson recipeIngredientJson : recipeJson.getIngredients())
+            this.ingredients.add(new Ingredient(recipeIngredientJson));
         this.nIngreds = ingredients.size();
-        this.cookedByUser = false;
-        this.isSaved = false;
-    }
-
-    public Recipe() {
-        this.serverId = "";
-        this.name = "Sample Recipe";
-        this.shortDescription = "Short recipe description.";
-        this.longDescription = "Long recipe description. Long recipe description. Long recipe description. Long recipe description. Long recipe description.";
-        this.imgUrl = SampleRecipeImgURLs.i().get(0);
-        this.servings = 3;
-        this.calories = 476;
-        this.fullCookTime = 91;
-        this.prepTime = 22;
-        this.cookTime = 51;
-
-        this.stepDescriptions = new ArrayList<>(Arrays.asList(
-                "In a medium-size mixing bowl or large glass measuring cup, <b>whisk together</b> your dry ingredients.",
-                "Heat olive oil in a large, oven-proof non stick pan (or a well-seasoned cast iron skillet) over medium-high heat. Sear chicken thighs for 3 minutes each side, until the skin becomes golden and crisp. Leave 2 tablespoons of chicken juices in the pan for added flavour, and drain any excess.",
-                "Fry the garlic in the same pan around the chicken for 1 minute until fragrant. Add the honey, both mustards, and water to the pan, mixing well, and combine all around the chicken.",
-                "OPTIONAL: Remove from the oven after 30 minutes; add in the green beans (mixing them through the sauce), and return to the oven to bake for a further 15 minutes, or until the chicken is completely cooked through and no longer pink in the middle, and the potatoes are fork tender."
-        ));
-        this.nSteps = this.stepDescriptions.size();
-
-        this.ingredients = new ArrayList<>(Arrays.asList(
-            new Ingredient("Eggs", "2 pieces"),
-            new Ingredient("Bacon", "200g"),
-            new Ingredient("Water", "1l"),
-            new Ingredient("Weed", "10g"),
-            new Ingredient("Sliced bacon", "100g"),
-            new Ingredient("Salt", "to taste")
-        ));
-        this.nIngreds = this.ingredients.size();
-        this.cookedByUser = false;
-        this.isSaved = false;
-    }
-
-    public Recipe(
-            String name,
-            String imgUrl) {
-        this.serverId = "";
-        this.name = name;
-        this.imgUrl = imgUrl;
-
-        this.shortDescription = "Short recipe description.";
-        this.longDescription = "Long recipe description. Long recipe description. Long recipe description. Long recipe description. Long recipe description.";
-        this.servings = 2;
-        this.calories = 312;
-        this.fullCookTime = 91;
-        this.prepTime = 22;
-        this.cookTime = 51;
-
-        this.nSteps = 0;
-        this.cookedByUser = false;
-        this.isSaved = false;
-    }
-
-    public Recipe(
-            String name,
-            String imgUrl,
-            int servings,
-            int calories,
-            int fullPrepTime) {
-        this.serverId = "";
-        this.name = name;
-        this.imgUrl = imgUrl;
-        this.servings = servings;
-        this.calories = calories;
-        this.fullCookTime = fullPrepTime;
-
-        this.prepTime = 22;
-        this.cookTime = 51;
-        this.shortDescription = "Short recipe description.";
-        this.longDescription = "Long recipe description. Long recipe description. Long recipe description. Long recipe description. Long recipe description.";
-
-        this.nSteps = 0;
-        this.cookedByUser = false;
-        this.isSaved = false;
-    }
-
-    public Recipe(
-            String name,
-            String imgUrl,
-            int servings,
-            int calories,
-            int fullPrepTime,
-            int prepTime,
-            int cookTime,
-            String shortDescription,
-            String longDescription) {
-        this.serverId = "";
-        this.name = name;
-        this.shortDescription = shortDescription;
-        this.longDescription = longDescription;
-        this.imgUrl = imgUrl;
-        this.servings = servings;
-        this.calories = calories;
-        this.fullCookTime = fullPrepTime;
-        this.prepTime = prepTime;
-        this.cookTime = cookTime;
-
-        this.nSteps = 0;
-        this.cookedByUser = false;
-        this.isSaved = false;
     }
 
     public Recipe(String name,

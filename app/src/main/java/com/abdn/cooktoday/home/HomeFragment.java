@@ -1,9 +1,14 @@
 package com.abdn.cooktoday.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,8 +21,6 @@ import android.widget.EditText;
 
 import com.abdn.cooktoday.MainActivity;
 import com.abdn.cooktoday.R;
-import com.abdn.cooktoday.api_connection.Server;
-import com.abdn.cooktoday.home.rvadapters.LoadingRecommendedRVAdapter;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.recipedetails.RecipeDetailsActivity;
 import com.abdn.cooktoday.home.rvadapters.HotRecipesRVAdapter;
@@ -25,8 +28,9 @@ import com.abdn.cooktoday.home.rvadapters.RecommedationCirclesRVAdapter;
 import com.abdn.cooktoday.home.rvadapters.RecommendedRVAdapter;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.search.SearchFragment;
-import com.abdn.cooktoday.utility.MockServer;
+import com.abdn.cooktoday.utility.ToastMaker;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,6 +38,7 @@ public class HomeFragment extends Fragment
         implements RecommendedRVAdapter.ItemClickListener, RecommedationCirclesRVAdapter.ItemClickListener, HotRecipesRVAdapter.ItemClickListener {
     private static final String TAG = "HomeFragment";
 
+    private List<Recipe> recRecipes;
     private RecommedationCirclesRVAdapter circlesRVAdapter;
     private HotRecipesRVAdapter hotRecipesRVAdapter;
     private RecommendedRVAdapter recommendedRVAdapter;
@@ -53,11 +58,14 @@ public class HomeFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "TEST - onCreate called");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i(TAG, "TEST - onCreateView called");
+
         View layout = inflater.inflate(R.layout.fragment_home, container, false);
         setup(layout);
         return layout;
@@ -71,6 +79,10 @@ public class HomeFragment extends Fragment
         Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
         intent.putExtra("RecipeObject", recommendedRVAdapter.getItem(position));
         startActivity(intent);
+    }
+
+    private void reloadRecommendedRecipe(int pos) {
+        recommendedRVAdapter.notifyItemChanged(pos);
     }
 
     /*
@@ -100,12 +112,13 @@ public class HomeFragment extends Fragment
         circlesRVAdapter.setClickListener(this);
         recyclerView.setAdapter(circlesRVAdapter);
 
+        recRecipes = LoggedInUser.user().getRecommendedRecipes();
         rvRecommendedRecipes = layout.findViewById(R.id.rvHomeFragmentRecommendedRecipes);
         rvRecommendedRecipes.setNestedScrollingEnabled(false);
         rvRecommendedRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         // this line displays a loading animation of the recommended recipes cards:
         // rvRecommendedRecipes.setAdapter(new LoadingRecommendedRVAdapter(getContext()));
-        recommendedRVAdapter = new RecommendedRVAdapter(getContext(), LoggedInUser.user().getRecommendedRecipes());
+        recommendedRVAdapter = new RecommendedRVAdapter(getContext(), recRecipes);
         recommendedRVAdapter.setClickListener(this);
         rvRecommendedRecipes.setAdapter(recommendedRVAdapter);
 
@@ -140,6 +153,6 @@ public class HomeFragment extends Fragment
     private List<Recipe> getHotRecipesFromServer() {
         // TODO: actually get the recipes from the server
 
-        return MockServer.server().getRecipes("hot");
+        return new ArrayList<>();
     }
 }

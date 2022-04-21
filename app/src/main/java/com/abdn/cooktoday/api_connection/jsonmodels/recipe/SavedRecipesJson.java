@@ -3,13 +3,13 @@ package com.abdn.cooktoday.api_connection.jsonmodels.recipe;
 import java.util.List;
 
 public class SavedRecipesJson {
-    private List<String> savedRecipes;
+    private List<RecipeJson> recipes;
 
-    public SavedRecipesJson(List<String> savedRecipes) {
-        this.savedRecipes = savedRecipes;
+    public SavedRecipesJson(List<RecipeJson> recipes) {
+        this.recipes = recipes;
     }
 
-    public List<String> getSavedRecipes() {
-        return savedRecipes;
+    public List<RecipeJson> getRecipes() {
+        return recipes;
     }
 }

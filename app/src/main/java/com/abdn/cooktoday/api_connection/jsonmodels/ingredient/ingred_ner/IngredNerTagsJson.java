@@ -1,4 +1,4 @@
-package com.abdn.cooktoday.api_connection.jsonmodels.ingred_ner;
+package com.abdn.cooktoday.api_connection.jsonmodels.ingredient.ingred_ner;
 
 import com.google.gson.annotations.SerializedName;
 

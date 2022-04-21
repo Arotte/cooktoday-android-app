@@ -1,6 +1,6 @@
 package com.abdn.cooktoday.api_connection.services;
 
-import com.abdn.cooktoday.api_connection.jsonmodels.ingred_ner.IngredientNerJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.ingred_ner.IngredientNerJson;
 
 import retrofit2.Call;
 import retrofit2.http.Field;

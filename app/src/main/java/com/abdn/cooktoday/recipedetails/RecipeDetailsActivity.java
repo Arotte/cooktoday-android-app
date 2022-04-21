@@ -34,8 +34,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.abdn.cooktoday.utility.MockServer;
-
 
 public class RecipeDetailsActivity extends AppCompatActivity
         implements IngredientItemRVAdapter.ItemClickListener, RecipeStepRVAdapter.ItemClickListener {
@@ -221,6 +219,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
                         public void success(Recipe recipe) {
                             Log.i(TAG, "Recipe " + recipe.getServerId() + " successfully saved to user's cookbook!");
                             ToastMaker.make("Recipe saved to Cookbook!", ToastMaker.Type.SUCCESS, RecipeDetailsActivity.this);
+                            recipe.setSaved(true);
                             LoggedInUser.user().addSavedRecipe(recipe);
                             isSaved = true;
                             updateSaveBtnView();

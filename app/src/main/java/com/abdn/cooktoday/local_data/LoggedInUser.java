@@ -55,6 +55,14 @@ public class LoggedInUser {
         for (Recipe cookedRecipe : cookedRecipes)
            cookedRecipeIds.add(cookedRecipe.getServerId());
 
+        List<String> myRecipeIds = new ArrayList<>();
+        for (Recipe myRecipe : myRecipes)
+            myRecipeIds.add(myRecipe.getServerId());
+
+        List<String> savedRecipeIds = new ArrayList<>();
+        for (Recipe savedRecipe : savedRecipes)
+            savedRecipeIds.add(savedRecipe.getServerId());
+
         for (Recipe savedRecipe : savedRecipes) {
            // if recipe is cooked
            String savedRecipeId = savedRecipe.getServerId();
@@ -65,8 +73,10 @@ public class LoggedInUser {
                savedRecipe.setCookedByUser(false);
         }
 
-        for (Recipe recommendedRecipe : recommendedRecipes)
+        for (Recipe recommendedRecipe : recommendedRecipes) {
            recommendedRecipe.setCookedByUser(cookedRecipeIds.contains(recommendedRecipe.getServerId()));
+           recommendedRecipe.setSaved(savedRecipeIds.contains(recommendedRecipe.getServerId()));
+        }
 
         for (Recipe myRecipe : myRecipes) {
            myRecipe.setCookedByUser(cookedRecipeIds.contains(myRecipe.getServerId()));
@@ -80,11 +90,7 @@ public class LoggedInUser {
 
         // -----------------
 
-//        List<String> myRecipeIds = new ArrayList<>();
-//        for (Recipe myRecipe : myRecipes)
-//            myRecipeIds.add(myRecipe.getServerId());
-//
-//
+
     }
 
     private void removeByIdFromCooked(String recipeId) {
@@ -104,7 +110,10 @@ public class LoggedInUser {
     public void setSavedRecipes(List<Recipe> recipes) { this.savedRecipes = recipes; }
     public Recipe getSavedRecipe(int idx) { return this.savedRecipes.get(idx); }
     public List<Recipe> getSavedRecipes() { return this.savedRecipes; }
-    public void addSavedRecipe(Recipe newRecipe) { this.savedRecipes.add(newRecipe); }
+    public void addSavedRecipe(Recipe newRecipe) {
+        this.savedRecipes.add(newRecipe);
+
+    }
     public int nSavedRecipes() { return this.savedRecipes.size(); }
 
     /*
