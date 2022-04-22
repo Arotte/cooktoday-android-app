@@ -45,4 +45,10 @@ public interface RecipeService {
             @Header("Cookie") String userSessId,
             @Path("id") String recipeId
     );
+
+    @POST("recipe/cooked/{id}")
+    Call<RecipeJSON__Outer> cookRecipe(
+            @Header("Cookie") String userSessId,
+            @Path("id") String recipeId
+    );
 }

@@ -72,12 +72,13 @@ public class LoggedInUser {
 
         for (Recipe savedRecipe : savedRecipes) {
            // if recipe is cooked
-           String savedRecipeId = savedRecipe.getServerId();
-           if (cookedRecipeIds.contains(savedRecipeId)) {
-               savedRecipe.setCookedByUser(true);
-               removeByIdFromCooked(savedRecipeId);
-           } else
-               savedRecipe.setCookedByUser(false);
+            savedRecipe.setCookedByUser(cookedRecipeIds.contains(savedRecipe.getServerId()));
+//           String savedRecipeId = savedRecipe.getServerId();
+//           if (cookedRecipeIds.contains(savedRecipeId)) {
+//               savedRecipe.setCookedByUser(true);
+//               removeByIdFromCooked(savedRecipeId);
+//           } else
+//               savedRecipe.setCookedByUser(false);
         }
 
         for (Recipe recommendedRecipe : recommendedRecipes) {
@@ -98,6 +99,13 @@ public class LoggedInUser {
         // -----------------
 
 
+    }
+
+    public void addCookedRecipe(Recipe newCookedRecipe) {
+        if (cookedRecipes == null)
+            cookedRecipes = new ArrayList<>();
+        cookedRecipes.add(newCookedRecipe);
+        normalizeRecipes();
     }
 
     private void removeByIdFromCooked(String recipeId) {

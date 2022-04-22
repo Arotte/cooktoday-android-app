@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class CookBookRVAdapter extends RecyclerView.Adapter<CookBookRVAdapter.ViewHolder> {
+public class  CookBookRVAdapter extends RecyclerView.Adapter<CookBookRVAdapter.ViewHolder> {
 
     private List<Recipe> recipes;
     private LayoutInflater mInflater;

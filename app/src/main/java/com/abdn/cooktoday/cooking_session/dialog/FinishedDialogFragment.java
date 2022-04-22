@@ -1,8 +1,5 @@
 package com.abdn.cooktoday.cooking_session.dialog;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -21,29 +18,42 @@ import com.abdn.cooktoday.local_data.model.Ingredient;
 
 import java.util.List;
 
-public class IngredientsDialogFragment extends DialogFragment {
+public class FinishedDialogFragment extends DialogFragment {
     public static final String TAG = "IngredientsDialog";
 
-    private List<Ingredient> ingredients;
+    private FinishedCookingCallback callback;
 
-    public IngredientsDialogFragment(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public FinishedDialogFragment(FinishedCookingCallback callback) {
+        this.callback = callback;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.cooking_sess_dialog_ingredients_panel, container, false);
+        View view = inflater.inflate(R.layout.cooking_sess_dialog_done_panel, container, false);
         // Set transparent background and no title
         if (getDialog() != null && getDialog().getWindow() != null) {
             getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         }
 
-        RecyclerView recyclerView = view.findViewById(R.id.rvCookingSessIngreds);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        IngredientsRVAdapter adapter = new IngredientsRVAdapter(getContext(), ingredients);
-        recyclerView.setAdapter(adapter);
+        // finished button
+        view.findViewById(R.id.btnFinishedCooking).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.finished();
+                dismiss();
+            }
+        }); // end finished button
+
+        // not yet finished button
+        view.findViewById(R.id.btnNotFinishedCooking).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.notFinished();
+                dismiss();
+            }
+        }); // end not yet finished button
 
         return view;
     }

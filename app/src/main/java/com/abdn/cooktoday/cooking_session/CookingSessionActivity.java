@@ -16,8 +16,16 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.abdn.cooktoday.R;
+import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.api_connection.ServerCallbacks;
+import com.abdn.cooktoday.cooking_session.dialog.FinishedCookingCallback;
+import com.abdn.cooktoday.cooking_session.dialog.FinishedDialogFragment;
 import com.abdn.cooktoday.cooking_session.dialog.IngredientsDialogFragment;
 import com.abdn.cooktoday.cooking_session.rvadapters.RecipeStepRVAdapter;
+import com.abdn.cooktoday.local_data.LoggedInUser;
+import com.abdn.cooktoday.local_data.model.Ingredient;
+import com.abdn.cooktoday.local_data.model.Recipe;
+import com.abdn.cooktoday.utility.ToastMaker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -37,13 +45,16 @@ public class CookingSessionActivity extends AppCompatActivity implements RecipeS
     TextView tvRecipeStep;
     TextView tvCurrentStep;
 
+    private Recipe recipe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cooking_session_v1);
 
+        recipe = (Recipe) getIntent().getSerializableExtra("RecipeObject");
+
         // init recipe steps
-        // TODO: GET THEM FROM PREVIOUS ACTIVITY
         initRecipeStepTexts();
         List<String> stepTypes = new ArrayList<>(Arrays.asList("Cooking", "Prep", "Prep", "OPTIONAL"));
 
@@ -94,10 +105,11 @@ public class CookingSessionActivity extends AppCompatActivity implements RecipeS
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.navbarCookingSessDone:
-                Log.i("CookingSessionActivity", "Marking Step " + activeStepPos + " as done.");
-                stepRVAdapter.markItemAsDone(activeStepPos, activeStepView);
+                handleDone();
                 return true;
             case R.id.navbarCookingSessNext:
+                Log.i("CookingSessionActivity", "Marking Step " + activeStepPos + " as done.");
+                stepRVAdapter.markItemAsDone(activeStepPos, activeStepView);
                 if (activeStepPos + 2 <= nSteps) {
                     rvSteps.smoothScrollToPosition(activeStepPos + 1);
                     activateItem(rvSteps.findViewHolderForAdapterPosition(activeStepPos + 1).itemView, activeStepPos + 1);
@@ -112,24 +124,60 @@ public class CookingSessionActivity extends AppCompatActivity implements RecipeS
 
             case R.id.navbarCookingSessIngred:
                 // Dialog dialog = new Dialog(new ContextThemeWrapper(this, R.style.DialogSlideAnim));
-                IngredientsDialogFragment dialog = new IngredientsDialogFragment();
-                dialog.setEnterTransition(R.anim.slide_in);
-                dialog.show(getSupportFragmentManager(), "dialog");
+                List<Ingredient> dummyIngreds = new ArrayList<>(Arrays.asList(
+                        new Ingredient("Eggs", "2 pieces"),
+                        new Ingredient("Bacon", "200g"),
+                        new Ingredient("Water", "1l"),
+                        new Ingredient("Weed", "10g"),
+                        new Ingredient("Sliced bacon", "100g"),
+                        new Ingredient("Salt", "to taste")
+                ));
 
+                IngredientsDialogFragment dialog = new IngredientsDialogFragment(recipe.getIngredients());
+                // dialog.setEnterTransition(R.anim.slide_in);
+                dialog.show(getSupportFragmentManager(), "dialog");
                 return true;
         }
         return false;
     }
 
-    private void initRecipeStepTexts() {
-        stepTexts = new ArrayList<>(Arrays.asList(
-                "In a medium-size mixing bowl or large glass measuring cup, <b>whisk together</b> your dry ingredients.",
-                "Heat olive oil in a large, oven-proof non stick pan (or a well-seasoned cast iron skillet) over medium-high heat. Sear chicken thighs for 3 minutes each side, until the skin becomes golden and crisp. Leave 2 tablespoons of chicken juices in the pan for added flavour, and drain any excess.",
-                "Fry the garlic in the same pan around the chicken for 1 minute until fragrant. Add the honey, both mustards, and water to the pan, mixing well, and combine all around the chicken.",
-                "OPTIONAL: Remove from the oven after 30 minutes; add in the green beans (mixing them through the sauce), and return to the oven to bake for a further 15 minutes, or until the chicken is completely cooked through and no longer pink in the middle, and the potatoes are fork tender."
-        ));
-        nSteps = stepTexts.size();
+    private void handleDone() {
+        // show dialog
+        FinishedDialogFragment dialog = new FinishedDialogFragment(new FinishedCookingCallback() {
+            @Override
+            public void finished() {
+                // send "cooked" status of recipe to server
+                Server.cookRecipe(LoggedInUser.user().getSessionID(), recipe.getServerId(), new ServerCallbacks.CookRecipeCallback() {
+                    @Override
+                    public void success() {
+                        // add recipe to user's list of cooked recipes
+                        LoggedInUser.user().addCookedRecipe(recipe);
+                        ToastMaker.make("Recipe cooked!", ToastMaker.Type.SUCCESS, CookingSessionActivity.this);
+                        // go back to previous activity
+                        finish();
+                    }
+                    @Override
+                    public void error(int errorCode) {
+                        if (errorCode == 400) {
+                            ToastMaker.make("Hooray, you cooked this recipe again!", ToastMaker.Type.SUCCESS, CookingSessionActivity.this);
+                            // go back to previous activity
+                            finish();
+                        }
+                    }
+                });
+            }
 
+            @Override
+            public void notFinished() {
+                // do nothing
+            }
+        });
+        dialog.show(getSupportFragmentManager(), "dialog");
+    }
+
+    private void initRecipeStepTexts() {
+        stepTexts = recipe.getStepDescriptions();
+        nSteps = stepTexts.size();
         // replace "."s with two newlines
         for (int i = 0; i < nSteps; i++) {
             stepTexts.set(i,

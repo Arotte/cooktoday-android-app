@@ -68,6 +68,35 @@ public class Server {
 
     /*
     =============================================
+    COOK RECIPE
+    ============================================= */
+    public static void cookRecipe(String userSessId, String recipeId, ServerCallbacks.CookRecipeCallback callback) {
+        Executor regExec = getExec();
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getRecipeService().cookRecipe(userSessId, recipeId).enqueue(new Callback<RecipeJSON__Outer>() {
+                    @Override
+                    public void onResponse(Call<RecipeJSON__Outer> call, Response<RecipeJSON__Outer> r) {
+                        if (r.code() == 200) {
+                            Log.i(TAG, "Recipe cooked successfully");
+                            callback.success();
+                        } else {
+                            callback.error(r.code());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<RecipeJSON__Outer> call, Throwable t) {
+                        Log.i(TAG, t.toString() + ", " + t.getMessage());
+                        callback.error(-1);
+                    }
+                });
+            }
+        });
+    }
+
+    /*
+    =============================================
     GET HOME FEED
     ============================================= */
     public static void getHomeFeed(String userSessId, ServerCallbacks.HomeFeedResultCallback resultCallback) {

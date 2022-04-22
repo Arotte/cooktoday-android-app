@@ -71,7 +71,9 @@ public class RecipeDetailsActivity extends AppCompatActivity
         ((Button) findViewById(R.id.fabtnRecipeDetailsCookDish)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(RecipeDetailsActivity.this, CookingSessionActivity.class));
+                Intent intent = new Intent(RecipeDetailsActivity.this, CookingSessionActivity.class);
+                intent.putExtra("RecipeObject", recipe);
+                startActivity(intent);
             }
         });
     }

@@ -92,4 +92,9 @@ public interface ServerCallbacks {
         void success(HomeFeedJson homeFeed);
         void error(int errorCode);
     }
+
+    interface CookRecipeCallback {
+        void success();
+        void error(int errorCode);
+    }
 }
