@@ -230,8 +230,8 @@ public class UploadActivity extends AppCompatActivity
         TextView seekBarCookValue = (TextView)findViewById(R.id.DurationTime);
         TextView seekBarPrepValue = (TextView)findViewById(R.id.PreparationTime);
         TextView totalTime = (TextView)findViewById(R.id.TotalTime);
-        seekBarCooking.setMax(6 * 60); //24 hours and 4 step in one hour.
-        seekBarPreparation.setMax(6 * 60);
+        seekBarCooking.setMax(3 * 6); // 3 times 10 minutes
+        seekBarPreparation.setMax(3 * 6);
 
         //addTime(seekBarCookValue.getText().toString(), seekBarPrepValue.getText().toString(), totalTime);
 
@@ -240,8 +240,8 @@ public class UploadActivity extends AppCompatActivity
             public void onProgressChanged(SeekBar seekBar, int duration,
                                           boolean fromUser) {
                 cookingTime = duration;
-                int hrs = duration / 60;
-                int min = (duration % 60);
+                int hrs = duration / 6;
+                int min = (duration % 6) * 10;
                 String minutes = String.format("%02d", min);
                 String newTime = hrs+"h "+minutes+"m";
                 seekBarCookValue.setText(newTime);
@@ -264,8 +264,8 @@ public class UploadActivity extends AppCompatActivity
             public void onProgressChanged(SeekBar seekBar, int duration,
                                           boolean fromUser) {
                 prepTime = duration;
-                int hrs = duration / 60;
-                int min = (duration % 60);
+                int hrs = duration / 6;
+                int min = (duration % 6) * 10;
                 total_hrs = hrs;
                 total_min = min;
                 String minutes = String.format("%02d", min);
