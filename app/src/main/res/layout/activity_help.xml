@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".help.HelpActivity">
+
+    <!-- TOP BAR -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:outlineProvider="none"
+            android:fitsSystemWindows="true"
+            android:padding="0dp"
+            android:layout_height="wrap_content"
+            android:outlineAmbientShadowColor="@color/transparent"
+            android:outlineSpotShadowColor="@color/transparent"
+            android:layout_width="match_parent"
+            android:background="@drawable/topbar_background">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:padding="0dp"
+                android:outlineProvider="none"
+                android:outlineAmbientShadowColor="@color/transparent"
+                android:outlineSpotShadowColor="@color/transparent"
+                android:layout_height="wrap_content"
+                app:toolbarId="@+id/toolbar"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:contentScrim="?attr/colorPrimary">
+
+
+                <androidx.appcompat.widget.Toolbar
+                    android:padding="0dp"
+                    android:id="@+id/toolbar"
+                    android:outlineSpotShadowColor="@color/transparent"
+                    android:outlineAmbientShadowColor="@color/transparent"
+                    android:layout_height="wrap_content"
+                    app:layout_collapseMode="pin"
+                    android:outlineProvider="none"
+                    android:layout_width="match_parent" >
+
+                    <ImageView
+                        android:id="@+id/helpArrowBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow___left_2"
+                        android:layout_marginEnd="7dp"/>
+                    <TextView
+                        android:id="@+id/helpTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Help Centre"
+                        android:fontFamily="@font/inter_medium"
+                        android:textColor="@color/textMain"
+                        android:textSize="19sp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCancelHelp"
+                        android:outlineProvider="none"
+                        android:shadowColor="@color/transparent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/transparent"
+                        android:layout_gravity="right"
+                        android:fontFamily="@font/interr"
+                        android:outlineAmbientShadowColor="@color/transparent"
+                        android:outlineSpotShadowColor="@color/transparent"
+                        android:text="Cancel"
+                        android:textAllCaps="false"
+                        android:textColor="@color/red"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:rippleColor="@color/red" />
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+            <LinearLayout
+                android:id="@+id/llHelpContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:overScrollMode="never"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="7dp"/>
 
                 <TextView
                     android:id="@+id/tvCookbookSavedRecipes"
@@ -76,7 +76,7 @@
                     android:layout_gravity="center"
                     android:overScrollMode="never"
                     android:fadingEdgeLength="15dp"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="7dp"/>
 
                 <View
                     android:layout_width="match_parent"

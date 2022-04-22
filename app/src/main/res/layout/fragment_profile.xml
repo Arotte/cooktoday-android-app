@@ -138,8 +138,9 @@
                     <!-- END SETTINGS ITEM -->
 
 
-                    <!-- SETTINGS ITEM -->
+                    <!-- HELP ITEM -->
                     <LinearLayout
+                        android:id="@+id/llProfile_Help"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -186,7 +187,7 @@
                             android:background="?android:attr/listDivider"
                             android:backgroundTint="@color/textSecondary"/>
                     </LinearLayout>
-                    <!-- END SETTINGS ITEM -->
+                    <!-- END HELP ITEM -->
                 </LinearLayout>
 
             <!-- LOGOUT -->

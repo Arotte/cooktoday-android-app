@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.APIRepository;
 import com.abdn.cooktoday.api_connection.jsonmodels.LogoutMessageJSONModel;
+import com.abdn.cooktoday.help.HelpActivity;
 import com.abdn.cooktoday.local_data.Cache;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.onboarding.OnBoardingActivity;
@@ -56,8 +57,20 @@ public class ProfileFragment extends Fragment {
         ((TextView) layout.findViewById(R.id.tvHelloAnakin)).setText("Hello, " + userFName);
 
         handleLogoutClicked(layout);
+        handleHelpClicked(layout);
 
         return layout;
+    }
+
+    private void handleHelpClicked(View layout) {
+        LinearLayout helpLayout = layout.findViewById(R.id.llProfile_Help);
+        helpLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), HelpActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void handleLogoutClicked(View view) {
