@@ -1,14 +1,8 @@
 package com.abdn.cooktoday.home;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,22 +22,16 @@ import com.abdn.cooktoday.home.rvadapters.RecommedationCirclesRVAdapter;
 import com.abdn.cooktoday.home.rvadapters.RecommendedRVAdapter;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.search.SearchFragment;
-import com.abdn.cooktoday.utility.ToastMaker;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class HomeFragment extends Fragment
         implements RecommendedRVAdapter.ItemClickListener, RecommedationCirclesRVAdapter.ItemClickListener, HotRecipesRVAdapter.ItemClickListener {
     private static final String TAG = "HomeFragment";
 
-    private List<Recipe> recRecipes;
-    private List<Recipe> personalizedRecipes;
     private RecommedationCirclesRVAdapter circlesRVAdapter;
-    private HotRecipesRVAdapter hotRecipesRVAdapter;
+    private HotRecipesRVAdapter personalizedRecipesRVAdapter;
     private RecommendedRVAdapter recommendedRVAdapter;
-    private RecyclerView rvRecommendedRecipes;
 
     public HomeFragment() {
         // required empty public constructor
@@ -59,14 +47,11 @@ public class HomeFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "TEST - onCreate called");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.i(TAG, "TEST - onCreateView called");
-
         View layout = inflater.inflate(R.layout.fragment_home, container, false);
         setup(layout);
         return layout;
@@ -83,8 +68,8 @@ public class HomeFragment extends Fragment
         circlesRVAdapter.setClickListener(this);
         recyclerView.setAdapter(circlesRVAdapter);
 
-        recRecipes = LoggedInUser.user().getRecommendedRecipes();
-        rvRecommendedRecipes = layout.findViewById(R.id.rvHomeFragmentRecommendedRecipes);
+        List<Recipe> recRecipes = LoggedInUser.user().getRecommendedRecipes();
+        RecyclerView rvRecommendedRecipes = layout.findViewById(R.id.rvHomeFragmentRecommendedRecipes);
         rvRecommendedRecipes.setNestedScrollingEnabled(false);
         rvRecommendedRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         // this line displays a loading animation of the recommended recipes cards:
@@ -94,12 +79,12 @@ public class HomeFragment extends Fragment
         rvRecommendedRecipes.setAdapter(recommendedRVAdapter);
 
         // hot recipes rv
-        personalizedRecipes = LoggedInUser.user().getPersonalizedRecipes();
+        List<Recipe> personalizedRecipes = LoggedInUser.user().getPersonalizedRecipes();
         RecyclerView rvHotRecipes = layout.findViewById(R.id.rvHomeFragmentHotRecipes);
         rvHotRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        hotRecipesRVAdapter = new HotRecipesRVAdapter(getContext(), personalizedRecipes);
-        hotRecipesRVAdapter.setClickListener(this);
-        rvHotRecipes.setAdapter(hotRecipesRVAdapter);
+        personalizedRecipesRVAdapter = new HotRecipesRVAdapter(getContext(), personalizedRecipes);
+        personalizedRecipesRVAdapter.setClickListener(this);
+        rvHotRecipes.setAdapter(personalizedRecipesRVAdapter);
 
         // TOP SEARCH BAR
         EditText search = layout.findViewById(R.id.etHomeFragmentSearchBar);
@@ -137,6 +122,9 @@ public class HomeFragment extends Fragment
 
     @Override
     public void onHotItemClick(View view, int position) {
+        Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
+        intent.putExtra("RecipeObject", personalizedRecipesRVAdapter.getItem(position));
+        startActivity(intent);
     }
 
     // ===========================================================
