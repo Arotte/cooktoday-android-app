@@ -72,44 +72,14 @@ public class HomeFragment extends Fragment
         return layout;
     }
 
-    /*
-    When user clicks a recommended recipe
-     */
-    @Override
-    public void onRecItemClick(View view, int position) {
-        Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
-        intent.putExtra("RecipeObject", recommendedRVAdapter.getItem(position));
-        startActivity(intent);
-    }
-
-    private void reloadRecommendedRecipe(int pos) {
-        recommendedRVAdapter.notifyItemChanged(pos);
-    }
-
-    /*
-    When user clicks one of the top insta story-like circles
-     */
-    @Override
-    public void onCircleItemClick(View view, int position) {
-
-    }
-
-    /*
-    When user clicks a "hot" recommended recipe
-     */
-    @Override
-    public void onHotItemClick(View view, int position) {
-
-    }
-
     private void setup(View layout) {
 
-        String[] circleRec = new String[]{"VEGAN", "FISH", "DRINKS", "BREAKFAST", "MAIN DISH", "SNACK"};
+        List<String> circleRec = LoggedInUser.user().getHomeFeedCategories();
 
         // top circle category selection rv
         RecyclerView recyclerView = layout.findViewById(R.id.rvHomeFragmentRecommendationCircles);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        circlesRVAdapter = new RecommedationCirclesRVAdapter(getContext(), Arrays.asList(circleRec));
+        circlesRVAdapter = new RecommedationCirclesRVAdapter(getContext(), circleRec);
         circlesRVAdapter.setClickListener(this);
         recyclerView.setAdapter(circlesRVAdapter);
 
@@ -136,12 +106,7 @@ public class HomeFragment extends Fragment
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).setSelected(R.id.bottomNavbarSearch);
-                SearchFragment nextFragment = new SearchFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, nextFragment, "findThisFragment")
-                    .addToBackStack(null)
-                    .commit();
+                startSearchFragment();
             }
         });
         
@@ -151,5 +116,51 @@ public class HomeFragment extends Fragment
         } else if (personalizedRecipes.size() == 0) {
             layout.findViewById(R.id.tvHomeForYou).setVisibility(View.GONE);
         }
+    }
+
+    // ===========================================================
+    // Click Listeners
+    // ===========================================================
+
+    @Override
+    public void onRecItemClick(View view, int position) {
+        Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
+        intent.putExtra("RecipeObject", recommendedRVAdapter.getItem(position));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onCircleItemClick(View view, int position) {
+        // launch search fragment, and prefill query with category name
+        startSearchFragment(circlesRVAdapter.getItem(position));
+    }
+
+    @Override
+    public void onHotItemClick(View view, int position) {
+    }
+
+    // ===========================================================
+    // Helper Methods
+    // ===========================================================
+
+    private void startSearchFragment() {
+        ((MainActivity) getActivity()).setSelected(R.id.bottomNavbarSearch);
+        SearchFragment nextFragment = new SearchFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, nextFragment, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void startSearchFragment(String query) {
+        ((MainActivity) getActivity()).setSelected(R.id.bottomNavbarSearch);
+        SearchFragment nextFragment = new SearchFragment();
+        Bundle args = new Bundle();
+        args.putString("query", query);
+        nextFragment.setArguments(args);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, nextFragment, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
     }
 }

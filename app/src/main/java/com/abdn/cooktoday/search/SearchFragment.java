@@ -175,6 +175,8 @@ public class SearchFragment extends Fragment
 
         searchResultsContainer = layout.findViewById(R.id.lvSearchResults);
 
+        handlePassedQueryArg();
+
         return layout;
     }
 
@@ -226,15 +228,9 @@ public class SearchFragment extends Fragment
         }
     }
 
-    private void toggleViews(boolean showInitialSearchScreen) {
-        if (showInitialSearchScreen) {
-            initialScreenContainer.setVisibility(View.VISIBLE);
-            searchResultViewContainer.setVisibility(View.INVISIBLE);
-        } else {
-            initialScreenContainer.setVisibility(View.INVISIBLE);
-            searchResultViewContainer.setVisibility(View.VISIBLE);
-        }
-    }
+    // ===========================================================
+    // Click Listeners
+    // ===========================================================
 
     @Override
     public void onSearchSuggestionItemClick(View view, int pos) {
@@ -246,6 +242,30 @@ public class SearchFragment extends Fragment
     public void onSearchHistoryItemClick(View view, int pos) {
         searchField.setText(searchHistory.get(pos) + " ");
         searchField.setSelection(searchField.getText().length());
+    }
+
+    // ================================================================
+    // Helper Functions
+    // ================================================================
+
+    private void handlePassedQueryArg() {
+        if (getArguments() != null) {
+            String query = getArguments().getString("query");
+            if (query != null) {
+                searchField.setText(query + " ");
+                // searchField.setSelection(searchField.getText().length());
+            }
+        }
+    }
+
+    private void toggleViews(boolean showInitialSearchScreen) {
+        if (showInitialSearchScreen) {
+            initialScreenContainer.setVisibility(View.VISIBLE);
+            searchResultViewContainer.setVisibility(View.INVISIBLE);
+        } else {
+            initialScreenContainer.setVisibility(View.INVISIBLE);
+            searchResultViewContainer.setVisibility(View.VISIBLE);
+        }
     }
 
     private void fillUpSearchSuggestions() {
@@ -278,9 +298,5 @@ public class SearchFragment extends Fragment
             imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
         }
     }
-
-    private static final String[] COUNTRIES = new String[] {
-            "Belgium", "France", "Italy", "Germany", "Spain", "Itabi"
-    };
 
 }
