@@ -1,7 +1,6 @@
 package com.abdn.cooktoday.upload_recipe.manual.bottomsheet;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,12 +23,8 @@ import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredSearchResultItemJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
-import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchResultItemJSON;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.NerredIngred;
-import com.abdn.cooktoday.local_data.model.Recipe;
-import com.abdn.cooktoday.recipedetails.RecipeDetailsActivity;
-import com.abdn.cooktoday.search.adapters.SearchResultArrayAdapter;
 import com.abdn.cooktoday.upload_recipe.manual.rvadapters.IngredSearchResultArrayAdapter;
 import com.abdn.cooktoday.utility.ProgressButtonHandler;
 import com.abdn.cooktoday.utility.ToastMaker;
