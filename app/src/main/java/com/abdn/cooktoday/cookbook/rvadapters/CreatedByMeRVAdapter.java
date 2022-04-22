@@ -17,14 +17,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class CookBookRVAdapter extends RecyclerView.Adapter<CookBookRVAdapter.ViewHolder> {
+public class CreatedByMeRVAdapter extends RecyclerView.Adapter<CreatedByMeRVAdapter.ViewHolder> {
 
     private List<Recipe> recipes;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public CookBookRVAdapter(Context context, List<Recipe> data) {
+    public CreatedByMeRVAdapter(Context context, List<Recipe> data) {
         this.mInflater = LayoutInflater.from(context);
         this.recipes = data;
     }
@@ -99,7 +99,7 @@ public class CookBookRVAdapter extends RecyclerView.Adapter<CookBookRVAdapter.Vi
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onRecItemClick(view, getAdapterPosition());
+            if (mClickListener != null) mClickListener.onMineItemClick(view, getAdapterPosition());
         }
     }
 
@@ -115,6 +115,6 @@ public class CookBookRVAdapter extends RecyclerView.Adapter<CookBookRVAdapter.Vi
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onRecItemClick(View view, int position);
+        void onMineItemClick(View view, int position);
     }
 }

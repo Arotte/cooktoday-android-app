@@ -26,6 +26,7 @@ import android.widget.ListView;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchResultItemJSON;
 import com.abdn.cooktoday.local_data.Cache;
 import com.abdn.cooktoday.local_data.model.Recipe;
@@ -179,7 +180,7 @@ public class SearchFragment extends Fragment
 
     private void search(String query) {
         // send search request to server
-        Server.searchRecipes(userSessId, query, new Server.RecipeSearchResult() {
+        Server.searchRecipes(userSessId, query, new ServerCallbacks.RecipeSearchResult() {
             @Override
             public void success(ArrayList<RecipeSearchResultItemJSON> recipes) {
                 Log.i(TAG, "Recipe search successful!");
@@ -206,7 +207,7 @@ public class SearchFragment extends Fragment
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     // get recipe details from server
-                    Server.getRecipeById(userSessId, searchResultsAdapter.getItem(i).getId(), new Server.GetRecipeResult() {
+                    Server.getRecipeById(userSessId, searchResultsAdapter.getItem(i).getId(), new ServerCallbacks.GetRecipeResult() {
                         @Override
                         public void success(Recipe recipe) {
                             // show recipe

@@ -19,6 +19,7 @@ import com.abdn.cooktoday.R;
 import android.widget.EditText;
 
 import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.api_connection.jsonmodels.media.AwsUploadedFilesJson;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
@@ -181,7 +182,7 @@ public class UploadActivity extends AppCompatActivity
                     try {
                         InputStream fin = getContentResolver().openInputStream(recipeImageFileUri);
                         File imageFile = createFileFromIs(fin);
-                        Server.uploadRecipeImageToAws(LoggedInUser.user().getSessionID(), imageFile, new Server.AwsRecipeImgUploadResult() {
+                        Server.uploadRecipeImageToAws(LoggedInUser.user().getSessionID(), imageFile, new ServerCallbacks.AwsRecipeImgUploadResult() {
                             @Override
                             public void success(AwsUploadedFilesJson files) {
                                 uploadedImageUrl = files.getFiles().get(0);
@@ -192,13 +193,14 @@ public class UploadActivity extends AppCompatActivity
                                     LoggedInUser.user().getSessionID(),
                                     LoggedInUser.user().getServerID(),
                                     recipe,
-                                    new Server.CreateRecipeResult() {
+                                    new ServerCallbacks.CreateRecipeResult() {
                                         @Override
-                                        public void success(Recipe recipe) {
+                                        public void success(Recipe createdRecipe) {
                                             // recipe created on server
                                             btnUploadHandler.setState(ProgressButtonHandler.State.SUCCESS);
                                             Log.i(TAG, "Recipe successfully created!");
                                             ToastMaker.make("Recipe added!", ToastMaker.Type.SUCCESS, UploadActivity.this);
+                                            LoggedInUser.user().newRecipeCreatedByUser(createdRecipe);
                                             finish();
                                         }
                                         @Override
@@ -234,7 +236,6 @@ public class UploadActivity extends AppCompatActivity
         //addTime(seekBarCookValue.getText().toString(), seekBarPrepValue.getText().toString(), totalTime);
 
         seekBarCooking.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
-
             @Override
             public void onProgressChanged(SeekBar seekBar, int duration,
                                           boolean fromUser) {
@@ -259,7 +260,6 @@ public class UploadActivity extends AppCompatActivity
         });
 
         seekBarPreparation.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
-
             @Override
             public void onProgressChanged(SeekBar seekBar, int duration,
                                           boolean fromUser) {

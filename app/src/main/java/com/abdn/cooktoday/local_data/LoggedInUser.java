@@ -32,6 +32,11 @@ public class LoggedInUser {
     private List<Recipe> recommendedRecipes;
     private List<Recipe> myRecipes;
     private List<Recipe> cookedRecipes;
+    private List<Recipe> personalizedRecipes;
+
+    private List<String> recommendedRecipeIds;
+    private List<String> myRecipeIds;
+    private List<String> cookedRecipeIds;
 
     public void setUser(User user) {
         fistName = user.getFirstName();
@@ -51,11 +56,11 @@ public class LoggedInUser {
 
         // -----------------
 
-        List<String> cookedRecipeIds = new ArrayList<>();
+        cookedRecipeIds = new ArrayList<>();
         for (Recipe cookedRecipe : cookedRecipes)
            cookedRecipeIds.add(cookedRecipe.getServerId());
 
-        List<String> myRecipeIds = new ArrayList<>();
+        myRecipeIds = new ArrayList<>();
         for (Recipe myRecipe : myRecipes)
             myRecipeIds.add(myRecipe.getServerId());
 
@@ -112,15 +117,54 @@ public class LoggedInUser {
     public List<Recipe> getSavedRecipes() { return this.savedRecipes; }
     public void addSavedRecipe(Recipe newRecipe) {
         this.savedRecipes.add(newRecipe);
-
+        notifySaved(newRecipe.getServerId());
     }
     public int nSavedRecipes() { return this.savedRecipes.size(); }
 
+    private void notifySaved(String recipeId) {
+        if (this.recommendedRecipeIds.contains(recipeId))
+            if (this.recommendedRecipes != null)
+                this.recommendedRecipes.get(this.recommendedRecipeIds.indexOf(recipeId)).setSaved(true);
+
+        if (this.myRecipeIds.contains(recipeId))
+            if (this.myRecipes != null)
+                this.myRecipes.get(this.myRecipeIds.indexOf(recipeId)).setSaved(true);
+
+        if (this.cookedRecipeIds.contains(recipeId))
+            if (this.cookedRecipes != null)
+                this.cookedRecipes.get(this.cookedRecipeIds.indexOf(recipeId)).setSaved(true);
+    }
+
+    public List<Recipe> getMyRecipes() {
+        return this.myRecipes;
+    }
+
+    public List<Recipe> getPersonalizedRecipes() {
+        if (this.personalizedRecipes == null)
+            return new ArrayList<>();
+        return this.personalizedRecipes;
+    }
+
+    public void setPersonalizedRecipes(List<Recipe> personalizedRecipes) {
+        this.personalizedRecipes = personalizedRecipes;
+    }
+
     /*
-    Recommended recipes related functions
-     */
+        Recommended recipes related functions
+         */
     public List<Recipe> getRecommendedRecipes() { return this.recommendedRecipes; }
-    public void setRecommendedRecipes(List<Recipe> recipes) { this.recommendedRecipes = recipes; }
+    public void setRecommendedRecipes(List<Recipe> recipes) {
+        this.recommendedRecipes = recipes;
+        this.recommendedRecipeIds = new ArrayList<>();
+        for (Recipe recipe : this.recommendedRecipes)
+            this.recommendedRecipeIds.add(recipe.getServerId());
+    }
+
+    public void newRecipeCreatedByUser(Recipe newRecipe) {
+        this.myRecipes.add(newRecipe);
+        this.myRecipeIds.add(newRecipe.getServerId());
+        // notifySaved(newRecipe.getServerId());
+    }
 
 
     /*

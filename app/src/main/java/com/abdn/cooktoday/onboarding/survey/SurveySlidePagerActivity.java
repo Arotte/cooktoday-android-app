@@ -22,6 +22,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.abdn.cooktoday.MainActivity;
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.api_connection.jsonmodels.UserPrefsJsonModel;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.onboarding.OnBoardingActivity;
@@ -211,7 +212,7 @@ public class SurveySlidePagerActivity extends FragmentActivity {
             surveyFragment2Allergies.getSelected(),
             surveyFragment3Diets.getSelected(),
             surveyFragment5Skills.getSelectedStr(),
-            new Server.SaveUserPrefResult() {
+            new ServerCallbacks.SaveUserPrefResult() {
                 @SuppressLint("LongLogTag")
                 @Override
                 public void success(UserPrefsJsonModel savedUserPrefs) {

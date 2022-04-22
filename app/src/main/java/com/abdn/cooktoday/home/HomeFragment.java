@@ -39,6 +39,7 @@ public class HomeFragment extends Fragment
     private static final String TAG = "HomeFragment";
 
     private List<Recipe> recRecipes;
+    private List<Recipe> personalizedRecipes;
     private RecommedationCirclesRVAdapter circlesRVAdapter;
     private HotRecipesRVAdapter hotRecipesRVAdapter;
     private RecommendedRVAdapter recommendedRVAdapter;
@@ -123,9 +124,10 @@ public class HomeFragment extends Fragment
         rvRecommendedRecipes.setAdapter(recommendedRVAdapter);
 
         // hot recipes rv
+        personalizedRecipes = LoggedInUser.user().getPersonalizedRecipes();
         RecyclerView rvHotRecipes = layout.findViewById(R.id.rvHomeFragmentHotRecipes);
         rvHotRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        hotRecipesRVAdapter = new HotRecipesRVAdapter(getContext(), getHotRecipesFromServer());
+        hotRecipesRVAdapter = new HotRecipesRVAdapter(getContext(), personalizedRecipes);
         hotRecipesRVAdapter.setClickListener(this);
         rvHotRecipes.setAdapter(hotRecipesRVAdapter);
 
@@ -142,17 +144,12 @@ public class HomeFragment extends Fragment
                     .commit();
             }
         });
-    }
-
-    /**
-     * Get a list of hot recipes from server
-     * and convert them to List<Recipe>
-     *
-     * @return a list of "hot" recipes from the server
-     */
-    private List<Recipe> getHotRecipesFromServer() {
-        // TODO: actually get the recipes from the server
-
-        return new ArrayList<>();
+        
+        // if no recipes in either recommended or hot recipes, hide title textviews
+        if (recRecipes.size() == 0) {
+            layout.findViewById(R.id.tvHomeRecommended).setVisibility(View.GONE);
+        } else if (personalizedRecipes.size() == 0) {
+            layout.findViewById(R.id.tvHomeForYou).setVisibility(View.GONE);
+        }
     }
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.abdn.cooktoday.MainActivity;
 import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.onboarding.OnBoardingActivity;
@@ -31,23 +32,23 @@ public class OnBoardingDataRetrieval {
         String userSessId = LoggedInUser.user().getSessionID();
 
         // 1.) retrieve saved recipes from server, and save them locally
-        Server.getAllSavedRecipes(userSessId, new Server.GetSavedRecipesResult() {
+        Server.getAllSavedRecipes(userSessId, new ServerCallbacks.GetSavedRecipesResult() {
             @Override
             public void success(List<Recipe> savedRecipes) {
                 Log.i(logTAG, "Saved recipes successfully retrieved from server!");
                 LoggedInUser.user().setSavedRecipes(savedRecipes);
                 // 2.) get all recipes created by user
-                Server.getAllOwnRecipes(userSessId, new Server.ListOfRecipesCallback() {
+                Server.getAllOwnRecipes(userSessId, new ServerCallbacks.ListOfRecipesCallback() {
                     @Override
                     public void success(List<Recipe> createdRecipes) {
                         LoggedInUser.user().setMyRecipes(createdRecipes);
                         // 3.) get all recipes cooked by user
-                        Server.getAllCookedRecipes(userSessId, new Server.ListOfRecipesCallback() {
+                        Server.getAllCookedRecipes(userSessId, new ServerCallbacks.ListOfRecipesCallback() {
                             @Override
                             public void success(List<Recipe> cookedRecipes) {
                                 LoggedInUser.user().setCookedRecipes(cookedRecipes);
                                 // 4.) retrieve recommended recipes from server, and save them
-                                Server.getRecommendedRecipes(userSessId, new Server.GetRecommendedRecipesResult() {
+                                Server.getRecommendedRecipes(userSessId, new ServerCallbacks.GetRecommendedRecipesResult() {
                                     @Override
                                     public void success(List<Recipe> recommendedRecipes) {
                                         Log.i(logTAG, "Successfully retrieved recommended recipes from server!");

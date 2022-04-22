@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.cooking_session.CookingSessionActivity;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
@@ -214,7 +215,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
                     // is not implemented
                 } else {
                     // post save recipe request to server
-                    Server.saveRecipe(LoggedInUser.user().getSessionID(), recipe.getServerId(), new Server.SaveRecipeResult() {
+                    Server.saveRecipe(LoggedInUser.user().getSessionID(), recipe.getServerId(), new ServerCallbacks.SaveRecipeResult() {
                         @Override
                         public void success(Recipe recipe) {
                             Log.i(TAG, "Recipe " + recipe.getServerId() + " successfully saved to user's cookbook!");

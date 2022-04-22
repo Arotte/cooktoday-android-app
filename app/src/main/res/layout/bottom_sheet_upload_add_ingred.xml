@@ -14,6 +14,18 @@
         android:gravity="center"
         android:background="@drawable/shape_round">
 
+        <LinearLayout
+            android:id="@+id/llIngredSearchAutocompleteSuggestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/lvIngredSearchResults"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
         <EditText
             android:id="@+id/etIngred"
             android:layout_width="match_parent"
