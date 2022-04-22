@@ -280,7 +280,7 @@ public class Server {
                                         imgFile))
                         .build();
                 Request request = new Request.Builder()
-                        .url( APIEndpoints.BASE + "media/recipe" )
+                        .url( APIEndpoints.getBase() + "media/recipe" )
                         .method("POST", body)
                         .addHeader("Cookie", userSessId)
                         .build();
