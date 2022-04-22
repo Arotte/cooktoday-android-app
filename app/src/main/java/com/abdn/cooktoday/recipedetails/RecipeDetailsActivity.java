@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.cooking_session.CookingSessionActivity;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
@@ -33,8 +34,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.abdn.cooktoday.utility.MockServer;
 
 
 public class RecipeDetailsActivity extends AppCompatActivity
@@ -59,11 +58,9 @@ public class RecipeDetailsActivity extends AppCompatActivity
 
         // get the recipe
         this.recipe = (Recipe) getIntent().getSerializableExtra("RecipeObject");
-        isSaved = false; // TODO: get this info from server
+        this.isSaved = recipe.isSaved();
         nIngreds = 0;
         nIngredsChecked = 0;
-        // get ingreds
-        // TODO: from server
         initIngredientsView();
         initStepsView();
 
@@ -209,6 +206,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
 
     private void initSaveRecipeButton() {
         saveBtn = (MaterialButton) findViewById(R.id.btnRecipeDetailsSave);
+        updateSaveBtnView();
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,16 +215,15 @@ public class RecipeDetailsActivity extends AppCompatActivity
                     // is not implemented
                 } else {
                     // post save recipe request to server
-                    Server.saveRecipe(LoggedInUser.user().getSessionID(), recipe.getServerId(), new Server.SaveRecipeResult() {
+                    Server.saveRecipe(LoggedInUser.user().getSessionID(), recipe.getServerId(), new ServerCallbacks.SaveRecipeResult() {
                         @Override
                         public void success(Recipe recipe) {
                             Log.i(TAG, "Recipe " + recipe.getServerId() + " successfully saved to user's cookbook!");
                             ToastMaker.make("Recipe saved to Cookbook!", ToastMaker.Type.SUCCESS, RecipeDetailsActivity.this);
+                            recipe.setSaved(true);
                             LoggedInUser.user().addSavedRecipe(recipe);
-
-                            saveBtn.setText("Saved");
-                            saveBtn.setIcon(getResources().getDrawable(R.drawable.ic_bookmark_bold));
                             isSaved = true;
+                            updateSaveBtnView();
                         }
 
                         @Override
@@ -237,6 +234,16 @@ public class RecipeDetailsActivity extends AppCompatActivity
                 }
             }
         });
+    }
+
+    private void updateSaveBtnView() {
+        if (isSaved) {
+            saveBtn.setText("Saved");
+            saveBtn.setIcon(getResources().getDrawable(R.drawable.ic_bookmark_bold));
+        } else {
+            saveBtn.setText("Save");
+            saveBtn.setIcon(getResources().getDrawable(R.drawable.ic_bookmark));
+        }
     }
 
     private void navbarFix() {

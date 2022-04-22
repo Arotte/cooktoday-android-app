@@ -1,7 +1,12 @@
 package com.abdn.cooktoday.api_connection;
 
+import android.provider.MediaStore;
+
 import com.abdn.cooktoday.api_connection.services.ExtractedRecipeService;
 import com.abdn.cooktoday.api_connection.services.FeedService;
+import com.abdn.cooktoday.api_connection.services.IngredientService;
+import com.abdn.cooktoday.api_connection.services.MediaService;
+import com.abdn.cooktoday.api_connection.services.NerService;
 import com.abdn.cooktoday.api_connection.services.RecipeService;
 import com.abdn.cooktoday.api_connection.services.SearchService;
 import com.abdn.cooktoday.api_connection.services.UserService;
@@ -24,6 +29,9 @@ public final class APIRepository {
     private final SearchService searchService;
     private final RecipeService recipeService;
     private final FeedService feedService;
+    private final NerService nerService;
+    private final MediaService mediaService;
+    private final IngredientService ingredientService;
 
     public static APIRepository getInstance() {
         if (instance == null) {
@@ -48,6 +56,9 @@ public final class APIRepository {
         searchService = retrofit.create(SearchService.class);
         recipeService = retrofit.create(RecipeService.class);
         feedService = retrofit.create(FeedService.class);
+        nerService = retrofit.create(NerService.class);
+        mediaService = retrofit.create(MediaService.class);
+        ingredientService = retrofit.create(IngredientService.class);
     }
 
     public UserService getUserService() {
@@ -63,4 +74,7 @@ public final class APIRepository {
         return recipeService;
     }
     public FeedService getFeedService() { return feedService; }
+    public NerService getNerService() { return nerService; }
+    public MediaService getMediaService() { return mediaService; }
+    public IngredientService getIngredientService() { return ingredientService; }
 }

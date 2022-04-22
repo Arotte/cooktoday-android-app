@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.abdn.cooktoday">
+
     <!-- To access images stored on AWS -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- To access Camera -->
     <uses-permission android:name="android.permission.CAMERA" />
@@ -16,6 +17,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CookToday"
         android:usesCleartextTraffic="true">
+        <receiver
+            android:name=".NewAppWidget"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/new_app_widget_info" />
+        </receiver>
+
         <activity
             android:name=".upload_recipe.from_url.UploadFromUrlActivity"
             android:exported="false" />
@@ -68,6 +81,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

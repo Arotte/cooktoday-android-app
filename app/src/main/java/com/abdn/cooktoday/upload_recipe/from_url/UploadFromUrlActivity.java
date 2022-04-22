@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.local_data.Cache;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
@@ -57,7 +58,7 @@ public class UploadFromUrlActivity extends AppCompatActivity
     }
 
     protected void getRecipeFromServer(String url, OnServerConnectionError errorCallback) {
-        Server.extractRecipe(url, new Server.RecipeExtractionResult() {
+        Server.extractRecipe(url, new ServerCallbacks.RecipeExtractionResult() {
             @Override
             public void success(Recipe recipe) {
                 setRecipe(recipe);
@@ -166,7 +167,7 @@ public class UploadFromUrlActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 // create new recipe on server
-                Server.createRecipe(LoggedInUser.user().getSessionID(), LoggedInUser.user().getServerID(), recipe, new Server.CreateRecipeResult() {
+                Server.createRecipe(LoggedInUser.user().getSessionID(), LoggedInUser.user().getServerID(), recipe, new ServerCallbacks.CreateRecipeResult() {
                     @Override
                     public void success(Recipe recipe) {
                         // recipe was successfully created on the server

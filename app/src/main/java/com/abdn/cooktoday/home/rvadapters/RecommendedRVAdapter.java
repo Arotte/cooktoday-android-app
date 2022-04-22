@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +15,6 @@ import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.List;
 
 public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdapter.ViewHolder> {
@@ -44,6 +44,8 @@ public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdap
         String calories = recipes.get(position).getCalories() + " kcal";
         String time     = recipes.get(position).getTimePretty(Recipe.TimeType.FULL_COOKING_TIME);
         String servings = recipes.get(position).getServings() + " ppl";
+        boolean isCooked = recipes.get(position).isCookedByUser();
+        boolean isSaved  = recipes.get(position).isSaved();
 
         // set recipe name
         holder.tvRecipeName.setText(name);
@@ -51,6 +53,8 @@ public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdap
         holder.tvKcal.setText(calories);
         holder.tvTime.setText(time);
         holder.tvServings.setText(servings);
+        holder.isCookedBadge.setVisibility(isCooked ? View.VISIBLE : View.GONE);
+        holder.llIsSaved.setVisibility(isSaved ? View.VISIBLE : View.GONE);
 
         // download and show recipe img
         if (imgUrl.isEmpty())
@@ -78,6 +82,8 @@ public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdap
         TextView    tvTime;
         TextView    tvServings;
         ImageView   ivRecipeImg;
+        LinearLayout isCookedBadge;
+        LinearLayout llIsSaved;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -86,6 +92,8 @@ public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdap
             tvServings     = itemView.findViewById(R.id.tvRecipeCardV2Servings);
             tvTime         = itemView.findViewById(R.id.tvRecipeCardV2CookingTime);
             ivRecipeImg    = itemView.findViewById(R.id.ivRecipeCardV2RecipeImg);
+            isCookedBadge  = itemView.findViewById(R.id.llCookedBadge);
+            llIsSaved      = itemView.findViewById(R.id.llSavedBadge);
             itemView.setOnClickListener(this);
         }
 

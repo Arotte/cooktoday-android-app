@@ -4,14 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class InstructionJSON {
+public class InstructionJson {
     @SerializedName("_id")
     private String id;
     private String text;
     // private ArrayList<String> ingredients;
 
 
-    public InstructionJSON(String id, String text) {
+    public InstructionJson(String id, String text) {
         this.id = id;
         this.text = text;
     }

@@ -3,6 +3,7 @@ package com.abdn.cooktoday.local_data;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.local_data.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoggedInUser {
@@ -29,6 +30,13 @@ public class LoggedInUser {
     private String email;
     private List<Recipe> savedRecipes;
     private List<Recipe> recommendedRecipes;
+    private List<Recipe> myRecipes;
+    private List<Recipe> cookedRecipes;
+    private List<Recipe> personalizedRecipes;
+
+    private List<String> recommendedRecipeIds;
+    private List<String> myRecipeIds;
+    private List<String> cookedRecipeIds;
 
     public void setUser(User user) {
         fistName = user.getFirstName();
@@ -39,20 +47,133 @@ public class LoggedInUser {
         sessionID = user.getSessionId();
     }
 
+    /**
+     *
+     */
+    public void normalizeRecipes() {
+        if (savedRecipes == null || recommendedRecipes == null || myRecipes == null || cookedRecipes == null)
+           return;
+
+        // -----------------
+
+        cookedRecipeIds = new ArrayList<>();
+        for (Recipe cookedRecipe : cookedRecipes)
+           cookedRecipeIds.add(cookedRecipe.getServerId());
+
+        myRecipeIds = new ArrayList<>();
+        for (Recipe myRecipe : myRecipes)
+            myRecipeIds.add(myRecipe.getServerId());
+
+        List<String> savedRecipeIds = new ArrayList<>();
+        for (Recipe savedRecipe : savedRecipes)
+            savedRecipeIds.add(savedRecipe.getServerId());
+
+        for (Recipe savedRecipe : savedRecipes) {
+           // if recipe is cooked
+           String savedRecipeId = savedRecipe.getServerId();
+           if (cookedRecipeIds.contains(savedRecipeId)) {
+               savedRecipe.setCookedByUser(true);
+               removeByIdFromCooked(savedRecipeId);
+           } else
+               savedRecipe.setCookedByUser(false);
+        }
+
+        for (Recipe recommendedRecipe : recommendedRecipes) {
+           recommendedRecipe.setCookedByUser(cookedRecipeIds.contains(recommendedRecipe.getServerId()));
+           recommendedRecipe.setSaved(savedRecipeIds.contains(recommendedRecipe.getServerId()));
+        }
+
+        for (Recipe myRecipe : myRecipes) {
+           myRecipe.setCookedByUser(cookedRecipeIds.contains(myRecipe.getServerId()));
+           String myRecipeId = myRecipe.getServerId();
+           if (cookedRecipeIds.contains(myRecipeId)) {
+               myRecipe.setCookedByUser(true);
+               removeByIdFromCooked(myRecipeId);
+           } else
+               myRecipe.setCookedByUser(false);
+        }
+
+        // -----------------
+
+
+    }
+
+    private void removeByIdFromCooked(String recipeId) {
+        Recipe target = null;
+        for (Recipe rec : cookedRecipes)
+            if (rec.getServerId().equals(recipeId)) {
+                target = rec;
+                break;
+            }
+        if (target != null)
+            cookedRecipes.remove(target);
+    }
+
     /*
     Saved recipe related functions
      */
     public void setSavedRecipes(List<Recipe> recipes) { this.savedRecipes = recipes; }
     public Recipe getSavedRecipe(int idx) { return this.savedRecipes.get(idx); }
     public List<Recipe> getSavedRecipes() { return this.savedRecipes; }
-    public void addSavedRecipe(Recipe newRecipe) { this.savedRecipes.add(newRecipe); }
+    public void addSavedRecipe(Recipe newRecipe) {
+        this.savedRecipes.add(newRecipe);
+        notifySaved(newRecipe.getServerId());
+    }
     public int nSavedRecipes() { return this.savedRecipes.size(); }
 
+    private void notifySaved(String recipeId) {
+        if (this.recommendedRecipeIds.contains(recipeId))
+            if (this.recommendedRecipes != null)
+                this.recommendedRecipes.get(this.recommendedRecipeIds.indexOf(recipeId)).setSaved(true);
+
+        if (this.myRecipeIds.contains(recipeId))
+            if (this.myRecipes != null)
+                this.myRecipes.get(this.myRecipeIds.indexOf(recipeId)).setSaved(true);
+
+        if (this.cookedRecipeIds.contains(recipeId))
+            if (this.cookedRecipes != null)
+                this.cookedRecipes.get(this.cookedRecipeIds.indexOf(recipeId)).setSaved(true);
+    }
+
+    public List<Recipe> getMyRecipes() {
+        return this.myRecipes;
+    }
+
+    public List<Recipe> getPersonalizedRecipes() {
+        if (this.personalizedRecipes == null)
+            return new ArrayList<>();
+        return this.personalizedRecipes;
+    }
+
+    public void setPersonalizedRecipes(List<Recipe> personalizedRecipes) {
+        this.personalizedRecipes = personalizedRecipes;
+    }
+
     /*
-    Recommended recipes related functions
-     */
+        Recommended recipes related functions
+         */
     public List<Recipe> getRecommendedRecipes() { return this.recommendedRecipes; }
-    public void setRecommendedRecipes(List<Recipe> recipes) { this.recommendedRecipes = recipes; }
+    public void setRecommendedRecipes(List<Recipe> recipes) {
+        this.recommendedRecipes = recipes;
+        this.recommendedRecipeIds = new ArrayList<>();
+        for (Recipe recipe : this.recommendedRecipes)
+            this.recommendedRecipeIds.add(recipe.getServerId());
+    }
+
+    public void newRecipeCreatedByUser(Recipe newRecipe) {
+        this.myRecipes.add(newRecipe);
+        this.myRecipeIds.add(newRecipe.getServerId());
+        // notifySaved(newRecipe.getServerId());
+    }
+
+
+    /*
+    Own & cooked recipes related functions
+     */
+    public void setMyRecipes(List<Recipe> recipes) { this.myRecipes = recipes; }
+    public void setCookedRecipes(List<Recipe> cookedRecipes) {
+        this.cookedRecipes = cookedRecipes;
+    }
 
 
     public String getFistName() {

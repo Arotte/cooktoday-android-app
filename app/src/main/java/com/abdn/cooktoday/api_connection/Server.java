@@ -2,94 +2,331 @@ package com.abdn.cooktoday.api_connection;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.abdn.cooktoday.api_connection.jsonmodels.UserPrefsJsonModel;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeStepJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.feed.RecommendedRecipesJson;
-import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeJSON;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.CreateIngredientJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.CreatedIngredientJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredSearchJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson__Outer;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.RecipeIngredientJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.ingred_ner.IngredientNerJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.media.AwsUploadedFilesJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreatedInstructionJson;
-import com.abdn.cooktoday.api_connection.jsonmodels.recipe.InstructionJSON;
-import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON;
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe.ListOfRecipesJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.SavedRecipesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchResultItemJSON;
 import com.abdn.cooktoday.local_data.model.Ingredient;
+import com.abdn.cooktoday.local_data.model.NerredIngred;
 import com.abdn.cooktoday.local_data.model.Recipe;
-import com.abdn.cooktoday.local_data.model.User;
+import com.abdn.cooktoday.utility.Util;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Executor;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Server {
+    // TODO: use RxJava for threading : https://github.com/ReactiveX/RxJava
+
     private static final String TAG = "CookTodayServer";
+
+    private static Executor getExec() {
+        return new Executor() {
+            @Override
+            public void execute(Runnable runnable) {
+                runnable.run();
+            }
+        };
+    }
 
     /*
     =============================================
-    RESULT CALLBACKS
+    INGREDIENT SEARCH
     ============================================= */
-
-    public interface RecipeExtractionResult {
-        void success(Recipe recipe);
-        void error(int errorCode);
+    public static void searchIngredients(String userSessId, String query, ServerCallbacks.IngredSearchCallback resultCallback) {
+        Executor regExec = getExec();
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getSearchService().searchIngreds(userSessId, query).enqueue(new Callback<IngredSearchJson>() {
+                    @Override
+                    public void onResponse(Call<IngredSearchJson> call, Response<IngredSearchJson> r) {
+                        if (r.code() == 200) {
+                            Log.i(TAG, "Ingredient search successful!");
+                            resultCallback.success(r.body().getIngredients());
+                        } else {
+                            resultCallback.error(r.code());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<IngredSearchJson> call, Throwable t) {
+                        Log.i(TAG, t.toString() + ", " + t.getMessage());
+                        resultCallback.error(-1);
+                    }
+                });
+            }
+        });
     }
 
-    public interface RecipeSearchResult {
-        void success(ArrayList<RecipeSearchResultItemJSON> recipes);
-        void error(int errorCode);
+    /*
+    =============================================
+    CREATE NEW INGREDIENT
+    ============================================= */
+    public static void createNewIngredient(String userSessId, CreateIngredientJson ingredientJson, ServerCallbacks.CreateNewIngredientCallback callback) {
+        Executor regExec = getExec();
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getIngredientService()
+                    .createIngredient(userSessId, ingredientJson)
+                    .enqueue(new Callback<CreatedIngredientJson>() {
+                        @Override
+                        public void onResponse(Call<CreatedIngredientJson> call, Response<CreatedIngredientJson> r) {
+                            if (r.code() == 200) {
+                                Log.i(TAG, "Ingredient created successfully");
+                                callback.success(r.body().getIngredient());
+                            } else {
+                                callback.error(r.code());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<CreatedIngredientJson> call, Throwable t) {
+                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            callback.error(-1);
+                        }
+                    });
+            }
+        });
     }
 
-    public interface GetRecipeResult {
-        void success(Recipe recipe);
-        void error(int errorCode);
+    /*
+    =============================================
+    GET INGREDIENT BY ID
+    ============================================= */
+    public static void getIngredientById(String userSessId, String ingredId, ServerCallbacks.GetIngredientCallback callback) {
+        Executor regExec = getExec();
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getIngredientService()
+                    .getIngredientById(userSessId, ingredId)
+                    .enqueue(new Callback<IngredientJson__Outer>() {
+                        @Override
+                        public void onResponse(Call<IngredientJson__Outer> call, Response<IngredientJson__Outer> r) {
+                            if (r.code() == 200) {
+                                Log.i(TAG, "Ingredient '" + ingredId + "' successfully retrieved from server!");
+                                callback.success(r.body().getIngredient());
+                            } else {
+                                callback.error(r.code());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<IngredientJson__Outer> call, Throwable t) {
+                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            callback.error(-1);
+                        }
+                    });
+            }
+        });
     }
 
-    public interface CreateRecipeResult {
-        void success(Recipe recipe);
-        void error(int errorCode);
+    /*
+    =============================================
+    GET ALL RECIPES CREATED BY USER
+    ============================================= */
+    public static void getAllOwnRecipes(String userSessId, ServerCallbacks.ListOfRecipesCallback callback) {
+        Executor regExec = getExec();
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getRecipeService()
+                    .getRecipesOfUser(userSessId)
+                    .enqueue(new Callback<ListOfRecipesJson>() {
+                        @Override
+                        public void onResponse(Call<ListOfRecipesJson> call, Response<ListOfRecipesJson> r) {
+                            if (r.code() == 200) {
+                                Log.i(TAG, "Recipes created by user successfully retrieved from server!");
+
+                                List<Recipe> recipes = new ArrayList<>();
+                                for (RecipeJson recipeJson : r.body().getRecipes())
+                                    recipes.add(new Recipe(recipeJson));
+                                callback.success(recipes);
+                            } else {
+                                callback.error(r.code());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ListOfRecipesJson> call, Throwable t) {
+                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            callback.error(-1);
+                        }
+                    });
+            }
+        });
     }
 
-    public interface SaveUserPrefResult {
-        void success(UserPrefsJsonModel savedUserPrefs);
-        void error(int errorCode);
+    /*
+    =============================================
+    GET ALL COOKED RECIPES BY USER
+    ============================================= */
+    public static void getAllCookedRecipes(String userSessId, ServerCallbacks.ListOfRecipesCallback callback) {
+        Executor regExec = getExec();
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getRecipeService()
+                    .getRecipesCookedByUser(userSessId)
+                    .enqueue(new Callback<ListOfRecipesJson>() {
+                        @Override
+                        public void onResponse(Call<ListOfRecipesJson> call, Response<ListOfRecipesJson> r) {
+                            if (r.code() == 200) {
+                                Log.i(TAG, "Recipes cooked by user successfully retrieved from server!");
+
+                                List<Recipe> recipes = new ArrayList<>();
+                                for (RecipeJson recipeJson : r.body().getRecipes()) {
+                                    Recipe rec = new Recipe(recipeJson);
+                                    rec.setCookedByUser(true);
+                                    recipes.add(rec);
+                                }
+                                callback.success(recipes);
+                            } else {
+                                callback.error(r.code());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ListOfRecipesJson> call, Throwable t) {
+                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            callback.error(-1);
+                        }
+                    });
+            }
+        });
     }
 
-    public interface GetSavedRecipesResult {
-        void success(List<Recipe> recipes);
-        void error(int errorCode);
+    /*
+    =============================================
+    UPLOAD AN IMAGE TO AWS
+    ============================================= */
+    public static void uploadRecipeImageToAws(String userSessId, File imgFile, ServerCallbacks.AwsRecipeImgUploadResult resultCallback) {
+        Executor regExec = getExec();
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpClient client = new OkHttpClient().newBuilder()
+                        .build();
+                MediaType mediaType = MediaType.parse("text/plain");
+                RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("media",imgFile.getName() + "_" + Util.getUniqueIdFromDate(),
+                                RequestBody.create(MediaType.parse("application/octet-stream"),
+                                        imgFile))
+                        .build();
+                Request request = new Request.Builder()
+                        .url( APIEndpoints.BASE + "media/recipe" )
+                        .method("POST", body)
+                        .addHeader("Cookie", userSessId)
+                        .build();
+                try {
+                    okhttp3.Call call = client.newCall(request);
+                    call.enqueue(new okhttp3.Callback() {
+                        @Override
+                        public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
+                            Log.i(TAG, "ERROR UPLOADING IMAGE TO AWS ====");
+                            e.printStackTrace();
+                        }
+
+                        @Override
+                        public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws IOException {
+                            if (response.code() == 200) {
+                                String responsejsonstr =response.body().string();
+                                Log.i(TAG, "SUCCESS UPLOADING IMAGE TO AWS! ====== " + response.toString() + " ==== " + responsejsonstr);
+                                try {
+                                    JSONObject responseJson = new JSONObject(responsejsonstr);
+                                    JSONArray fileUrls = responseJson.getJSONArray("files");
+                                    resultCallback.success(new AwsUploadedFilesJson(fileUrls));
+                                } catch (JSONException e) {
+                                    Log.i(TAG, "aaaaaaaaaaaaaaaaaaaa");
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                Log.i(TAG, "ERROR UPLOADING IMAGE TO AWS! ====== " + response.toString());
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
-    public interface SaveRecipeResult {
-        void success(Recipe recipe);
-        void error(int errorCode);
-    }
+    /*
+    =============================================
+    PERFORM NER ON AN INGREDIENT STRING
+    ============================================= */
+    public static void performNerOnIngred(String userSessId, String ingredStr, ServerCallbacks.IngredientNerResult resultCallback) {
+        Executor regExec = getExec();
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getNerService()
+                    .performNerOnIngred(userSessId, ingredStr)
+                    .enqueue(new Callback<IngredientNerJson>() {
+                        @Override
+                        public void onResponse(Call<IngredientNerJson> call, Response<IngredientNerJson> r) {
+                            if (r.code() == 200) {
+                                Log.i(TAG, "Successfully performed NER on ingredient '" + ingredStr + "'");
+                                resultCallback.success(new NerredIngred(r.body()));
+                            } else {
+                                resultCallback.error(r.code());
+                            }
+                        }
 
-    public interface GetRecommendedRecipesResult {
-        void success(List<Recipe> recommendedRecipes);
-        void error(int errorCode);
+                        @Override
+                        public void onFailure(Call<IngredientNerJson> call, Throwable t) {
+                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            resultCallback.error(-1);
+                        }
+                    });
+            }
+        });
     }
 
     /*
     =============================================
     GET RECOMMENDED RECIPES
     ============================================= */
-    public static void getRecommendedRecipes(String userSessId, GetRecommendedRecipesResult resultCallback) {
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
-
+    public static void getRecommendedRecipes(String userSessId, ServerCallbacks.GetRecommendedRecipesResult resultCallback) {
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -101,7 +338,8 @@ public class Server {
                             if (r.code() == 200) {
                                 Log.i(TAG, "Successfully retrieved recommended recipes!");
                                 List<Recipe> recommendedRecipes = new ArrayList<>();
-                                for (RecipeJSON recipeJson : r.body().getRecommendedRecipes())
+                                assert r.body() != null;
+                                for (RecipeJson recipeJson : r.body().getRecommendedRecipes())
                                     recommendedRecipes.add(new Recipe(recipeJson));
                                 resultCallback.success(recommendedRecipes);
                             } else {
@@ -123,14 +361,8 @@ public class Server {
     =============================================
     SAVE A RECIPE
     ============================================= */
-    public static void saveRecipe(String userSessId, String recipeId, SaveRecipeResult resultCallback) {
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
-
+    public static void saveRecipe(String userSessId, String recipeId, ServerCallbacks.SaveRecipeResult resultCallback) {
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -161,54 +393,38 @@ public class Server {
     =============================================
     GET ALL SAVED RECIPES OF USER
     ============================================= */
-    public static void getAllSavedRecipes(String userSessId, GetSavedRecipesResult resultCallback) {
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
-
+    public static void getAllSavedRecipes(String userSessId, ServerCallbacks.GetSavedRecipesResult resultCallback) {
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
                 APIRepository.getInstance().getRecipeService()
-                        .getSavedRecipes(userSessId)
-                        .enqueue(new Callback<SavedRecipesJson>() {
-                            @Override
-                            public void onResponse(Call<SavedRecipesJson> call, Response<SavedRecipesJson> r) {
-                                if (r.code() == 200) {
-                                    Log.i(TAG, "Saved recipe IDs retrieved!");
-                                    SavedRecipesJson savedRecipeIds = r.body();
-                                    List<Recipe> savedRecipes = new ArrayList<>();
-
-                                    // get recipes by ID from server one by one
-                                    for (String savedRecipeId : savedRecipeIds.getSavedRecipes()) {
-                                        getRecipeById(userSessId, savedRecipeId, new GetRecipeResult() {
-                                            @Override
-                                            public void success(Recipe recipe) {
-                                                Log.i(TAG, "Recipe " + savedRecipeId + " successfully retrieved from server!");
-                                                savedRecipes.add(recipe);
-                                            }
-                                            @Override
-                                            public void error(int errorCode) {
-                                                Log.i(TAG, "Error retrieving recipe " + savedRecipeId + " from server (code: " + errorCode + ")!");
-                                            }
-                                        });
-                                    }
-
-                                    resultCallback.success(savedRecipes);
-                                } else {
-                                    resultCallback.error(r.code());
+                    .getSavedRecipes(userSessId)
+                    .enqueue(new Callback<SavedRecipesJson>() {
+                        @Override
+                        public void onResponse(Call<SavedRecipesJson> call, Response<SavedRecipesJson> r) {
+                            if (r.code() == 200) {
+                                Log.i(TAG, "Saved recipe IDs retrieved!");
+                                SavedRecipesJson savedRecipeIds = r.body();
+                                List<Recipe> savedRecipes = new ArrayList<>();
+                                assert savedRecipeIds != null;
+                                for (RecipeJson recipeJson : savedRecipeIds.getRecipes()) {
+                                    Recipe rec = new Recipe(recipeJson);
+                                    rec.setSaved(true);
+                                    savedRecipes.add(rec);
                                 }
+                                resultCallback.success(savedRecipes);
+                            } else {
+                                resultCallback.error(r.code());
                             }
+                        }
 
-                            @Override
-                            public void onFailure(Call<SavedRecipesJson> call, Throwable t) {
-                                Log.i(TAG, t.toString() + ", " + t.getMessage());
-                                resultCallback.error(-1);
-                            }
-                        });
+                        @Override
+                        public void onFailure(Call<SavedRecipesJson> call, Throwable t) {
+                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            resultCallback.error(-1);
+                        }
+                    });
             }
         });
     }
@@ -224,7 +440,7 @@ public class Server {
         List<String> allergies,
         List<String> diet,
         String cookingSkill,
-        SaveUserPrefResult resultCallback) {
+        ServerCallbacks.SaveUserPrefResult resultCallback) {
 
         UserPrefsJsonModel userPrefsJson = new UserPrefsJsonModel(
                 dislikedIngreds,
@@ -234,13 +450,7 @@ public class Server {
                 cookingSkill
         );
 
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
-
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -271,21 +481,16 @@ public class Server {
     =============================================
     CREATE NEW RECIPE
     ============================================= */
-    public static void createRecipe(String userSessId, String userId, Recipe recipe, CreateRecipeResult resultCallback) {
+    public static void createRecipe(String userSessId, String userId, Recipe recipe, ServerCallbacks.CreateRecipeResult resultCallback) {
         ArrayList<CreatedInstructionJson> instructionsJson = new ArrayList<>();
         for (String instruction : recipe.getStepDescriptions())
             instructionsJson.add(new CreatedInstructionJson(instruction, new ArrayList<>()));
 
 
         String dateOfCreation = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());;
-        CreateRecipeJSON recipeJson = new CreateRecipeJSON(recipe, dateOfCreation, userId);
+        CreateRecipeJson recipeJson = new CreateRecipeJson(recipe, dateOfCreation, userId);
 
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -316,14 +521,8 @@ public class Server {
     =============================================
     GET RECIPE BY ID
     ============================================= */
-    public static void getRecipeById(String userSessId, String recipeId, GetRecipeResult resultCallback) {
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
-
+    public static void getRecipeById(String userSessId, String recipeId, ServerCallbacks.GetRecipeResult resultCallback) {
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -352,14 +551,8 @@ public class Server {
     =============================================
     SEARCH RECIPES
     ============================================= */
-    public static void searchRecipes(String userSessId, String query, RecipeSearchResult resultCallback) {
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }
-        };
-
+    public static void searchRecipes(String userSessId, String query, ServerCallbacks.RecipeSearchResult resultCallback) {
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {
@@ -388,12 +581,8 @@ public class Server {
     =============================================
     EXTRACT RECIPE FROM URL
     ============================================= */
-    public static void extractRecipe(String url, RecipeExtractionResult resultCallback) {
-        Executor regExec = new Executor() {
-            @Override
-            public void execute(Runnable runnable) {
-                runnable.run();
-            }};
+    public static void extractRecipe(String url, ServerCallbacks.RecipeExtractionResult resultCallback) {
+        Executor regExec = getExec();
         regExec.execute(new Runnable() {
             @Override
             public void run() {

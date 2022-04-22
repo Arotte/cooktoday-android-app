@@ -38,10 +38,6 @@ public class SearchResultArrayAdapter extends ArrayAdapter<RecipeSearchResultIte
         listItem = LayoutInflater.from(mContext).inflate(R.layout.fragment_search_layout_item_autocomplete, parent, false);
 
         RecipeSearchResultItemJSON currentRecipe = recipesList.get(position);
-
-//        ImageView image = (ImageView) listItem.findViewById(R.id.ivSearchResultRecipeImage);
-//        Picasso.get().load(currentRecipe.getImgUrl()).into(image);
-
         TextView name = (TextView) listItem.findViewById(R.id.tvSearchResultRecipeName);
         name.setText(currentRecipe.getName());
 

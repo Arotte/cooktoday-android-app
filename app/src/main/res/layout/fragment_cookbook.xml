@@ -33,15 +33,54 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/tvCookbookMyRecipes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="Created by Me"
+                    android:textColor="@color/textMain"
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCookBookFragmentMyRecipes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:overScrollMode="never"
+                    android:layout_marginTop="15dp"/>
+
+                <TextView
+                    android:id="@+id/tvCookbookSavedRecipes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="Saved"
+                    android:textColor="@color/textMain"
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvCookBookFragmentCookBookRecipes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:overScrollMode="never"
-                    android:requiresFadingEdge="vertical"
                     android:fadingEdgeLength="15dp"
                     android:layout_marginTop="15dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

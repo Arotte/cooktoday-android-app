@@ -1,16 +1,17 @@
 package com.abdn.cooktoday.upload_recipe.manual;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 
 
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.FileUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.abdn.cooktoday.R;
@@ -18,9 +19,18 @@ import com.abdn.cooktoday.R;
 import android.widget.EditText;
 
 import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.api_connection.ServerCallbacks;
+import com.abdn.cooktoday.api_connection.jsonmodels.media.AwsUploadedFilesJson;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
+import com.abdn.cooktoday.local_data.model.NerredIngred;
 import com.abdn.cooktoday.local_data.model.Recipe;
+import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.AddIngredBottomSheet;
+import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.OnIngredientAddedCallback;
+import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.AddStepBottomSheet;
+import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.OnStepAddedCallback;
+import com.abdn.cooktoday.upload_recipe.manual.rvadapters.IngredientRVAdapter;
+import com.abdn.cooktoday.upload_recipe.manual.rvadapters.StepRVAdapter;
 import com.abdn.cooktoday.utility.ProgressButtonHandler;
 import com.abdn.cooktoday.utility.ToastMaker;
 import com.google.android.material.button.MaterialButton;
@@ -28,69 +38,111 @@ import com.google.android.material.button.MaterialButton;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import org.apache.commons.io.IOUtils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 // TODO: send image to server
-public class UploadActivity extends AppCompatActivity {
+public class UploadActivity extends AppCompatActivity
+        implements IngredientRVAdapter.ItemClickListener, StepRVAdapter.ItemClickListener {
+
     private static final String TAG = "UploadActivity";
 
     int PICK_IMAGE = 100;
     ImageView imageView;
 
-    EditText input;
     EditText etRecipeName;
     EditText etRecipeDesc;
     EditText etServings;
     EditText etCalories;
 
-    ImageView enter;
-    ListView listView;
-    ArrayList<String> ingredients;
-    ArrayAdapter<String> adapter;
-
-    EditText input_step;
-    ImageView enter_step;
-    ListView listViewSteps;
-    ArrayList<String> steps;
-    ArrayAdapter<String> adapter_steps;
     ProgressButtonHandler btnUploadHandler;
+    String uploadedImageUrl;
+    Uri recipeImageFileUri;
 
     int total_hrs = 0;
     int total_min = 0;
     int cookingTime = 0;
     int prepTime = 0;
 
+    // adding new ingredients
+    RecyclerView rvIngreds;
+    IngredientRVAdapter rvAdapterIngreds;
+    MaterialButton btnAddNewIngred;
+    List<NerredIngred> ingredients;
+    AddIngredBottomSheet addIngredBottomSheet;
+    private int quantityColor;
+    private int unitColor;
+    private int nameColor;
+
+    // adding new steps
+    RecyclerView rvSteps;
+    StepRVAdapter rvAdapterSteps;
+    MaterialButton btnAddNewStep;
+    List<String> steps;
+    AddStepBottomSheet addStepBottomSheet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
-        initViews();
-    }
 
+        quantityColor = getResources().getColor(R.color.facebook_tp);
+        unitColor = getResources().getColor(R.color.google_tp);
+        nameColor = getResources().getColor(R.color.primaryGreen_tp);
+
+        initViews();
+        ingredAdditionSetup();
+        stepAdditionSetup();
+    }
 
     private Recipe gatherRecipeDetails() {
         List<Ingredient> ingreds = new ArrayList<>();
-        for (String ingredStr : ingredients)
-            ingreds.add(new Ingredient(ingredStr, ""));
+        for (NerredIngred nerIngred : ingredients)
+            ingreds.add(new Ingredient(nerIngred.getOriginal(), nerIngred.getQuantity()));
 
         return new Recipe(
-                etRecipeName.getText().toString(),
-                "",
-                etRecipeDesc.getText().toString(),
-                "",
-                Integer.parseInt(etServings.getText().toString()),
-                Integer.parseInt(etCalories.getText().toString()),
-                prepTime,
-                cookingTime,
-                steps,
-                ingreds);
+            etRecipeName.getText().toString(),
+            "",
+            etRecipeDesc.getText().toString(),
+            uploadedImageUrl,
+            Integer.parseInt(etServings.getText().toString()),
+            Integer.parseInt(etCalories.getText().toString()),
+            prepTime,
+            cookingTime,
+            steps,
+            ingreds);
+    }
+
+    private File createFileFromIs(InputStream is) {
+        File file = new File("data/data/com.abdn.cooktoday/temp.jpg");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try( OutputStream outputStream = new FileOutputStream(file) ) {
+            IOUtils.copy(is, outputStream);
+        } catch (FileNotFoundException e) {
+            // handle exception here
+        } catch (IOException e) {
+            // handle exception here
+        }
+        return file;
     }
 
     private void initViews() {
@@ -101,88 +153,6 @@ public class UploadActivity extends AppCompatActivity {
         etCalories = (EditText) findViewById(R.id.etUploadCalories);
         etServings = (EditText) findViewById(R.id.etUploadServings);
 
-        enter = (ImageView) findViewById(R.id.add);
-        listView = (ListView)findViewById(R.id.listView);
-        input = (EditText)findViewById(R.id.input);
-        ingredients = new ArrayList<>();
-        adapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1, ingredients);
-
-        enter_step = (ImageView) findViewById(R.id.add_step);
-        listViewSteps = (ListView)findViewById(R.id.listViewSteps);
-        input_step = (EditText)findViewById(R.id.input_step);
-        steps = new ArrayList<>();
-        adapter_steps = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1,steps);
-
-        ViewCompat.setNestedScrollingEnabled(listView, true);
-        ViewCompat.setNestedScrollingEnabled(listViewSteps, true);
-
-        listView.setAdapter(adapter);
-        listViewSteps.setAdapter(adapter_steps);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String name = ingredients.get(i);
-                //makeToast(name);
-            }
-        });
-
-        listViewSteps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String name = steps.get(i);
-                //makeToast(name);
-            }
-        });
-
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //makeToast("Removed: " + items.get(i));
-                removeItem(i);
-                return false;
-            }
-        });
-
-        listViewSteps.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //makeToast("Removed: " + steps.get(i));
-                removeStep(i);
-                return false;
-            }
-        });
-
-        enter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String text = input.getText().toString();
-                if(text == null || text.length() == 0){
-                    //makeToast("Enter an item.");
-                }else{
-                    input.setText("");
-                    addItem(text);
-                    //makeToast("Added: " + text);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
-
-        enter_step.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String text = input_step.getText().toString();
-                if(text == null || text.length() == 0){
-                    //makeToast("Enter an item.");
-                }else{
-                    input_step.setText("");
-                    addStep(text);
-                    //makeToast("Added: " + text);
-                    adapter_steps.notifyDataSetChanged();
-                }
-            }
-        });
-
         Button cancel = findViewById(R.id.btnCancelUpload);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,7 +160,6 @@ public class UploadActivity extends AppCompatActivity {
                 finish();
             }
         });
-
 
         // set up image chooser area
         View imgUploadArea = (RelativeLayout) findViewById(R.id.uploadImageArea);
@@ -207,30 +176,52 @@ public class UploadActivity extends AppCompatActivity {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // gather recipe details entered by the user
                 btnUploadHandler.setState(ProgressButtonHandler.State.LOADING);
-                Recipe recipe = gatherRecipeDetails();
-                // make recipe creation request to the server
-                Server.createRecipe(
-                        LoggedInUser.user().getSessionID(),
-                        LoggedInUser.user().getServerID(),
-                        recipe,
-                        new Server.CreateRecipeResult() {
+                // 1.) upload image to AWS
+                if (recipeImageFileUri != null) {
+                    try {
+                        InputStream fin = getContentResolver().openInputStream(recipeImageFileUri);
+                        File imageFile = createFileFromIs(fin);
+                        Server.uploadRecipeImageToAws(LoggedInUser.user().getSessionID(), imageFile, new ServerCallbacks.AwsRecipeImgUploadResult() {
                             @Override
-                            public void success(Recipe recipe) {
-                                // recipe created on server
-                                btnUploadHandler.setState(ProgressButtonHandler.State.SUCCESS);
-                                Log.i(TAG, "Recipe successfully created!");
-                                ToastMaker.make("Recipe added!", ToastMaker.Type.SUCCESS, UploadActivity.this);
-                                finish();
+                            public void success(AwsUploadedFilesJson files) {
+                                uploadedImageUrl = files.getFiles().get(0);
+                                Log.i(TAG, "File successfully uploaded to AWS! Link: " + uploadedImageUrl);
+                                // 2.) post recipe creation request to API
+                                Recipe recipe = gatherRecipeDetails();
+                                Server.createRecipe(
+                                    LoggedInUser.user().getSessionID(),
+                                    LoggedInUser.user().getServerID(),
+                                    recipe,
+                                    new ServerCallbacks.CreateRecipeResult() {
+                                        @Override
+                                        public void success(Recipe createdRecipe) {
+                                            // recipe created on server
+                                            btnUploadHandler.setState(ProgressButtonHandler.State.SUCCESS);
+                                            Log.i(TAG, "Recipe successfully created!");
+                                            ToastMaker.make("Recipe added!", ToastMaker.Type.SUCCESS, UploadActivity.this);
+                                            LoggedInUser.user().newRecipeCreatedByUser(createdRecipe);
+                                            finish();
+                                        }
+                                        @Override
+                                        public void error(int errorCode) {
+                                            // error while creating recipe on server
+                                            btnUploadHandler.setState(ProgressButtonHandler.State.DEFAULT);
+                                            Log.i(TAG, "Error while creating recipe on server! Error code: " + errorCode);
+                                            ToastMaker.make("Oops! Something went wrong", ToastMaker.Type.ERROR, UploadActivity.this);
+                                        }});
                             }
                             @Override
                             public void error(int errorCode) {
-                                // error while creating recipe on server
                                 btnUploadHandler.setState(ProgressButtonHandler.State.DEFAULT);
-                                Log.i(TAG, "Error while creating recipe on server! Error code: " + errorCode);
+                                Log.i(TAG, "Error while upload recipe image to AWS! Error code: " + errorCode);
                                 ToastMaker.make("Oops! Something went wrong", ToastMaker.Type.ERROR, UploadActivity.this);
-                            }});
+                            }
+                        });
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
 
@@ -245,7 +236,6 @@ public class UploadActivity extends AppCompatActivity {
         //addTime(seekBarCookValue.getText().toString(), seekBarPrepValue.getText().toString(), totalTime);
 
         seekBarCooking.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
-
             @Override
             public void onProgressChanged(SeekBar seekBar, int duration,
                                           boolean fromUser) {
@@ -270,7 +260,6 @@ public class UploadActivity extends AppCompatActivity {
         });
 
         seekBarPreparation.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
-
             @Override
             public void onProgressChanged(SeekBar seekBar, int duration,
                                           boolean fromUser) {
@@ -303,26 +292,6 @@ public class UploadActivity extends AppCompatActivity {
                 ((ImageView) findViewById(R.id.icCookbookSuccessIcon)));
     }
 
-    public void addItem(String item){
-        ingredients.add(item);
-        listView.setAdapter(adapter);
-    }
-
-    public void addStep(String item){
-        steps.add(item);
-        listViewSteps.setAdapter(adapter_steps);
-    }
-
-    public void removeItem(int i){
-        ingredients.remove(i);
-        adapter.notifyDataSetChanged();
-    }
-
-    public void removeStep(int i){
-        steps.remove(i);
-        adapter_steps.notifyDataSetChanged();
-    }
-
     public static void sumTime(int h1, int h2, int m1, int m2, TextView totalTime){
         int minSum = m1 + m2;
         int hourSum = 0;
@@ -341,7 +310,7 @@ public class UploadActivity extends AppCompatActivity {
     void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         // Sets the type as image/*. This ensures only components of type image are selected
-        //intent.setType("image/*");
+        intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
     }
@@ -357,11 +326,124 @@ public class UploadActivity extends AppCompatActivity {
                 if (null != selectedImageUri) {
                     // update the preview image in the layout
                     imageView.setImageURI(selectedImageUri);
+                    recipeImageFileUri = selectedImageUri;
                     // make relative layout transparent
                     View relativeLayout = findViewById(R.id.uploadImageArea);
                     relativeLayout.setBackgroundResource(R.color.transparent);
                 }
             }
         }
+    }
+
+    // =============================================================================
+    // INGREDIENT ADDITIONS
+    // =============================================================================
+
+    private void ingredAdditionSetup() {
+        // ingredients recyclerview
+        rvIngreds = (RecyclerView) findViewById(R.id.rvCreateRecipeIngreds);
+        rvIngreds.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvIngreds.setNestedScrollingEnabled(false);
+
+        ingredients = new ArrayList<>();
+        rvAdapterIngreds = new IngredientRVAdapter(this, ingredients, quantityColor, unitColor, nameColor);
+        rvAdapterIngreds.setClickListener(this);
+
+        rvIngreds.setAdapter(rvAdapterIngreds);
+
+        // bottom sheet
+        addIngredBottomSheet = new AddIngredBottomSheet(new OnIngredientAddedCallback() {
+            @Override
+            public void success(NerredIngred ingred) {
+                onAddIngredFinished(ingred);
+            }
+        }, quantityColor, unitColor, nameColor);
+
+        if (addIngredBottomSheet.isVisible())
+            addIngredBottomSheet.dismiss();
+
+        // add new ingred button
+        btnAddNewIngred = (MaterialButton) findViewById(R.id.btnCreateRecipeAddIngred);
+        btnAddNewIngred.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAddNewIngredBtnClick();
+            }
+        });
+    }
+
+    private void onAddNewIngredBtnClick() {
+        // show ingred addition bottom sheet
+        showIngredBottomSheet();
+    }
+
+    @Override
+    public void onIngredItemClick(View view, int position) {
+    }
+
+    @Override
+    public void onIngredItemLongClick(View view, int position) {
+        // delete item
+        ingredients.remove(position);
+        rvAdapterIngreds.notifyItemRemoved(position);
+    }
+
+
+    private void showIngredBottomSheet() {
+        addIngredBottomSheet.show(UploadActivity.this.getSupportFragmentManager(), "ModalBottomSheet");
+    }
+
+    private void onAddIngredFinished(NerredIngred ingred) {
+        // insert new ingredient
+        ingredients.add(ingred);
+        rvAdapterIngreds.notifyItemInserted(ingredients.size() - 1);
+    }
+
+    // =============================================================================
+    // STEP ADDITIONS
+    // =============================================================================
+
+    private void stepAdditionSetup() {
+        steps = new ArrayList<>();
+        rvSteps = (RecyclerView) findViewById(R.id.rvCreateRecipeSteps);
+        rvSteps.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvSteps.setNestedScrollingEnabled(false);
+
+        rvAdapterSteps = new StepRVAdapter(this, steps);
+        rvAdapterSteps.setClickListener(this);
+
+        rvSteps.setAdapter(rvAdapterSteps);
+
+        // bottom sheet
+        addStepBottomSheet = new AddStepBottomSheet(new OnStepAddedCallback() {
+            @Override
+            public void success(String stepDesc) {
+                // add step to recyclerview
+                steps.add(stepDesc);
+                rvAdapterSteps.notifyItemInserted(steps.size() - 1);
+            }
+        });
+
+        if (addStepBottomSheet.isVisible())
+            addStepBottomSheet.dismiss();
+
+        // add new step button
+        btnAddNewStep = (MaterialButton) findViewById(R.id.btnCreateRecipeAddStep);
+        btnAddNewStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // show step addition bottom sheet
+                addStepBottomSheet.show(UploadActivity.this.getSupportFragmentManager(), "ModalBottomSheet");
+            }
+        });
+
+    }
+
+    @Override
+    public void onStepItemClick(View view, int position) {
+    }
+
+    @Override
+    public void onStepItemLongClick(View view, int position) {
     }
 }

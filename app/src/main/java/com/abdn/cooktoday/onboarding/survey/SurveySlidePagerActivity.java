@@ -22,13 +22,16 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.abdn.cooktoday.MainActivity;
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.api_connection.jsonmodels.UserPrefsJsonModel;
 import com.abdn.cooktoday.local_data.LoggedInUser;
+import com.abdn.cooktoday.onboarding.OnBoardingActivity;
 import com.abdn.cooktoday.onboarding.survey.steps.SurveyFragment1Cuisines;
 import com.abdn.cooktoday.onboarding.survey.steps.SurveyFragment2Allergies;
 import com.abdn.cooktoday.onboarding.survey.steps.SurveyFragment3Diets;
 import com.abdn.cooktoday.onboarding.survey.steps.SurveyFragment4Ingreds;
 import com.abdn.cooktoday.onboarding.survey.steps.SurveyFragment5Skills;
+import com.abdn.cooktoday.utility.OnBoardingDataRetrieval;
 import com.abdn.cooktoday.utility.ToastMaker;
 import com.google.android.material.button.MaterialButton;
 
@@ -209,7 +212,7 @@ public class SurveySlidePagerActivity extends FragmentActivity {
             surveyFragment2Allergies.getSelected(),
             surveyFragment3Diets.getSelected(),
             surveyFragment5Skills.getSelectedStr(),
-            new Server.SaveUserPrefResult() {
+            new ServerCallbacks.SaveUserPrefResult() {
                 @SuppressLint("LongLogTag")
                 @Override
                 public void success(UserPrefsJsonModel savedUserPrefs) {
@@ -217,12 +220,21 @@ public class SurveySlidePagerActivity extends FragmentActivity {
                     Log.i(TAG, "Preferences successfully saved!");
                     ToastMaker.make("Preferences successfully saved!", ToastMaker.Type.SUCCESS, SurveySlidePagerActivity.this);
 
-                    // clear Activity stack, start MainActivity
-                    Intent intent = new Intent(SurveySlidePagerActivity.this, MainActivity.class);
-                    intent.putExtra("StartedFrom", "OnBoardingSurvey");
-                    intent.addFlags(
-                            Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                    // retrieve essential data from server
+                    OnBoardingDataRetrieval.retrieve(TAG, new OnBoardingDataRetrieval.RetrievalResult() {
+                        @Override
+                        public void success() {
+                            // clear Activity stack, start MainActivity
+                            Intent intent = new Intent(SurveySlidePagerActivity.this, MainActivity.class);
+                            intent.putExtra("StartedFrom", "OnBoardingSurvey");
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        }
+                        @Override
+                        public void error(int where, String whereStr, int errorCode) {
+                            Log.i(TAG, "Error while retrieving data: " + errorCode + ", " + whereStr);
+                        }
+                    });
                 }
 
                 @SuppressLint("LongLogTag")

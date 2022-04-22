@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:background="@drawable/shape_round">
+
+        <LinearLayout
+            android:id="@+id/llIngredSearchAutocompleteSuggestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/lvIngredSearchResults"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/etIngred"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/custom_input_nocornerradius"
+            android:ems="10"
+            android:fontFamily="@font/inter_medium"
+            android:gravity="start|top"
+            android:hint="For example: 1 tsp garlic powder"
+            android:inputType="textMultiLine"
+            android:lines="3"
+            android:paddingStart="12dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="12dp"
+            android:textColor="@color/textMain"
+            android:textColorHint="@color/textSecondary"
+            android:textSize="17sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical|center_horizontal">
+            <TextView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:text=""
+                android:background="@color/facebook"
+                android:layout_marginEnd="7dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantity"
+                android:fontFamily="@font/interr"
+                android:textColor="@color/textMain"
+                android:textSize="14sp"
+                android:backgroundTint="@color/facebook_tp" />
+            <TextView
+                android:layout_marginStart="17dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:text=""
+                android:background="@color/google"
+                android:layout_marginEnd="7dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unit"
+                android:fontFamily="@font/interr"
+                android:textColor="@color/textMain"
+                android:textSize="14sp"
+                android:backgroundTint="@color/facebook_tp" />
+            <TextView
+                android:layout_marginStart="17dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:text=""
+                android:background="@color/primaryGreen"
+                android:layout_marginEnd="7dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:fontFamily="@font/interr"
+                android:textColor="@color/textMain"
+                android:textSize="14sp"
+                android:backgroundTint="@color/facebook_tp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAction"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/primaryGreen"
+                android:fontFamily="@font/interr"
+                android:stateListAnimator="@null"
+                android:text="Extract details"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:cornerRadius="30dp"
+                app:rippleColor="@color/black" />
+
+            <ProgressBar
+                android:id="@+id/pb"
+                android:indeterminate="true"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingEnd="5dp"
+                android:indeterminateTint="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_alignTop="@id/btnAction"
+                android:layout_alignEnd="@id/btnAction"
+                android:layout_alignBottom="@id/btnAction"/>
+
+            <ImageView
+                android:id="@+id/icAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_discovery"
+                android:layout_gravity="right"
+                android:layout_alignTop="@id/btnAction"
+                android:layout_alignEnd="@id/btnAction"
+                android:layout_alignBottom="@id/btnAction"
+                app:tint="@color/white"
+                android:layout_marginEnd="20dp"/>
+
+            <ImageView
+                android:id="@+id/icSuccess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/btnAction"
+                android:layout_alignEnd="@id/btnAction"
+                android:layout_alignBottom="@id/btnAction"
+                android:layout_gravity="right"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_done_simple"
+                app:tint="@color/white" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

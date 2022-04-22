@@ -22,8 +22,10 @@ import com.abdn.cooktoday.api_connection.jsonmodels.UserJSONModel__Outer;
 import com.abdn.cooktoday.local_data.Cache;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.User;
+import com.abdn.cooktoday.onboarding.OnBoardingActivity;
 import com.abdn.cooktoday.onboarding.forgotpassword.ForgotPassword;
 import com.abdn.cooktoday.onboarding.registration.RegisterActivity;
+import com.abdn.cooktoday.utility.OnBoardingDataRetrieval;
 
 import java.util.concurrent.Executor;
 
@@ -32,6 +34,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
+    private static final String TAG = "LoginActivity";
 
     EditText emailField;
     EditText pwField;
@@ -153,15 +156,25 @@ public class LoginActivity extends AppCompatActivity {
 
     private void onLoginSuccess(User user) {
         Log.i("LoginActivity", "User login SUCCESSFUL!");
-        loginIcon.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.INVISIBLE);
-        successIcon.setVisibility(View.VISIBLE);
 
         saveLoggedInUserToCache(user);
         LoggedInUser.user().setUser(user);
 
-        finish();
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        OnBoardingDataRetrieval.retrieve(TAG, new OnBoardingDataRetrieval.RetrievalResult() {
+            @Override
+            public void success() {
+                loginIcon.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
+                successIcon.setVisibility(View.VISIBLE);
+                finish();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            }
+
+            @Override
+            public void error(int where, String whereStr, int errorCode) {
+                Log.i(TAG, "Error while retrieving data: " + errorCode + ", " + whereStr);
+            }
+        });
     }
 
     private void onLoginFailure(int httpErrorCode) {

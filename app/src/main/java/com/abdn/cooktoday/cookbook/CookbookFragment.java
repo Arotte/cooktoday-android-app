@@ -7,27 +7,31 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.cookbook.bottomsheet.UploadTypeBottomSheet;
 import com.abdn.cooktoday.cookbook.rvadapters.CookBookRVAdapter;
+import com.abdn.cooktoday.cookbook.rvadapters.CreatedByMeRVAdapter;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.recipedetails.RecipeDetailsActivity;
 import com.abdn.cooktoday.local_data.model.Recipe;
-import com.abdn.cooktoday.utility.MockServer;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.List;
 
 
 public class CookbookFragment extends Fragment
-    implements CookBookRVAdapter.ItemClickListener {
+    implements CookBookRVAdapter.ItemClickListener, CreatedByMeRVAdapter.ItemClickListener {
+    private static final String TAG = "CookbookFragment";
 
     private ExtendedFloatingActionButton btnNewRecipe;
     private CookBookRVAdapter cookbookRVAdapter;
+    private CreatedByMeRVAdapter myRecipesAdapter;
     private UploadTypeBottomSheet bottomSheet;
 
     private int nSavedRecipesDisplayed;
@@ -46,11 +50,14 @@ public class CookbookFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Log.i(TAG, "TEST - onCreate called");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Log.i(TAG, "TEST - onCreateView called");
+
         View view = inflater.inflate(R.layout.fragment_cookbook, container, false);
 
         bottomSheet = new UploadTypeBottomSheet();
@@ -70,20 +77,26 @@ public class CookbookFragment extends Fragment
         return view;
     }
 
-    /*
-    When user clicks a cookbook recipe
-     */
+
     @Override
     public void onRecItemClick(View view, int position) {
+        startRecipeDetailsActivity(cookbookRVAdapter.getItem(position));
+    }
+
+    @Override
+    public void onMineItemClick(View view, int position) {
+        startRecipeDetailsActivity(myRecipesAdapter.getItem(position));
+    }
+
+    private void startRecipeDetailsActivity(Recipe recipe) {
         Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
-        intent.putExtra("RecipeObject", cookbookRVAdapter.getItem(position));
+        intent.putExtra("RecipeObject", recipe);
         startActivity(intent);
     }
 
     private void setup(View layout) {
         List<Recipe> savedRecipes = LoggedInUser.user().getSavedRecipes();
         this.nSavedRecipesDisplayed = LoggedInUser.user().nSavedRecipes();
-
         // cookbook recipes rv
         RecyclerView cookbookRecipes = layout.findViewById(R.id.rvCookBookFragmentCookBookRecipes);
         cookbookRecipes.setNestedScrollingEnabled(false);
@@ -91,7 +104,23 @@ public class CookbookFragment extends Fragment
         cookbookRVAdapter = new CookBookRVAdapter(getContext(), savedRecipes);
         cookbookRVAdapter.setClickListener(this);
         cookbookRecipes.setAdapter(cookbookRVAdapter);
+
+        // recyclerview for user's own recipes
+        List<Recipe> createdByMe = LoggedInUser.user().getMyRecipes();
+        RecyclerView myRecipes = layout.findViewById(R.id.rvCookBookFragmentMyRecipes);
+        myRecipes.setNestedScrollingEnabled(false);
+        myRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        myRecipesAdapter = new CreatedByMeRVAdapter(getContext(), createdByMe);
+        myRecipesAdapter.setClickListener(this);
+        myRecipes.setAdapter(myRecipesAdapter);
+
+        // if there are recipes, don't display title textviews
+        if (savedRecipes.size() == 0) {
+            TextView tvCookbookTitle = layout.findViewById(R.id.tvCookbookSavedRecipes);
+            tvCookbookTitle.setVisibility(View.GONE);
+        } else if (createdByMe.size() == 0) {
+            TextView tvCookbookTitle = layout.findViewById(R.id.tvCookbookMyRecipes);
+            tvCookbookTitle.setVisibility(View.GONE);
+        }
     }
-
-
 }

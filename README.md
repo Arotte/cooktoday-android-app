@@ -4,6 +4,11 @@
 
 This repository contains the source of the CookToday Android mobile application.
 
+## TODO
+
+* integrate media upload endpoint
+* extend and update this readme with: env setup, git practices, basic documentation, how-to run, etc
+
 ## Branches
 
 * `develop`: this is our main branch that we use for development
