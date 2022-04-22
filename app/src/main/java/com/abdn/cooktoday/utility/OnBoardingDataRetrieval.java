@@ -6,6 +6,7 @@ import android.util.Log;
 import com.abdn.cooktoday.MainActivity;
 import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.api_connection.ServerCallbacks;
+import com.abdn.cooktoday.api_connection.jsonmodels.feed.HomeFeedJson;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.onboarding.OnBoardingActivity;
@@ -47,13 +48,15 @@ public class OnBoardingDataRetrieval {
                             @Override
                             public void success(List<Recipe> cookedRecipes) {
                                 LoggedInUser.user().setCookedRecipes(cookedRecipes);
-                                // 4.) retrieve recommended recipes from server, and save them
-                                Server.getRecommendedRecipes(userSessId, new ServerCallbacks.GetRecommendedRecipesResult() {
+                                // 4.) retrieve home feed from server
+                                Server.getHomeFeed(userSessId, new ServerCallbacks.HomeFeedResultCallback() {
                                     @Override
-                                    public void success(List<Recipe> recommendedRecipes) {
-                                        Log.i(logTAG, "Successfully retrieved recommended recipes from server!");
-                                        LoggedInUser.user().setRecommendedRecipes(recommendedRecipes);
+                                    public void success(HomeFeedJson homeFeedJson) {
+                                        Log.i(logTAG, "Successfully retrieved home feed from server!");
+                                        LoggedInUser.user().setRecommendedRecipes(homeFeedJson.getRecommendedRecipesInternal());
+                                        LoggedInUser.user().setPersonalizedRecipes(homeFeedJson.getPersonalizedRecipesInternal());
                                         LoggedInUser.user().normalizeRecipes();
+                                        LoggedInUser.user().setHomeFeedCategories(homeFeedJson.getCategories());
                                         // 5.) call success result callback
                                         resultCallback.success();
                                     }

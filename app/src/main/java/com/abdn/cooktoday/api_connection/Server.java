@@ -8,6 +8,7 @@ import com.abdn.cooktoday.api_connection.jsonmodels.UserPrefsJsonModel;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeStepJSON;
+import com.abdn.cooktoday.api_connection.jsonmodels.feed.HomeFeedJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.feed.RecommendedRecipesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.CreateIngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.CreatedIngredientJson;
@@ -65,6 +66,34 @@ public class Server {
         };
     }
 
+    /*
+    =============================================
+    GET HOME FEED
+    ============================================= */
+    public static void getHomeFeed(String userSessId, ServerCallbacks.HomeFeedResultCallback resultCallback) {
+        Executor regExec = getExec();
+        regExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                APIRepository.getInstance().getFeedService().getHomeFeed(userSessId).enqueue(new Callback<HomeFeedJson>() {
+                    @Override
+                    public void onResponse(Call<HomeFeedJson> call, Response<HomeFeedJson> r) {
+                        if (r.code() == 200) {
+                            Log.i(TAG, "Home feed retrieved successfully");
+                            resultCallback.success(r.body());
+                        } else {
+                            resultCallback.error(r.code());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<HomeFeedJson> call, Throwable t) {
+                        Log.i(TAG, t.toString() + ", " + t.getMessage());
+                        resultCallback.error(-1);
+                    }
+                });
+            }
+        });
+    }
     /*
     =============================================
     INGREDIENT SEARCH

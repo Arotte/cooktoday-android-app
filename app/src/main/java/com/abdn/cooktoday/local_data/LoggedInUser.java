@@ -38,6 +38,8 @@ public class LoggedInUser {
     private List<String> myRecipeIds;
     private List<String> cookedRecipeIds;
 
+    private List<String> homeFeedCategories;
+
     public void setUser(User user) {
         fistName = user.getFirstName();
         lastName = user.getLastName();
@@ -149,9 +151,17 @@ public class LoggedInUser {
         this.personalizedRecipes = personalizedRecipes;
     }
 
+    public List<String> getHomeFeedCategories() {
+        return homeFeedCategories;
+    }
+
+    public void setHomeFeedCategories(List<String> homeFeedCategories) {
+        this.homeFeedCategories = homeFeedCategories;
+    }
+
     /*
-        Recommended recipes related functions
-         */
+            Recommended recipes related functions
+             */
     public List<Recipe> getRecommendedRecipes() { return this.recommendedRecipes; }
     public void setRecommendedRecipes(List<Recipe> recipes) {
         this.recommendedRecipes = recipes;

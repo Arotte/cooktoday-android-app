@@ -1,6 +1,7 @@
 package com.abdn.cooktoday.api_connection;
 
 import com.abdn.cooktoday.api_connection.jsonmodels.UserPrefsJsonModel;
+import com.abdn.cooktoday.api_connection.jsonmodels.feed.HomeFeedJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredSearchResultItemJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.media.AwsUploadedFilesJson;
@@ -84,6 +85,11 @@ public interface ServerCallbacks {
 
     interface IngredSearchCallback {
         void success(List<IngredSearchResultItemJson> ingredients);
+        void error(int errorCode);
+    }
+
+    interface HomeFeedResultCallback {
+        void success(HomeFeedJson homeFeed);
         void error(int errorCode);
     }
 }
