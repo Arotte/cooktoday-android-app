@@ -66,6 +66,12 @@ public class Ingredient implements Serializable {
         }
     }
 
+    public void update(NerredIngred nerredIngred) {
+        this.quantity = nerredIngred.getQuantity();
+        this.unit = nerredIngred.getUnit();
+        this.comment = nerredIngred.getNil();
+    }
+
     // ============================================================
     // default getters & setters
 

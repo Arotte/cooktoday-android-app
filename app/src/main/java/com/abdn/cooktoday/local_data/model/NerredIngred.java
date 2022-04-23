@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.ingred_ner.IngredientNerJson;
 
+import org.w3c.dom.Text;
+
 public class NerredIngred {
 
     private String original;
@@ -117,4 +119,7 @@ public class NerredIngred {
         this.name = name;
     }
 
+    public String getNil() {
+        return nil;
+    }
 }

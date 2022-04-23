@@ -4,12 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.local_data.model.Ingredient;
+import com.abdn.cooktoday.local_data.model.NerredIngred;
 
 import java.util.List;
 
@@ -38,6 +41,8 @@ public class PreviewIngredientItemRVAdapter extends RecyclerView.Adapter<Preview
         // String ingredQuantity = mData.get(position).getQuantity();
 
         holder.tvIngredientName.setText(ingredName);
+        holder.nerDone.setVisibility(View.GONE);
+        holder.nerInProgress.setVisibility(View.VISIBLE);
         // holder.tvIngredientQuantity.setText(ingredQuantity);
     }
 
@@ -53,10 +58,15 @@ public class PreviewIngredientItemRVAdapter extends RecyclerView.Adapter<Preview
         TextView tvIngredientName;
         // TextView tvIngredientQuantity;
 
+        ImageView nerDone;
+        ProgressBar nerInProgress;
+
         ViewHolder(View itemView) {
             super(itemView);
             tvIngredientName = itemView.findViewById(R.id.tvIngredientItemName);
             // tvIngredientQuantity = itemView.findViewById(R.id.tvIngredientQuantity);
+            nerDone = itemView.findViewById(R.id.ivIngredNerDone);
+            nerInProgress = itemView.findViewById(R.id.pbIngredientNer);
 
             itemView.setOnClickListener(this);
         }
@@ -65,6 +75,26 @@ public class PreviewIngredientItemRVAdapter extends RecyclerView.Adapter<Preview
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onIngredItemClick(view, getAdapterPosition());
         }
+    }
+
+    public void setNerDone(
+            NerredIngred nerredIngred,
+            PreviewIngredientItemRVAdapter.ViewHolder holder,
+            int nameColor,
+            int quantityColor,
+            int unitColor) {
+        holder.nerDone.setVisibility(View.VISIBLE);
+        holder.nerInProgress.setVisibility(View.GONE);
+        nerredIngred.colorize(
+                holder.tvIngredientName,
+                quantityColor,
+                unitColor,
+                nameColor);
+    }
+
+    public void setNerInProgress(PreviewIngredientItemRVAdapter.ViewHolder holder) {
+        holder.nerDone.setVisibility(View.GONE);
+        holder.nerInProgress.setVisibility(View.VISIBLE);
     }
 
     // convenience method for getting data at click position
