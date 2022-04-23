@@ -16,14 +16,14 @@ import java.util.List;
 
 public class IngredientRVAdapter extends RecyclerView.Adapter<IngredientRVAdapter.ViewHolder> {
 
-    private List<NerredIngred> mData;
+    private List<Ingredient> mData;
     private int quantityColor;
     private int unitColor;
     private int nameColor;
     private LayoutInflater mInflater;
     private IngredientRVAdapter.ItemClickListener mClickListener;
 
-    public IngredientRVAdapter(Context context, List<NerredIngred> data, int quantityColor, int unitColor, int nameColor) {
+    public IngredientRVAdapter(Context context, List<Ingredient> data, int quantityColor, int unitColor, int nameColor) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         this.quantityColor = quantityColor;
@@ -40,12 +40,7 @@ public class IngredientRVAdapter extends RecyclerView.Adapter<IngredientRVAdapte
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(IngredientRVAdapter.ViewHolder holder, int position) {
-        NerredIngred ingred = mData.get(position);
-        ingred.colorize(holder.tvIngredientName,
-                quantityColor,
-                unitColor,
-                nameColor);
-        // holder.tvIngredientName.setText(ingredName);
+        holder.tvIngredientName.setText(mData.get(position).getName());
     }
 
     // total number of rows
@@ -83,7 +78,7 @@ public class IngredientRVAdapter extends RecyclerView.Adapter<IngredientRVAdapte
     }
 
     // convenience method for getting data at click position
-    public NerredIngred getItem(int id) {
+    public Ingredient getItem(int id) {
         return mData.get(id);
     }
 

@@ -56,6 +56,7 @@ public class Recipe implements Serializable {
     private int fullCookTime; // unit: minutes
     private int prepTime;
     private int cookTime;
+    private String cuisine;
 
     private boolean cookedByUser;
     private boolean isSaved;
@@ -94,6 +95,7 @@ public class Recipe implements Serializable {
         this.nSteps = stepDescriptions.size();
         this.cookedByUser = false;
         this.isSaved = false;
+        this.cuisine = recipeJson.getCuisine();
 
         this.ingredients = new ArrayList<>();
         for (RecipeIngredientJson recipeIngredientJson : recipeJson.getIngredients())
@@ -110,7 +112,8 @@ public class Recipe implements Serializable {
                   int prepTime,
                   int cookTime,
                   List<String> stepDescriptions,
-                  List<Ingredient> ingredients) {
+                  List<Ingredient> ingredients,
+                  String cuisine) {
         this.serverId = "";
         this.name = name;
         this.shortDescription = shortDescription;
@@ -127,6 +130,7 @@ public class Recipe implements Serializable {
         this.nIngreds = ingredients.size();
         this.cookedByUser = false;
         this.isSaved = false;
+        this.cuisine = cuisine;
     }
 
     // =====================================================
@@ -190,6 +194,18 @@ public class Recipe implements Serializable {
 
     // default
 
+
+    public void setServerId(String serverId) {
+        this.serverId = serverId;
+    }
+
+    public String getCuisine() {
+        return cuisine;
+    }
+
+    public void setCuisine(String cuisine) {
+        this.cuisine = cuisine;
+    }
 
     public boolean isSaved() {
         return isSaved;

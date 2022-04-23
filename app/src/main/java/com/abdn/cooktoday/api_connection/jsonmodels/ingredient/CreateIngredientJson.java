@@ -1,5 +1,8 @@
 package com.abdn.cooktoday.api_connection.jsonmodels.ingredient;
 
+import com.abdn.cooktoday.local_data.model.Ingredient;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreateIngredientJson {
@@ -19,6 +22,21 @@ public class CreateIngredientJson {
         this.protein = protein;
         this.carbs = carbs;
         this.fats = fats;
+    }
+
+    public CreateIngredientJson(Ingredient ingred) {
+        this.name = ingred.getName();
+        this.defaultUnit = ingred.getDefaultUnit();
+        this.description = ingred.getDescription();
+
+        if (ingred.getDiet() != null)
+            this.diet = ingred.getDiet();
+        else
+            this.diet = new ArrayList<>();
+
+        this.protein = ingred.getProtein();
+        this.carbs = ingred.getCarbs();
+        this.fats = ingred.getFats();
     }
 
     public String getName() {

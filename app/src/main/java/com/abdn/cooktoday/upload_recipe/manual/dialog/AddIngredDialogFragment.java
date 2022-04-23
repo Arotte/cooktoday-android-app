@@ -15,6 +15,8 @@ import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.cooking_session.dialog.FinishedCookingCallback;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 
+import java.util.ArrayList;
+
 public class AddIngredDialogFragment extends DialogFragment {
     public static final String TAG = "AddIngredientDialog";
 
@@ -30,7 +32,10 @@ public class AddIngredDialogFragment extends DialogFragment {
 
     public AddIngredDialogFragment(Ingredient ingredient, AddIngredDialogCallback callback) {
         this.callback = callback;
-        this.ingredient = ingredient;
+        if (ingredient != null)
+            this.ingredient = ingredient;
+        else
+            this.ingredient = new Ingredient();
     }
 
     @Override
@@ -85,8 +90,8 @@ public class AddIngredDialogFragment extends DialogFragment {
                 name.setText(ingredient.getName());
             if (ingredient.getQuantity() != null)
                 quantity.setText(ingredient.getQuantity());
-            if (ingredient.getUnit() != null)
-                unit.setText(ingredient.getUnit());
+            if (ingredient.getDefaultUnit() != null)
+                unit.setText(ingredient.getDefaultUnit());
             if (ingredient.getComment() != null)
                 comment.setText(ingredient.getComment());
             if (ingredient.getProcessingMethod() != null)
@@ -100,6 +105,14 @@ public class AddIngredDialogFragment extends DialogFragment {
         ingredient.setUnit(unit.getText().toString());
         ingredient.setComment(comment.getText().toString());
         ingredient.setProcessingMethod(processing.getText().toString());
+        ingredient.setDefaultUnit(unit.getText().toString());
+
+        // set dummy values for the rest
+        ingredient.setDescription("");
+        ingredient.setDiet(new ArrayList<String>());
+        ingredient.setProtein(0);
+        ingredient.setCarbs(0);
+        ingredient.setFats(0);
     }
 
     private boolean validateIngredient() {

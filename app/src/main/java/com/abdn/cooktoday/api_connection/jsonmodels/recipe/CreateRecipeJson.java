@@ -1,5 +1,11 @@
 package com.abdn.cooktoday.api_connection.jsonmodels.recipe;
 
+import com.abdn.cooktoday.api_connection.Server;
+import com.abdn.cooktoday.api_connection.ServerCallbacks;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.CreateIngredientJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
+import com.abdn.cooktoday.local_data.LoggedInUser;
+import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.google.gson.annotations.SerializedName;
 
@@ -17,11 +23,24 @@ public class CreateRecipeJson {
     private String authorId;
     private ArrayList<String> media;
     private ArrayList<CreatedInstructionJson> instructions;
-    private ArrayList<String> ingredients;
+    private ArrayList<CreateRecipeIngredientJson> ingredients;
     private int calories;
     private String cuisine;
 
-    public CreateRecipeJson(String name, String shortDesc, int cookingTime, int prepTime, int portionsNum, String dateOfCreation, String authorId, ArrayList<String> media, ArrayList<CreatedInstructionJson> instructions, ArrayList<String> ingredients, int calories, String longDesc, String cuisine) {
+    public CreateRecipeJson(
+            String name,
+            String shortDesc,
+            int cookingTime,
+            int prepTime,
+            int portionsNum,
+            String dateOfCreation,
+            String authorId,
+            ArrayList<String> media,
+            ArrayList<CreatedInstructionJson> instructions,
+            ArrayList<CreateRecipeIngredientJson> ingredients,
+            int calories,
+            String longDesc,
+            String cuisine) {
         this.name = name;
         this.shortDesc = shortDesc;
         this.cookingTime = cookingTime;
@@ -45,14 +64,36 @@ public class CreateRecipeJson {
         this.portionsNum = recipe.getServings();
         this.authorId = authorId;
         this.media = new ArrayList<>(Arrays.asList(recipe.getImgUrl()));
-        this.ingredients = (ArrayList<String>) recipe.getIngredientsStr();
         this.calories = recipe.getCalories();
         this.longDesc = recipe.getLongDescription();
-        this.cuisine = "test123"; // TODO!!!!!!!
+        this.cuisine = recipe.getCuisine();
 
         this.instructions = new ArrayList<>();
         for (String stepStr : recipe.getStepDescriptions())
             this.instructions.add(new CreatedInstructionJson(stepStr, new ArrayList<String>()));
+
+        this.ingredients = new ArrayList<>();
+        for (Ingredient ingredient : recipe.getIngredients()) {
+            if (ingredient.getId() == null || ingredient.getId().isEmpty()) {
+                // this ingredient is not saved in the database, so
+                // we need to create a new one
+                Server.createNewIngredient(LoggedInUser.user().getSessionID(), new CreateIngredientJson(ingredient), new ServerCallbacks.CreateNewIngredientCallback() {
+                    @Override
+                    public void success(IngredientJson ingredientJson) {
+                        // ingredient successfully created on the server
+                        ingredient.setId(ingredientJson.get_id());
+                        ingredients.add(new CreateRecipeIngredientJson(ingredient));
+                    }
+
+                    @Override
+                    public void error(int errorCode) {
+                        // error creating ingredient on the server
+                    }
+                });
+            } else {
+                this.ingredients.add(new CreateRecipeIngredientJson(ingredient));
+            }
+        }
     }
 
     public String getCuisine() {
@@ -99,7 +140,7 @@ public class CreateRecipeJson {
         return instructions;
     }
 
-    public ArrayList<String> getIngredients() {
+    public ArrayList<CreateRecipeIngredientJson> getIngredients() {
         return ingredients;
     }
 

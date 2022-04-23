@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 
+import com.abdn.cooktoday.CookTodaySettings;
 import com.abdn.cooktoday.R;
 
 import android.widget.EditText;
@@ -91,7 +92,7 @@ public class UploadActivity extends AppCompatActivity
     private RecyclerView rvIngreds;
     private IngredientRVAdapter rvAdapterIngreds;
     private MaterialButton btnAddNewIngred;
-    private List<NerredIngred> ingredients;
+    private List<Ingredient> ingredients;
     private AddIngredBottomSheet addIngredBottomSheet;
     private int quantityColor;
     private int unitColor;
@@ -117,7 +118,6 @@ public class UploadActivity extends AppCompatActivity
     private LinearLayout contentRecipeIngredContainer;
 
     private ProgressButtonHandler btnUploadHandler;
-    private Recipe recipe;
 
     // =============================================================================================
 
@@ -436,8 +436,9 @@ public class UploadActivity extends AppCompatActivity
     }
 
     private void addIngredientToRecipe(Ingredient ingredient) {
-        // add ingredient to recipe
-
+        // insert new ingredient
+        ingredients.add(ingredient);
+        rvAdapterIngreds.notifyItemInserted(ingredients.size() - 1);
     }
 
     private void ingredAdditionSetup() {
@@ -452,29 +453,14 @@ public class UploadActivity extends AppCompatActivity
 
         rvIngreds.setAdapter(rvAdapterIngreds);
 
-        // bottom sheet
-        addIngredBottomSheet = new AddIngredBottomSheet(new OnIngredientAddedCallback() {
-            @Override
-            public void success(NerredIngred ingred) {
-                onAddIngredFinished(ingred);
-            }
-        }, quantityColor, unitColor, nameColor);
-
-        if (addIngredBottomSheet.isVisible())
-            addIngredBottomSheet.dismiss();
-
         // add new ingred button
         btnAddNewIngred = (MaterialButton) findViewById(R.id.btnCreateRecipeAddIngred);
         btnAddNewIngred.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onAddNewIngredBtnClick();
+                showContentIngredSearch();
             }
         });
-    }
-
-    private void onAddNewIngredBtnClick() {
-        showContentIngredSearch();
     }
 
     @Override
@@ -486,19 +472,6 @@ public class UploadActivity extends AppCompatActivity
         // delete item
         ingredients.remove(position);
         rvAdapterIngreds.notifyItemRemoved(position);
-    }
-
-
-    private void showIngredBottomSheet() {
-        addIngredBottomSheet.show(UploadActivity.this.getSupportFragmentManager(), "ModalBottomSheet");
-    }
-
-    private void onAddIngredFinished(NerredIngred ingred) {
-        // called when bottom sheet is closed
-
-        // insert new ingredient
-        ingredients.add(ingred);
-        rvAdapterIngreds.notifyItemInserted(ingredients.size() - 1);
     }
 
     // =============================================================================
@@ -564,10 +537,6 @@ public class UploadActivity extends AppCompatActivity
     }
 
     private Recipe gatherRecipeDetails() {
-        List<Ingredient> ingreds = new ArrayList<>();
-        for (NerredIngred nerIngred : ingredients)
-            ingreds.add(new Ingredient(nerIngred.getOriginal(), nerIngred.getQuantity()));
-
         return new Recipe(
                 etRecipeName.getText().toString(),
                 "",
@@ -578,11 +547,12 @@ public class UploadActivity extends AppCompatActivity
                 prepTime,
                 cookingTime,
                 steps,
-                ingreds);
+                ingredients,
+                ""); // TODO: ADD CUISINE!!
     }
 
     private File createFileFromIs(InputStream is) {
-        File file = new File("data/data/com.abdn.cooktoday/temp.jpg");
+        File file = new File(CookTodaySettings.getDataFolder() + "temp.jpg");
         if (!file.exists()) {
             try {
                 file.createNewFile();

@@ -544,7 +544,6 @@ public class Server {
         for (String instruction : recipe.getStepDescriptions())
             instructionsJson.add(new CreatedInstructionJson(instruction, new ArrayList<>()));
 
-
         String dateOfCreation = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());;
         CreateRecipeJson recipeJson = new CreateRecipeJson(recipe, dateOfCreation, userId);
 
@@ -671,7 +670,8 @@ public class Server {
                                     recipeJson.getPrepTimeInt(),
                                     recipeJson.getCookTimeInt(),
                                     recipeSteps,
-                                    recipeIngredients);
+                                    recipeIngredients,
+                                    ""); // TODO: add cuisine!!!
                             resultCallback.success(recipe);
                         } else {
                             resultCallback.error(r.code());
