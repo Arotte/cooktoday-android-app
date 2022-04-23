@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.abdn.cooktoday.CookTodaySettings;
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.squareup.picasso.Picasso;
@@ -67,7 +68,7 @@ public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdap
 
     public String getURLForResource (int resourceId) {
         //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
-        return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
+        return Uri.parse("android.resource://"+ CookTodaySettings.packageName +"/" +resourceId).toString();
     }
 
     // total number of rows
