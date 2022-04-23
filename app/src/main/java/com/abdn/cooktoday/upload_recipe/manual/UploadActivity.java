@@ -126,6 +126,9 @@ public class UploadActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
 
+        steps = new ArrayList<>();
+        ingredients = new ArrayList<>();
+
         contentMainContainer = (LinearLayout) findViewById(R.id.add_recipe_content_main_container);
         contentRecipeIngredContainer = (LinearLayout) findViewById(R.id.add_recipe_content_search_container);
         showContentMain();
@@ -252,7 +255,7 @@ public class UploadActivity extends AppCompatActivity
     private void uploadRecipe() {
         btnUploadHandler.setState(ProgressButtonHandler.State.LOADING);
         // 1.) upload image to AWS
-        if (recipeImageFileUri != null) {
+        if (recipeImageFileUri != null && checkFields()) {
             try {
                 InputStream fin = getContentResolver().openInputStream(recipeImageFileUri);
                 File imageFile = createFileFromIs(fin);
@@ -297,6 +300,34 @@ public class UploadActivity extends AppCompatActivity
                 e.printStackTrace();
             }
         }
+    }
+
+    private boolean checkFields() {
+        // check if all required fields are filled
+        boolean recipeNameFilled = !etRecipeName.getText().toString().isEmpty();
+        boolean recipeDescriptionFilled = !etRecipeDesc.getText().toString().isEmpty();
+        boolean atLeastOneIngred = ingredients.size() > 0;
+        boolean atLeastOneStep = steps.size() > 0;
+        boolean servingsFilled = !etServings.getText().toString().isEmpty();
+        boolean caloriesFilled = !etCalories.getText().toString().isEmpty();
+
+        if (!recipeNameFilled)
+            etRecipeName.setError("Name is required.");
+        if (!recipeDescriptionFilled)
+            etRecipeDesc.setError("Description is required.");
+        if (!atLeastOneIngred || !atLeastOneStep)
+            ToastMaker.make("At least one ingredient and one step is required.", ToastMaker.Type.ERROR, this);
+        if (!servingsFilled)
+            etServings.setError("Servings is required.");
+        if (!caloriesFilled)
+            etCalories.setError("Calories is required.");
+
+        return recipeNameFilled &&
+                recipeDescriptionFilled &&
+                atLeastOneIngred &&
+                atLeastOneStep &&
+                servingsFilled &&
+                caloriesFilled;
     }
 
     // =============================================================================================
@@ -447,8 +478,6 @@ public class UploadActivity extends AppCompatActivity
         rvIngreds = (RecyclerView) findViewById(R.id.rvCreateRecipeIngreds);
         rvIngreds.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvIngreds.setNestedScrollingEnabled(false);
-
-        ingredients = new ArrayList<>();
         rvAdapterIngreds = new IngredientRVAdapter(this, ingredients, quantityColor, unitColor, nameColor);
         rvAdapterIngreds.setClickListener(this);
 
@@ -480,7 +509,6 @@ public class UploadActivity extends AppCompatActivity
     // =============================================================================
 
     private void stepAdditionSetup() {
-        steps = new ArrayList<>();
         rvSteps = (RecyclerView) findViewById(R.id.rvCreateRecipeSteps);
         rvSteps.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvSteps.setNestedScrollingEnabled(false);
