@@ -71,19 +71,13 @@ public class LoggedInUser {
             savedRecipeIds.add(savedRecipe.getServerId());
 
         for (Recipe savedRecipe : savedRecipes) {
-           // if recipe is cooked
             savedRecipe.setCookedByUser(cookedRecipeIds.contains(savedRecipe.getServerId()));
-//           String savedRecipeId = savedRecipe.getServerId();
-//           if (cookedRecipeIds.contains(savedRecipeId)) {
-//               savedRecipe.setCookedByUser(true);
-//               removeByIdFromCooked(savedRecipeId);
-//           } else
-//               savedRecipe.setCookedByUser(false);
         }
 
         for (Recipe recommendedRecipe : recommendedRecipes) {
-           recommendedRecipe.setCookedByUser(cookedRecipeIds.contains(recommendedRecipe.getServerId()));
-           recommendedRecipe.setSaved(savedRecipeIds.contains(recommendedRecipe.getServerId()));
+            recommendedRecipe.setCreatedByUser(myRecipeIds.contains(recommendedRecipe.getServerId()));
+            recommendedRecipe.setCookedByUser(cookedRecipeIds.contains(recommendedRecipe.getServerId()));
+            recommendedRecipe.setSaved(savedRecipeIds.contains(recommendedRecipe.getServerId()));
         }
 
         for (Recipe myRecipe : myRecipes) {
@@ -179,8 +173,10 @@ public class LoggedInUser {
     }
 
     public void newRecipeCreatedByUser(Recipe newRecipe) {
+        newRecipe.setCreatedByUser(true);
         this.myRecipes.add(newRecipe);
         this.myRecipeIds.add(newRecipe.getServerId());
+        normalizeRecipes();
         // notifySaved(newRecipe.getServerId());
     }
 

@@ -60,6 +60,7 @@ public class Recipe implements Serializable {
 
     private boolean cookedByUser;
     private boolean isSaved;
+    private boolean createdByUser;
 
     // steps:
     private int nSteps;
@@ -101,6 +102,8 @@ public class Recipe implements Serializable {
         for (RecipeIngredientJson recipeIngredientJson : recipeJson.getIngredients())
             this.ingredients.add(new Ingredient(recipeIngredientJson));
         this.nIngreds = ingredients.size();
+
+        this.createdByUser = false;
     }
 
     public Recipe(String name,
@@ -131,6 +134,8 @@ public class Recipe implements Serializable {
         this.cookedByUser = false;
         this.isSaved = false;
         this.cuisine = cuisine;
+
+        this.createdByUser = false;
     }
 
     // =====================================================
@@ -194,6 +199,14 @@ public class Recipe implements Serializable {
 
     // default
 
+
+    public boolean isCreatedByUser() {
+        return createdByUser;
+    }
+
+    public void setCreatedByUser(boolean createdByUser) {
+        this.createdByUser = createdByUser;
+    }
 
     public void setServerId(String serverId) {
         this.serverId = serverId;

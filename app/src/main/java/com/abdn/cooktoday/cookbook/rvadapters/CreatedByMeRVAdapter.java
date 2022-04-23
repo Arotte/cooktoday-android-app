@@ -55,6 +55,7 @@ public class CreatedByMeRVAdapter extends RecyclerView.Adapter<CreatedByMeRVAdap
         holder.tvServings.setText(servings);
         holder.cookedBadge.setVisibility(isCooked ? View.VISIBLE : View.GONE);
         holder.llIsSaved.setVisibility(View.GONE);
+        holder.llCreatedByMe.setVisibility(View.GONE);
 
         // download and show recipe img
         if (imgUrl.isEmpty())
@@ -84,6 +85,7 @@ public class CreatedByMeRVAdapter extends RecyclerView.Adapter<CreatedByMeRVAdap
         ImageView   ivRecipeImg;
         LinearLayout cookedBadge;
         LinearLayout llIsSaved;
+        LinearLayout llCreatedByMe;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -94,6 +96,7 @@ public class CreatedByMeRVAdapter extends RecyclerView.Adapter<CreatedByMeRVAdap
             ivRecipeImg    = itemView.findViewById(R.id.ivRecipeCardV2RecipeImg);
             cookedBadge    = itemView.findViewById(R.id.llCookedBadge);
             llIsSaved      = itemView.findViewById(R.id.llSavedBadge);
+            llCreatedByMe  = itemView.findViewById(R.id.llCreatedByMeBadge);
             itemView.setOnClickListener(this);
         }
 
