@@ -56,7 +56,7 @@ public class RecommendedRVAdapter extends RecyclerView.Adapter<RecommendedRVAdap
         holder.tvServings.setText(servings);
         holder.isCookedBadge.setVisibility(isCooked ? View.VISIBLE : View.GONE);
         holder.llIsSaved.setVisibility(isSaved ? View.VISIBLE : View.GONE);
-        holder.llIsSaved.setVisibility(isCreatedByMe ? View.VISIBLE : View.GONE);
+        holder.llCreatedByMe.setVisibility(isCreatedByMe ? View.VISIBLE : View.GONE);
 
         // download and show recipe img
         if (imgUrl.isEmpty())
