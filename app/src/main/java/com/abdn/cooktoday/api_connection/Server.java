@@ -304,7 +304,7 @@ public class Server {
                         .build();
                 MediaType mediaType = MediaType.parse("text/plain");
                 RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                        .addFormDataPart("media",imgFile.getName() + "_" + Util.getUniqueIdFromDate(),
+                        .addFormDataPart("media",imgFile.getName(),
                                 RequestBody.create(MediaType.parse("application/octet-stream"),
                                         imgFile))
                         .build();

@@ -261,6 +261,7 @@ public class UploadActivity extends AppCompatActivity
                     public void success(AwsUploadedFilesJson files) {
                         uploadedImageUrl = files.getFiles().get(0);
                         Log.i(TAG, "File successfully uploaded to AWS! Link: " + uploadedImageUrl);
+                        imageFile.delete();
                         // 2.) post recipe creation request to API
                         Recipe recipe = gatherRecipeDetails();
                         Server.createRecipe(
@@ -552,7 +553,7 @@ public class UploadActivity extends AppCompatActivity
     }
 
     private File createFileFromIs(InputStream is) {
-        File file = new File(CookTodaySettings.getDataFolder() + "temp.jpg");
+        File file = new File(CookTodaySettings.getDataFolder() + "_" + Util.getUniqueIdFromDate() + "_temp.jpg");
         if (!file.exists()) {
             try {
                 file.createNewFile();

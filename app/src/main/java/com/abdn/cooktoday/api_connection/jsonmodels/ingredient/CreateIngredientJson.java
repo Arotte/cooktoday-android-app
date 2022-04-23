@@ -26,8 +26,13 @@ public class CreateIngredientJson {
 
     public CreateIngredientJson(Ingredient ingred) {
         this.name = ingred.getName();
+
         this.defaultUnit = ingred.getDefaultUnit();
-        this.description = ingred.getDescription();
+        if (ingred.getDescription() != null && !ingred.getDescription().isEmpty())
+            this.description = ingred.getDescription();
+        else
+            this.description = "no description";
+
 
         if (ingred.getDiet() != null)
             this.diet = ingred.getDiet();

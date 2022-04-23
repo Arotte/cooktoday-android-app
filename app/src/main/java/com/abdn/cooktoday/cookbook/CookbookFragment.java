@@ -50,17 +50,15 @@ public class CookbookFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Log.i(TAG, "TEST - onCreate called");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Log.i(TAG, "TEST - onCreateView called");
-
         View view = inflater.inflate(R.layout.fragment_cookbook, container, false);
 
         bottomSheet = new UploadTypeBottomSheet();
+
         if (bottomSheet.isVisible())
             bottomSheet.dismiss();
 
@@ -76,7 +74,6 @@ public class CookbookFragment extends Fragment
         setup(view);
         return view;
     }
-
 
     @Override
     public void onRecItemClick(View view, int position) {

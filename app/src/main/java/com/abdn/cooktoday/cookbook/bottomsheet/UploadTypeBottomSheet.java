@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
 import com.abdn.cooktoday.R;
+import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.upload_recipe.from_url.UploadFromUrlActivity;
 import com.abdn.cooktoday.upload_recipe.manual.UploadActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -34,7 +35,8 @@ public class UploadTypeBottomSheet extends BottomSheetDialogFragment {
         manual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().startActivity(new Intent(getActivity(), UploadActivity.class));
+                Intent intent = new Intent(getActivity(), UploadActivity.class);
+                getActivity().startActivity(intent);
             }
         });
 

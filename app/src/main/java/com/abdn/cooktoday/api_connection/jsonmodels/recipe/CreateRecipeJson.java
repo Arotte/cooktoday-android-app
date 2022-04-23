@@ -66,7 +66,11 @@ public class CreateRecipeJson {
         this.media = new ArrayList<>(Arrays.asList(recipe.getImgUrl()));
         this.calories = recipe.getCalories();
         this.longDesc = recipe.getLongDescription();
-        this.cuisine = recipe.getCuisine();
+
+        if (recipe.getCuisine() == null || recipe.getCuisine().equals(""))
+            this.cuisine = "none";
+        else
+            this.cuisine = recipe.getCuisine();
 
         this.instructions = new ArrayList<>();
         for (String stepStr : recipe.getStepDescriptions())
