@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.onboarding.survey.SurveySlidePagerActivity;
+import com.abdn.cooktoday.utility.Util;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -118,7 +119,7 @@ public class RegisterEmailVerificationActivity extends AppCompatActivity {
                             codeInputFields.get(finalI + 1).requestFocus();
                         } else {
                             codeInputFields.get(finalI).clearFocus();
-                            hideKeyboard(codeInputFields.get(finalI));
+                            Util.hideKeyboardIfVisible(RegisterEmailVerificationActivity.this, codeInputFields.get(finalI));
                             System.out.println("CODE INPUT FINISHED");
                         }
                         finalCode.set(finalI, Integer.parseInt(codeInputFields.get(finalI).getText().toString()));
@@ -139,15 +140,6 @@ public class RegisterEmailVerificationActivity extends AppCompatActivity {
 
     private void showKeyboard() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-    }
-
-    private void hideKeyboard() {
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-    }
-
-    private void hideKeyboard(EditText e) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(e.getWindowToken(), 0);
     }
 
     private void printCode() {

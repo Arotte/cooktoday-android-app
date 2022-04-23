@@ -51,6 +51,19 @@ public class Ingredient implements Serializable {
         }
     }
 
+    public Ingredient(IngredientJson ingredientJson) {
+        if (ingredientJson != null) {
+            this.id = ingredientJson.get_id();
+            this.name = ingredientJson.getName();
+            this.defaultUnit = ingredientJson.getDefaultUnit();
+            this.description = ingredientJson.getDescription();
+            this.diet = ingredientJson.getDiet();
+            this.protein = ingredientJson.getProtein();
+            this.carbs = ingredientJson.getCarbs();
+            this.fats = ingredientJson.getFats();
+        }
+    }
+
     // ============================================================
     // default getters & setters
 

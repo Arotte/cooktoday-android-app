@@ -72,6 +72,9 @@ public class Recipe implements Serializable {
     // =====================================================
     // constructors
 
+    public Recipe() {
+    }
+
     public Recipe(RecipeJson recipeJson) {
         String recipeImgUrl = "";
         if (!recipeJson.getMedia().isEmpty())

@@ -35,6 +35,7 @@ import com.abdn.cooktoday.search.adapters.SearchResultArrayAdapter;
 import com.abdn.cooktoday.search.bottomsheet.SearchFilterBottomSheet;
 import com.abdn.cooktoday.search.adapters.SearchHistoryRVAdapter;
 import com.abdn.cooktoday.search.adapters.SearchSuggestionRVAdapter;
+import com.abdn.cooktoday.utility.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +123,7 @@ public class SearchFragment extends Fragment
             @Override
             public void onClick(View v) {
                 // display filter bottom sheet
-                hideKeyboardIfVisible();
+                Util.hideKeyboardIfVisible(getActivity(), searchField);
                 SearchFilterBottomSheet bottomSheet = new SearchFilterBottomSheet();
                 bottomSheet.show(getActivity().getSupportFragmentManager(), "ModalBottomSheet");
             }
@@ -155,23 +156,7 @@ public class SearchFragment extends Fragment
         });
 
         // set listener for icon
-        searchField.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_LEFT = 0;
-                final int DRAWABLE_TOP = 1;
-                final int DRAWABLE_RIGHT = 2;
-                final int DRAWABLE_BOTTOM = 3;
-
-                if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if(event.getRawX() >= (searchField.getRight() - searchField.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        searchField.setText("");
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
+        Util.setEditTextXIconListener(searchField);
 
         searchResultsContainer = layout.findViewById(R.id.lvSearchResults);
 
@@ -290,13 +275,4 @@ public class SearchFragment extends Fragment
         getActivity().getWindow().setEnterTransition(fade);
         getActivity().getWindow().setExitTransition(fade);
     }
-
-    private void hideKeyboardIfVisible() {
-        // hide keyboard if visible
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm.isAcceptingText()) {
-            imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
-        }
-    }
-
 }
