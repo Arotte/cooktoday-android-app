@@ -2,6 +2,7 @@ package com.abdn.cooktoday.api_connection.jsonmodels.recipe;
 
 import android.util.Log;
 
+import com.abdn.cooktoday.CookTodaySettings;
 import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.CreateIngredientJson;
@@ -76,7 +77,7 @@ public class CreateRecipeJson {
         this.longDesc = recipe.getLongDescription();
 
         if (recipe.getCuisine() == null || recipe.getCuisine().equals(""))
-            this.cuisine = "none";
+            this.cuisine = CookTodaySettings.noneStr;
         else
             this.cuisine = recipe.getCuisine();
 

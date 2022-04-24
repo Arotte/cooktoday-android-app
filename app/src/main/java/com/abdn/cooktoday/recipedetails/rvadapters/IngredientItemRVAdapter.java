@@ -34,11 +34,8 @@ public class IngredientItemRVAdapter extends RecyclerView.Adapter<IngredientItem
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(IngredientItemRVAdapter.ViewHolder holder, int position) {
-        String ingredName = mData.get(position).getName();
-        String ingredQuantity = mData.get(position).getQuantity();
-
+        String ingredName = mData.get(position).getString();
         holder.tvIngredientName.setText(ingredName);
-        holder.tvIngredientQuantity.setText(ingredQuantity);
     }
 
     // total number of rows
@@ -51,13 +48,10 @@ public class IngredientItemRVAdapter extends RecyclerView.Adapter<IngredientItem
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvIngredientName;
-        TextView tvIngredientQuantity;
 
         ViewHolder(View itemView) {
             super(itemView);
             tvIngredientName = itemView.findViewById(R.id.tvIngredientItemName);
-            tvIngredientQuantity = itemView.findViewById(R.id.tvIngredientQuantity);
-
             itemView.setOnClickListener(this);
         }
 

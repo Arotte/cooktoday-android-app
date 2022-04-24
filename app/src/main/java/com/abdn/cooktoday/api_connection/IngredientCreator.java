@@ -1,4 +1,4 @@
-package com.abdn.cooktoday;
+package com.abdn.cooktoday.api_connection;
 
 import android.util.Log;
 
@@ -82,6 +82,14 @@ public class IngredientCreator {
                     }
                 }
             });
+        } else {
+            // this ingredient is already saved in the database, so
+            // we can just use it
+            nIngredCreated++;
+            if (nIngredCreated < nIngredTotal)
+                rec_create(ingredientsCreatedCallback);
+            else
+                ingredientsCreatedCallback.onIngredientsCreated(ingredientList);
         }
     }
 

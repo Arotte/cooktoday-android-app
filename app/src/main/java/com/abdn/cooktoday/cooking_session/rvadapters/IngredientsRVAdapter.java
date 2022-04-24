@@ -39,20 +39,8 @@ public class IngredientsRVAdapter extends RecyclerView.Adapter<IngredientsRVAdap
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(IngredientsRVAdapter.ViewHolder holder, int position) {
-        String name = mData.get(position).getName();
-        String quantity = mData.get(position).getQuantity();
-        String unit = mData.get(position).getUnit();
-        String notes = mData.get(position).getComment();
-
-        if (notes == null || notes.isEmpty()) {
-            holder.tvNotes.setVisibility(View.GONE);
-            holder.tvNotesDelim.setVisibility(View.GONE);
-        } else {
-            holder.tvNotes.setText(notes);
-        }
+        String name = mData.get(position).getString();
         holder.tvName.setText(name);
-        holder.tvQuantity.setText(quantity);
-        holder.tvUnit.setText(unit);
     }
 
     // total number of rows
@@ -65,20 +53,10 @@ public class IngredientsRVAdapter extends RecyclerView.Adapter<IngredientsRVAdap
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvName;
-        TextView tvQuantity;
-        TextView tvUnit;
-        TextView tvNotes;
-        TextView tvNotesDelim;
 
         ViewHolder(View itemView) {
             super(itemView);
-
             tvName = itemView.findViewById(R.id.tvCookingSessIngredName);
-            tvQuantity = itemView.findViewById(R.id.tvCookingSessIngredQuantity);
-            tvUnit = itemView.findViewById(R.id.tvCookingSessIngredUnit);
-            tvNotes = itemView.findViewById(R.id.tvCookingSessIngredComment);
-            tvNotesDelim = itemView.findViewById(R.id.tvCookingSessIngredCommentDelimeter);
-
             itemView.setOnClickListener(this);
         }
 

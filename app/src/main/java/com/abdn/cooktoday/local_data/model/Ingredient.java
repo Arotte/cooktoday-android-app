@@ -1,5 +1,6 @@
 package com.abdn.cooktoday.local_data.model;
 
+import com.abdn.cooktoday.CookTodaySettings;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.RecipeIngredientJson;
 
@@ -78,11 +79,11 @@ public class Ingredient implements Serializable {
             this.quantity = "-1";
 
         if (this.unit == null || this.unit.isEmpty())
-            this.unit = "none";
+            this.unit = CookTodaySettings.noneStr;
         if (this.comment == null || this.comment.isEmpty())
-            this.comment = "none";
+            this.comment = CookTodaySettings.noneStr;
         if (this.defaultUnit == null || this.defaultUnit.isEmpty())
-            this.defaultUnit = "none";
+            this.defaultUnit = CookTodaySettings.noneStr;
 
     }
 
@@ -102,6 +103,36 @@ public class Ingredient implements Serializable {
                 ", carbs=" + carbs +
                 ", fats=" + fats +
                 '}';
+    }
+
+    public String getString() {
+        StringBuilder retStr = new StringBuilder();
+
+        boolean nameOk = name != null && !name.isEmpty();
+        boolean quantityOk = quantity != null && !quantity.isEmpty() && !quantity.equals("-1") && !quantity.contains(CookTodaySettings.noneStr);
+        boolean unitOk = unit != null && !unit.isEmpty() && !unit.contains(CookTodaySettings.noneStr);
+        boolean commentOk = comment != null && !comment.isEmpty() && !comment.contains(CookTodaySettings.noneStr);
+
+        if (commentOk)
+            if (comment.contains(")") || comment.contains("("))
+                comment = comment.replaceAll("\\(", "").replaceAll("\\)", "");
+
+        if (quantityOk && unitOk && nameOk)
+            return retStr
+                    .append(unit).append(" ")
+                    .append(quantity).append(" ")
+                    .append(name)
+                    .append(commentOk ? " (" + comment + ")" : "")
+                    .toString();
+
+        if ((!quantityOk || !unitOk) && nameOk)
+            return retStr.
+                    append(name)
+                    .append(commentOk ? " (" + comment + ")" : "")
+                    .toString();
+
+        // if name is not ok, return empty string
+        return "";
     }
 
     // ============================================================

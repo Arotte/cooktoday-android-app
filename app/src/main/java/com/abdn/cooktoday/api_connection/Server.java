@@ -4,7 +4,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.abdn.cooktoday.IngredientCreator;
 import com.abdn.cooktoday.api_connection.jsonmodels.UserPrefsJsonModel;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON__Outer;
@@ -14,13 +13,9 @@ import com.abdn.cooktoday.api_connection.jsonmodels.feed.RecommendedRecipesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.CreateIngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.CreatedIngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredSearchJson;
-import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredSearchResultItemJson;
-import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson__Outer;
-import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.RecipeIngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.ingred_ner.IngredientNerJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.media.AwsUploadedFilesJson;
-import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeIngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreatedInstructionJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.ListOfRecipesJson;
@@ -28,12 +23,9 @@ import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.SavedRecipesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchJSON;
-import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchResultItemJSON;
-import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.NerredIngred;
 import com.abdn.cooktoday.local_data.model.Recipe;
-import com.abdn.cooktoday.utility.Util;
 
 import org.json.JSONArray;
 import org.json.JSONException;

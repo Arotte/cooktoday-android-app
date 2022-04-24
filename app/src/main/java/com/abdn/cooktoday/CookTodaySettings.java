@@ -7,6 +7,8 @@ public final class CookTodaySettings {
 
     public static final String packageName = R.class.getPackage().getName();
 
+    public static final String noneStr = "none";
+
     public static String getDataFolder() {
         return "data/data/" + packageName + "/";
     }

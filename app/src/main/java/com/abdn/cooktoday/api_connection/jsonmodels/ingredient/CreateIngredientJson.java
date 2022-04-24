@@ -1,5 +1,6 @@
 package com.abdn.cooktoday.api_connection.jsonmodels.ingredient;
 
+import com.abdn.cooktoday.CookTodaySettings;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class CreateIngredientJson {
         if (ingred.getDescription() != null && !ingred.getDescription().isEmpty())
             this.description = ingred.getDescription();
         else
-            this.description = "no description";
+            this.description = CookTodaySettings.noneStr;
 
 
         if (ingred.getDiet() != null)

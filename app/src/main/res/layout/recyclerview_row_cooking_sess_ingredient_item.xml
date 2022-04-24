@@ -7,7 +7,6 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_marginTop="10dp">
-
     <TextView
         android:id="@+id/tvCookingSessIngredName"
         android:layout_width="wrap_content"
@@ -16,65 +15,4 @@
         android:text="eggs"
         android:textColor="@color/textMain"
         android:textSize="15sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/interr"
-        android:text=", "
-        android:textColor="@color/textMain"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/tvCookingSessIngredQuantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/interr"
-        android:text="2"
-        android:textColor="@color/textMain"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/interr"
-        android:text=" "
-        android:textColor="@color/textMain"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/tvCookingSessIngredUnit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/interr"
-        android:text="pieces"
-        android:textColor="@color/textMain"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <TextView
-        android:id="@+id/tvCookingSessIngredCommentDelimeter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/interr"
-        android:text=", "
-        android:textColor="@color/textMain"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/tvCookingSessIngredComment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/interr"
-        android:text="comment"
-        android:textColor="@color/textSecondary"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 </LinearLayout>
