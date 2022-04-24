@@ -5,6 +5,7 @@ import com.abdn.cooktoday.api_connection.jsonmodels.feed.HomeFeedJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredSearchResultItemJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.media.AwsUploadedFilesJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchResultItemJSON;
 import com.abdn.cooktoday.local_data.model.NerredIngred;
 import com.abdn.cooktoday.local_data.model.Recipe;
@@ -80,7 +81,7 @@ public interface ServerCallbacks {
 
     interface CreateNewIngredientCallback {
         void success(IngredientJson ingredient);
-        void error(int errorCode);
+        void error(int errorCode, String errorMessage);
     }
 
     interface IngredSearchCallback {
@@ -96,5 +97,10 @@ public interface ServerCallbacks {
     interface CookRecipeCallback {
         void success();
         void error(int errorCode);
+    }
+
+    public interface CreateRecipeRequestJsonCreatedCallback {
+        void onSuccess(CreateRecipeJson json);
+        void onFailure(String error);
     }
 }

@@ -173,8 +173,19 @@ public class Recipe implements Serializable {
 
     @Override
     public String toString() {
+        StringBuilder stepDescriptionsString = new StringBuilder("[");
+        for (String stepDescription : stepDescriptions)
+            stepDescriptionsString.append("Step('").append(stepDescription).append("'), ");
+        stepDescriptionsString.append("]");
+
+        StringBuilder ingredientsString = new StringBuilder("[");
+        for (Ingredient ingredient : ingredients)
+            ingredientsString.append(ingredient.toString()).append(", ");
+        ingredientsString.append("]");
+
         return "Recipe{" +
-                "name='" + name + '\'' +
+                "serverId='" + serverId + '\'' +
+                ", name='" + name + '\'' +
                 ", shortDescription='" + shortDescription + '\'' +
                 ", longDescription='" + longDescription + '\'' +
                 ", imgUrl='" + imgUrl + '\'' +
@@ -183,10 +194,14 @@ public class Recipe implements Serializable {
                 ", fullCookTime=" + fullCookTime +
                 ", prepTime=" + prepTime +
                 ", cookTime=" + cookTime +
+                ", cuisine='" + cuisine + '\'' +
+                ", cookedByUser=" + cookedByUser +
+                ", isSaved=" + isSaved +
+                ", createdByUser=" + createdByUser +
                 ", nSteps=" + nSteps +
-                ", stepDescriptions=" + stepDescriptions +
+                ", stepDescriptions=" + stepDescriptionsString +
                 ", nIngreds=" + nIngreds +
-                ", ingredients=" + ingredients +
+                ", ingredients=" + ingredientsString +
                 '}';
     }
 

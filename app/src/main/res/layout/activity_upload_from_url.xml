@@ -257,22 +257,66 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/btnRecipePreviewAddRecipe"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
         app:layout_anchor="@id/scrollViewRecipePreview"
         app:layout_anchorGravity="bottom|end"
         android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        app:tint="@color/white"
-        app:icon="@drawable/ic_add"
-        android:text="Add Recipe"
-        android:textColor="@color/white"
-        app:iconTint="@color/white"
-        android:backgroundTint="@color/primaryGreen"
-        android:stateListAnimator="@null"
-        android:textAllCaps="false"/>
+        android:layout_marginEnd="20dp">
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/btnRecipePreviewAddRecipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tint="@color/white"
+            app:icon="@drawable/ic_add"
+            android:text="Add Recipe"
+            android:textColor="@color/white"
+            app:iconTint="@color/primaryGreen"
+            android:backgroundTint="@color/primaryGreen"
+            android:stateListAnimator="@null"
+            android:textAllCaps="false"/>
+
+        <ProgressBar
+            android:id="@+id/pbAddRecipeUrl"
+            android:indeterminate="true"
+            android:paddingTop="13dp"
+            android:paddingBottom="13dp"
+            android:paddingEnd="5dp"
+            android:indeterminateTint="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_alignTop="@id/btnRecipePreviewAddRecipe"
+            android:layout_alignStart="@id/btnRecipePreviewAddRecipe"
+            android:layout_alignBottom="@id/btnRecipePreviewAddRecipe"/>
+
+        <ImageView
+            android:id="@+id/ivAddRecipeUrlPlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:layout_gravity="end"
+            android:layout_alignTop="@id/btnRecipePreviewAddRecipe"
+            android:layout_alignStart="@id/btnRecipePreviewAddRecipe"
+            android:layout_alignBottom="@id/btnRecipePreviewAddRecipe"
+            app:tint="@color/white"
+            android:layout_marginStart="13dp"/>
+
+        <ImageView
+            android:id="@+id/ivAddRecipeUrlDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/btnRecipePreviewAddRecipe"
+            android:layout_alignStart="@id/btnRecipePreviewAddRecipe"
+            android:layout_alignBottom="@id/btnRecipePreviewAddRecipe"
+            android:layout_gravity="end"
+            android:layout_marginStart="13dp"
+            android:src="@drawable/ic_done_simple"
+            app:tint="@color/white" />
+    </RelativeLayout>
+
 
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.NerredIngred;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.recipedetails.rvadapters.RecipeStepRVAdapter;
+import com.abdn.cooktoday.utility.ProgressButtonHandler;
 import com.abdn.cooktoday.utility.ToastMaker;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.squareup.picasso.Picasso;
@@ -44,6 +46,7 @@ public class UploadFromUrlActivity extends AppCompatActivity
     private ExtendedFloatingActionButton saveBtn;
     private ExtendedFloatingActionButton discardBtn;
     private RecyclerView rvIngredients;
+    private ProgressButtonHandler progressButtonHandler;
 
     private boolean ingredientNerFinished;
     private int ingredNerProgress;
@@ -213,27 +216,37 @@ public class UploadFromUrlActivity extends AppCompatActivity
             }
         });
 
+        progressButtonHandler = new ProgressButtonHandler(
+                (ProgressBar) findViewById(R.id.pbAddRecipeUrl),
+                (ImageView) findViewById(R.id.ivAddRecipeUrlPlus),
+                (ImageView) findViewById(R.id.ivAddRecipeUrlDone)
+        );
+        progressButtonHandler.setState(ProgressButtonHandler.State.DEFAULT);
+
         saveBtn = (ExtendedFloatingActionButton) findViewById(R.id.btnRecipePreviewAddRecipe);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // create new recipe on server
                 if (ingredientNerFinished) {
+                    Log.i(TAG, "Recipe that is being created: " + recipe.toString());
+                    progressButtonHandler.setState(ProgressButtonHandler.State.LOADING);
+
                     Server.createRecipe(LoggedInUser.user().getSessionID(), LoggedInUser.user().getServerID(), recipe, new ServerCallbacks.CreateRecipeResult() {
                         @Override
                         public void success(Recipe recipe) {
                             // recipe was successfully created on the server
+                            progressButtonHandler.setState(ProgressButtonHandler.State.SUCCESS);
                             Log.i(TAG, "Recipe creation successful!");
                             ToastMaker.make("Recipe added!", ToastMaker.Type.SUCCESS, UploadFromUrlActivity.this);
-
-                            // TODO: add just created recipe to saved recipes of the user
-
+                            LoggedInUser.user().newRecipeCreatedByUser(recipe);
                             finish();
                         }
 
                         @Override
                         public void error(int errorCode) {
                             // error during the creation of the recipe on the server
+                            progressButtonHandler.setState(ProgressButtonHandler.State.DEFAULT);
                             Log.i(TAG, "Error during creation of recipe! Error code: " + errorCode);
                             ToastMaker.make("Oops! Something went wrong", ToastMaker.Type.ERROR, UploadFromUrlActivity.this);
                         }

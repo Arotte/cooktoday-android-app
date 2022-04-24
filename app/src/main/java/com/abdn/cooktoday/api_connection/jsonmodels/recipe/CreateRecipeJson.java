@@ -1,8 +1,11 @@
 package com.abdn.cooktoday.api_connection.jsonmodels.recipe;
 
+import android.util.Log;
+
 import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.CreateIngredientJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredSearchResultItemJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
@@ -11,8 +14,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CreateRecipeJson {
+    private static final String TAG = "CreateRecipeJson";
+
     private String name;
     private String shortDesc;
     private String longDesc;
@@ -55,6 +61,8 @@ public class CreateRecipeJson {
         this.longDesc = longDesc;
         this.cuisine = cuisine;
     }
+
+
     public CreateRecipeJson(Recipe recipe, String dateOfCreation, String authorId) {
         this.dateOfCreation = dateOfCreation;
         this.name = recipe.getName();
@@ -77,27 +85,8 @@ public class CreateRecipeJson {
             this.instructions.add(new CreatedInstructionJson(stepStr, new ArrayList<String>()));
 
         this.ingredients = new ArrayList<>();
-        for (Ingredient ingredient : recipe.getIngredients()) {
-            if (ingredient.getId() == null || ingredient.getId().isEmpty()) {
-                // this ingredient is not saved in the database, so
-                // we need to create a new one
-                Server.createNewIngredient(LoggedInUser.user().getSessionID(), new CreateIngredientJson(ingredient), new ServerCallbacks.CreateNewIngredientCallback() {
-                    @Override
-                    public void success(IngredientJson ingredientJson) {
-                        // ingredient successfully created on the server
-                        ingredient.setId(ingredientJson.get_id());
-                        ingredients.add(new CreateRecipeIngredientJson(ingredient));
-                    }
-
-                    @Override
-                    public void error(int errorCode) {
-                        // error creating ingredient on the server
-                    }
-                });
-            } else {
-                this.ingredients.add(new CreateRecipeIngredientJson(ingredient));
-            }
-        }
+        for (Ingredient ingredient : recipe.getIngredients())
+            this.ingredients.add(new CreateRecipeIngredientJson(ingredient));
     }
 
     public String getCuisine() {

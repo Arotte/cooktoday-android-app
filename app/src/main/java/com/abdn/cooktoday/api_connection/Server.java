@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.abdn.cooktoday.IngredientCreator;
 import com.abdn.cooktoday.api_connection.jsonmodels.UserPrefsJsonModel;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe.ExtractedRecipeJSON__Outer;
@@ -13,11 +14,13 @@ import com.abdn.cooktoday.api_connection.jsonmodels.feed.RecommendedRecipesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.CreateIngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.CreatedIngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredSearchJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredSearchResultItemJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.RecipeIngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.ingred_ner.IngredientNerJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.media.AwsUploadedFilesJson;
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeIngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreatedInstructionJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.ListOfRecipesJson;
@@ -26,6 +29,7 @@ import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.SavedRecipesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchJSON;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchResultItemJSON;
+import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.NerredIngred;
 import com.abdn.cooktoday.local_data.model.Recipe;
@@ -170,14 +174,18 @@ public class Server {
                                 Log.i(TAG, "Ingredient created successfully");
                                 callback.success(r.body().getIngredient());
                             } else {
-                                callback.error(r.code());
+                                try {
+                                    callback.error(r.code(), r.errorBody().string());
+                                } catch (IOException e) {
+                                    callback.error(r.code(), r.message());
+                                }
                             }
                         }
 
                         @Override
                         public void onFailure(Call<CreatedIngredientJson> call, Throwable t) {
                             Log.i(TAG, t.toString() + ", " + t.getMessage());
-                            callback.error(-1);
+                            callback.error(-1, t.getMessage());
                         }
                     });
             }
@@ -544,32 +552,47 @@ public class Server {
         for (String instruction : recipe.getStepDescriptions())
             instructionsJson.add(new CreatedInstructionJson(instruction, new ArrayList<>()));
 
-        String dateOfCreation = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());;
-        CreateRecipeJson recipeJson = new CreateRecipeJson(recipe, dateOfCreation, userId);
+        String dateOfCreation = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
-        Executor regExec = getExec();
-        regExec.execute(new Runnable() {
+        IngredientCreator ingredientCreator = new IngredientCreator(recipe.getIngredients());
+        ingredientCreator.create(new IngredientCreator.IngredientsCreatedCallback() {
             @Override
-            public void run() {
-                APIRepository.getInstance().getRecipeService()
-                        .createRecipe(userSessId, recipeJson)
-                        .enqueue(new Callback<RecipeJSON__Outer>() {
-                    @Override
-                    public void onResponse(Call<RecipeJSON__Outer> call, Response<RecipeJSON__Outer> r) {
-                        if (r.code() == 200) {
-                            Log.i(TAG, "Recipe created!");
-                            resultCallback.success(recipe);
-                        } else {
-                            resultCallback.error(r.code());
-                        }
-                    }
+            public void onIngredientsCreated(List<Ingredient> ingredients) {
+                // ingredients created
 
+                recipe.setIngredients(ingredients);
+                CreateRecipeJson recipeJson = new CreateRecipeJson(recipe, dateOfCreation, userId);
+
+                Executor regExec = getExec();
+                regExec.execute(new Runnable() {
                     @Override
-                    public void onFailure(Call<RecipeJSON__Outer> call, Throwable t) {
-                        Log.i(TAG, t.toString() + ", " + t.getMessage());
-                        resultCallback.error(-1);
+                    public void run() {
+                        APIRepository.getInstance().getRecipeService()
+                            .createRecipe(userSessId, recipeJson)
+                            .enqueue(new Callback<RecipeJSON__Outer>() {
+                                @Override
+                                public void onResponse(Call<RecipeJSON__Outer> call, Response<RecipeJSON__Outer> r) {
+                                    if (r.code() == 200) {
+                                        Log.i(TAG, "Recipe created!");
+                                        resultCallback.success(recipe);
+                                    } else {
+                                        resultCallback.error(r.code());
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<RecipeJSON__Outer> call, Throwable t) {
+                                    Log.i(TAG, t.toString() + ", " + t.getMessage());
+                                    resultCallback.error(-1);
+                                }
+                            });
                     }
                 });
+            }
+
+            @Override
+            public void onIngredientsCreationFailed() {
+
             }
         });
     }

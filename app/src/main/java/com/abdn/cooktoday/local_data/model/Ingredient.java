@@ -70,6 +70,38 @@ public class Ingredient implements Serializable {
         this.quantity = nerredIngred.getQuantity();
         this.unit = nerredIngred.getUnit();
         this.comment = nerredIngred.getNil();
+        this.defaultUnit = this.unit;
+
+        if (this.quantity != null)
+            this.quantity = this.quantity.replaceAll("[^\\d.]", "");
+        if (this.quantity == null || this.quantity.isEmpty())
+            this.quantity = "-1";
+
+        if (this.unit == null || this.unit.isEmpty())
+            this.unit = "none";
+        if (this.comment == null || this.comment.isEmpty())
+            this.comment = "none";
+        if (this.defaultUnit == null || this.defaultUnit.isEmpty())
+            this.defaultUnit = "none";
+
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", quantity='" + quantity + '\'' +
+                ", unit='" + unit + '\'' +
+                ", comment='" + comment + '\'' +
+                ", processingMethod='" + processingMethod + '\'' +
+                ", defaultUnit='" + defaultUnit + '\'' +
+                ", description='" + description + '\'' +
+                ", diet=" + diet +
+                ", protein=" + protein +
+                ", carbs=" + carbs +
+                ", fats=" + fats +
+                '}';
     }
 
     // ============================================================
