@@ -75,6 +75,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
+                    android:id="@+id/llRecipeDetailsRecipeCookedNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -112,6 +113,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/llRecipeDetailsStarts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -263,6 +265,7 @@
 
 
             <TextView
+                android:id="@+id/tvRecipeDetailsDescription"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

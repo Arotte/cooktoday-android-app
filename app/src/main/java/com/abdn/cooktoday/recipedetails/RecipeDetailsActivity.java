@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.recipedetails.rvadapters.IngredientItemRVAdapter;
 import com.abdn.cooktoday.recipedetails.rvadapters.RecipeStepRVAdapter;
 import com.abdn.cooktoday.utility.ToastMaker;
+import com.abdn.cooktoday.utility.Util;
 import com.google.android.material.button.MaterialButton;
 import com.squareup.picasso.Picasso;
 
@@ -71,23 +73,6 @@ public class RecipeDetailsActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-    }
-
-    private void initReviewStars() {
-        StarReviewsViewHandler starHandler = new StarReviewsViewHandler(
-            Arrays.asList(
-                R.id.ivRecipeDetails__star1,
-                R.id.ivRecipeDetails__star2,
-                R.id.ivRecipeDetails__star3,
-                R.id.ivRecipeDetails__star4,
-                R.id.ivRecipeDetails__star5),
-            R.id.tvRecipeDetailsReviewCount,
-            R.color.primaryGreen,
-            R.color.inactiveStar);
-
-        // set average review to 3.67/5
-        // and total review count to 1121
-        starHandler.set(3.67F, 1121);
     }
 
     private void initStepsView() {
@@ -194,11 +179,27 @@ public class RecipeDetailsActivity extends AppCompatActivity
         ((TextView) findViewById(R.id.tvRecipeDetailsTotalTime)).setText(
                 this.recipe.getTimePretty(Recipe.TimeType.FULL_COOKING_TIME));
 
-        // short & long description
-        ((TextView) findViewById(R.id.tvRecipeDetailsRecipeShortDescription)).setText(
-                this.recipe.getShortDescription());
-        ((TextView) findViewById(R.id.tvRecipeDetailsLongDescription)).setText(
-                this.recipe.getLongDescription());
+        String shortDesc = this.recipe.getShortDescription();
+        String longDesc = this.recipe.getLongDescription();
+        boolean shortDescOk = !shortDesc.isEmpty();
+        boolean longDescOk = !longDesc.isEmpty();
+        TextView tvShortDesc = ((TextView) findViewById(R.id.tvRecipeDetailsRecipeShortDescription));
+        TextView tvLongDesc = ((TextView) findViewById(R.id.tvRecipeDetailsLongDescription));
+        TextView tvLongDescTitle = ((TextView) findViewById(R.id.tvRecipeDetailsDescription));
+
+        if (!longDescOk) {
+            tvLongDesc.setVisibility(View.GONE);
+            tvLongDescTitle.setVisibility(View.GONE);
+        } else {
+            Util.renderHtmlInTextView(longDesc, tvLongDesc);
+        }
+
+        if (!shortDescOk) {
+            tvShortDesc.setVisibility(View.GONE);
+        } else {
+            Util.renderHtmlInTextView(shortDesc, tvShortDesc);
+        }
+
     }
 
     private void initSaveRecipeButton() {
@@ -252,6 +253,26 @@ public class RecipeDetailsActivity extends AppCompatActivity
         fade.excludeTarget(android.R.id.navigationBarBackground, true);
         getWindow().setEnterTransition(fade);
         getWindow().setExitTransition(fade);
+    }
+
+    private void initReviewStars() {
+        // backend does not yet support reviews
+
+        ((LinearLayout) findViewById(R.id.llRecipeDetailsStarts)).setVisibility(View.GONE);
+        // StarReviewsViewHandler starHandler = new StarReviewsViewHandler(
+        //     Arrays.asList(
+        //         R.id.ivRecipeDetails__star1,
+        //         R.id.ivRecipeDetails__star2,
+        //         R.id.ivRecipeDetails__star3,
+        //         R.id.ivRecipeDetails__star4,
+        //         R.id.ivRecipeDetails__star5),
+        //     R.id.tvRecipeDetailsReviewCount,
+        //    R.color.primaryGreen,
+        //    R.color.inactiveStar);
+
+        // set average review to 3.67/5
+        // and total review count to 1121
+        // starHandler.set(3.67F, 1121);
     }
 
     /**

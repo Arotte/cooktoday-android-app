@@ -2,10 +2,13 @@ package com.abdn.cooktoday.utility;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
+import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,5 +46,13 @@ public class Util {
                 return false;
             }
         });
+    }
+
+    public static void renderHtmlInTextView(String html, TextView tv) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            tv.setText(Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            tv.setText(Html.fromHtml(html));
+        }
     }
 }
