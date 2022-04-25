@@ -66,6 +66,7 @@ public class Recipe implements Serializable {
     // ingreds
     private int nIngreds;
     private List<Ingredient> ingredients; // TODO: list of Ingredient class
+    private List<Boolean> isIngredChecked;
 
 
     // =====================================================
@@ -96,8 +97,11 @@ public class Recipe implements Serializable {
         this.cuisine = recipeJson.getCuisine();
 
         this.ingredients = new ArrayList<>();
-        for (RecipeIngredientJson recipeIngredientJson : recipeJson.getIngredients())
+        this.isIngredChecked = new ArrayList<>();
+        for (RecipeIngredientJson recipeIngredientJson : recipeJson.getIngredients()) {
             this.ingredients.add(new Ingredient(recipeIngredientJson));
+            this.isIngredChecked.add(false);
+        }
         this.nIngreds = ingredients.size();
 
         this.createdByUser = false;
@@ -133,6 +137,9 @@ public class Recipe implements Serializable {
         this.cuisine = cuisine;
 
         this.createdByUser = false;
+        this.isIngredChecked = new ArrayList<>();
+        for (int i = 0; i < nIngreds; i++)
+            this.isIngredChecked.add(false);
     }
 
     // =====================================================
@@ -211,6 +218,18 @@ public class Recipe implements Serializable {
 
     // default
 
+
+    public List<Boolean> getIsIngredChecked() {
+        return isIngredChecked;
+    }
+
+    public boolean isIngredChecked(int position) {
+        return isIngredChecked.get(position);
+    }
+
+    public void setIngredChecked(int position, boolean checked) {
+        isIngredChecked.set(position, checked);
+    }
 
     public boolean isCreatedByUser() {
         return createdByUser;

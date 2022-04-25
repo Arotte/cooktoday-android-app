@@ -16,6 +16,7 @@ import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.home.rvadapters.HotRecipesRVAdapter;
 import com.abdn.cooktoday.home.rvadapters.RecommedationCirclesRVAdapter;
 import com.abdn.cooktoday.home.rvadapters.RecommendedRVAdapter;
+import com.abdn.cooktoday.local_data.LocalRecipes;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.recipedetails.RecipeDetailsActivity;
@@ -66,7 +67,7 @@ public class HomeFragment extends Fragment
         circlesRVAdapter.setClickListener(this);
         recyclerView.setAdapter(circlesRVAdapter);
 
-        List<Recipe> recRecipes = LoggedInUser.user().getRecommendedRecipes();
+        List<Recipe> recRecipes = LocalRecipes.i().getRecommendedRecipes();
         RecyclerView rvRecommendedRecipes = layout.findViewById(R.id.rvHomeFragmentRecommendedRecipes);
         rvRecommendedRecipes.setNestedScrollingEnabled(false);
         rvRecommendedRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -77,7 +78,7 @@ public class HomeFragment extends Fragment
         rvRecommendedRecipes.setAdapter(recommendedRVAdapter);
 
         // hot recipes rv
-        List<Recipe> personalizedRecipes = LoggedInUser.user().getPersonalizedRecipes();
+        List<Recipe> personalizedRecipes = LocalRecipes.i().getPersonalizedRecipes();
         RecyclerView rvHotRecipes = layout.findViewById(R.id.rvHomeFragmentHotRecipes);
         rvHotRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         personalizedRecipesRVAdapter = new HotRecipesRVAdapter(getContext(), personalizedRecipes);

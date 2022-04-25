@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.api_connection.ServerCallbacks;
+import com.abdn.cooktoday.local_data.LocalRecipes;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.NerredIngred;
@@ -232,7 +233,7 @@ public class UploadFromUrlActivity extends AppCompatActivity
                             progressButtonHandler.setState(ProgressButtonHandler.State.SUCCESS);
                             Log.i(TAG, "Recipe creation successful!");
                             ToastMaker.make("Recipe added!", ToastMaker.Type.SUCCESS, UploadFromUrlActivity.this);
-                            LoggedInUser.user().newRecipeCreatedByUser(recipe);
+                            LocalRecipes.i().addRecipe(recipe, LocalRecipes.Type.ADDED_BY_USER);
                             finish();
                         }
 

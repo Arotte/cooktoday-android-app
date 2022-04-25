@@ -19,6 +19,7 @@ import com.abdn.cooktoday.cooking_session.dialog.FinishedCookingCallback;
 import com.abdn.cooktoday.cooking_session.dialog.FinishedDialogFragment;
 import com.abdn.cooktoday.cooking_session.dialog.IngredientsDialogFragment;
 import com.abdn.cooktoday.cooking_session.rvadapters.RecipeStepRVAdapter;
+import com.abdn.cooktoday.local_data.LocalRecipes;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.Recipe;
@@ -148,7 +149,7 @@ public class CookingSessionActivity extends AppCompatActivity implements RecipeS
                     @Override
                     public void success() {
                         // add recipe to user's list of cooked recipes
-                        LoggedInUser.user().addCookedRecipe(recipe);
+                        LocalRecipes.i().recipeCooked(recipe.getServerId());
                         ToastMaker.make("Recipe cooked!", ToastMaker.Type.SUCCESS, CookingSessionActivity.this);
                         // go back to previous activity
                         finish();

@@ -28,6 +28,7 @@ import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredSearchResultItemJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.media.AwsUploadedFilesJson;
+import com.abdn.cooktoday.local_data.LocalRecipes;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.Recipe;
@@ -270,7 +271,7 @@ public class UploadActivity extends AppCompatActivity
                                         btnUploadHandler.setState(ProgressButtonHandler.State.SUCCESS);
                                         Log.i(TAG, "Recipe successfully created!");
                                         ToastMaker.make("Recipe added!", ToastMaker.Type.SUCCESS, UploadActivity.this);
-                                        LoggedInUser.user().newRecipeCreatedByUser(createdRecipe);
+                                        LocalRecipes.i().addRecipe(recipe, LocalRecipes.Type.ADDED_BY_USER);
                                         finish();
                                     }
                                     @Override

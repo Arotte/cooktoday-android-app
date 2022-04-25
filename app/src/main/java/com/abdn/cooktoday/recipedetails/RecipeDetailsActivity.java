@@ -18,6 +18,7 @@ import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.cooking_session.CookingSessionActivity;
+import com.abdn.cooktoday.local_data.LocalRecipes;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.Recipe;
@@ -220,7 +221,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
                             Log.i(TAG, "Recipe " + recipe.getServerId() + " successfully saved to user's cookbook!");
                             ToastMaker.make("Recipe saved to Cookbook!", ToastMaker.Type.SUCCESS, RecipeDetailsActivity.this);
                             recipe.setSaved(true);
-                            LoggedInUser.user().addSavedRecipe(recipe);
+                            LocalRecipes.i().recipeSaved(recipe.getServerId());
                             isSaved = true;
                             updateSaveBtnView();
                         }

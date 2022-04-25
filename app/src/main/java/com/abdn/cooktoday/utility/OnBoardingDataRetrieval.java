@@ -5,6 +5,7 @@ import android.util.Log;
 import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.api_connection.jsonmodels.feed.HomeFeedJson;
+import com.abdn.cooktoday.local_data.LocalRecipes;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Recipe;
 
@@ -34,25 +35,24 @@ public class OnBoardingDataRetrieval {
             @Override
             public void success(List<Recipe> savedRecipes) {
                 Log.i(logTAG, "Saved recipes successfully retrieved from server!");
-                LoggedInUser.user().setSavedRecipes(savedRecipes);
+                LocalRecipes.i().addRecipes(savedRecipes, LocalRecipes.Type.SAVED);
                 // 2.) get all recipes created by user
                 Server.getAllOwnRecipes(userSessId, new ServerCallbacks.ListOfRecipesCallback() {
                     @Override
                     public void success(List<Recipe> createdRecipes) {
-                        LoggedInUser.user().setMyRecipes(createdRecipes);
+                        LocalRecipes.i().addRecipes(createdRecipes, LocalRecipes.Type.ADDED_BY_USER);
                         // 3.) get all recipes cooked by user
                         Server.getAllCookedRecipes(userSessId, new ServerCallbacks.ListOfRecipesCallback() {
                             @Override
                             public void success(List<Recipe> cookedRecipes) {
-                                LoggedInUser.user().setCookedRecipes(cookedRecipes);
+                                LocalRecipes.i().addRecipes(cookedRecipes, LocalRecipes.Type.COOKED_BY_USER);
                                 // 4.) retrieve home feed from server
                                 Server.getHomeFeed(userSessId, new ServerCallbacks.HomeFeedResultCallback() {
                                     @Override
                                     public void success(HomeFeedJson homeFeedJson) {
                                         Log.i(logTAG, "Successfully retrieved home feed from server!");
-                                        LoggedInUser.user().setRecommendedRecipes(homeFeedJson.getRecommendedRecipesInternal());
-                                        LoggedInUser.user().setPersonalizedRecipes(homeFeedJson.getPersonalizedRecipesInternal());
-                                        LoggedInUser.user().normalizeRecipes();
+                                        LocalRecipes.i().addRecipes(homeFeedJson.getRecommendedRecipesInternal(), LocalRecipes.Type.RECOMMENDED);
+                                        LocalRecipes.i().addRecipes(homeFeedJson.getPersonalizedRecipesInternal(), LocalRecipes.Type.PERSONALIZED);
                                         LoggedInUser.user().setHomeFeedCategories(homeFeedJson.getCategories());
                                         // 5.) call success result callback
                                         resultCallback.success();

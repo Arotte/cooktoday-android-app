@@ -15,6 +15,7 @@ import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.cookbook.bottomsheet.UploadTypeBottomSheet;
 import com.abdn.cooktoday.cookbook.rvadapters.CookBookRVAdapter;
 import com.abdn.cooktoday.cookbook.rvadapters.CreatedByMeRVAdapter;
+import com.abdn.cooktoday.local_data.LocalRecipes;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.recipedetails.RecipeDetailsActivity;
@@ -90,8 +91,8 @@ public class CookbookFragment extends Fragment
     }
 
     private void setup(View layout) {
-        List<Recipe> savedRecipes = LoggedInUser.user().getSavedRecipes();
-        this.nSavedRecipesDisplayed = LoggedInUser.user().nSavedRecipes();
+        List<Recipe> savedRecipes = LocalRecipes.i().getSavedRecipes();
+        this.nSavedRecipesDisplayed = savedRecipes.size();
         // cookbook recipes rv
         RecyclerView cookbookRecipes = layout.findViewById(R.id.rvCookBookFragmentCookBookRecipes);
         cookbookRecipes.setNestedScrollingEnabled(false);
@@ -101,7 +102,7 @@ public class CookbookFragment extends Fragment
         cookbookRecipes.setAdapter(cookbookRVAdapter);
 
         // recyclerview for user's own recipes
-        List<Recipe> createdByMe = LoggedInUser.user().getMyRecipes();
+        List<Recipe> createdByMe = LocalRecipes.i().getRecipesAddedByUser();
         RecyclerView myRecipes = layout.findViewById(R.id.rvCookBookFragmentMyRecipes);
         myRecipes.setNestedScrollingEnabled(false);
         myRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
