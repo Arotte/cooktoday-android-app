@@ -65,6 +65,8 @@ public class RecipeDetailsActivity extends AppCompatActivity
         initRecipeDetailsView();
         initSaveRecipeButton();
         initReviewStars();
+
+        initCookedCounter();
         findViewById(R.id.fabtnRecipeDetailsCookDish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,7 +160,6 @@ public class RecipeDetailsActivity extends AppCompatActivity
         else
             img.setImageDrawable(getResources().getDrawable(R.drawable.img_food2));
 
-
         // recipe name
         ((TextView) findViewById(R.id.tvRecipeDetailsRecipeName)).setText(
                 this.recipe.getName());
@@ -181,8 +182,8 @@ public class RecipeDetailsActivity extends AppCompatActivity
 
         String shortDesc = this.recipe.getShortDescription();
         String longDesc = this.recipe.getLongDescription();
-        boolean shortDescOk = !shortDesc.isEmpty();
-        boolean longDescOk = !longDesc.isEmpty();
+        boolean shortDescOk = !(shortDesc == null) && !shortDesc.isEmpty();
+        boolean longDescOk = !(longDesc == null) && !longDesc.isEmpty();
         TextView tvShortDesc = ((TextView) findViewById(R.id.tvRecipeDetailsRecipeShortDescription));
         TextView tvLongDesc = ((TextView) findViewById(R.id.tvRecipeDetailsLongDescription));
         TextView tvLongDescTitle = ((TextView) findViewById(R.id.tvRecipeDetailsDescription));
@@ -273,6 +274,11 @@ public class RecipeDetailsActivity extends AppCompatActivity
         // set average review to 3.67/5
         // and total review count to 1121
         // starHandler.set(3.67F, 1121);
+    }
+
+    private void initCookedCounter() {
+        // backend does not yet support cooked count
+        ((LinearLayout) findViewById(R.id.llRecipeDetailsRecipeCookedNo)).setVisibility(View.GONE);
     }
 
     /**

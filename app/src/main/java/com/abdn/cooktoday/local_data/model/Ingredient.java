@@ -111,7 +111,7 @@ public class Ingredient implements Serializable {
         boolean nameOk = name != null && !name.isEmpty();
         boolean quantityOk = quantity != null && !quantity.isEmpty() && !quantity.equals("-1") && !quantity.contains(CookTodaySettings.noneStr);
         boolean unitOk = unit != null && !unit.isEmpty() && !unit.contains(CookTodaySettings.noneStr);
-        boolean commentOk = comment != null && !comment.isEmpty() && !comment.contains(CookTodaySettings.noneStr);
+        boolean commentOk = comment != null && !comment.isEmpty() && !comment.contains(CookTodaySettings.noneStr) && !comment.equals(" ");
 
         if (commentOk)
             if (comment.contains(")") || comment.contains("("))
@@ -119,8 +119,8 @@ public class Ingredient implements Serializable {
 
         if (quantityOk && unitOk && nameOk)
             return retStr
-                    .append(unit).append(" ")
                     .append(quantity).append(" ")
+                    .append(unit).append(" ")
                     .append(name)
                     .append(commentOk ? " (" + comment + ")" : "")
                     .toString();
