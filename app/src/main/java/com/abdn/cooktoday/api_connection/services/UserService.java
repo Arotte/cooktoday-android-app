@@ -1,11 +1,8 @@
 package com.abdn.cooktoday.api_connection.services;
 
 import com.abdn.cooktoday.api_connection.jsonmodels.LogoutMessageJSONModel;
-import com.abdn.cooktoday.api_connection.jsonmodels.UserJSONModel;
 import com.abdn.cooktoday.api_connection.jsonmodels.UserJSONModel__Outer;
 import com.abdn.cooktoday.api_connection.jsonmodels.UserPrefsJsonModel;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

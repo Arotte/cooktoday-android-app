@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 public class RecipeSearchResultItemJSON {
 
     @SerializedName("_id")
-    private String id;
-    private String name;
-    private String shortDesc;
-    private double score;
+    private final String id;
+    private final String name;
+    private final String shortDesc;
+    private final double score;
 
     public RecipeSearchResultItemJSON(String id, String name, String shortDesc, int score) {
         this.id = id;

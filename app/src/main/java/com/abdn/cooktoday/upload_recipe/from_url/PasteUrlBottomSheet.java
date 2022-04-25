@@ -1,24 +1,17 @@
 package com.abdn.cooktoday.upload_recipe.from_url;
 
-import static android.content.Context.CLIPBOARD_SERVICE;
-
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -29,10 +22,6 @@ import com.google.android.material.button.MaterialButton;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-
-import nl.bryanderidder.themedtogglebuttongroup.ThemedButton;
-import nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup;
 
 public class PasteUrlBottomSheet extends BottomSheetDialogFragment {
 
@@ -140,7 +129,7 @@ public class PasteUrlBottomSheet extends BottomSheetDialogFragment {
         });
 
         // cancel button
-        ((ImageView) v.findViewById(R.id.ivAddUrlBottomSheetCancel)).setOnClickListener(new View.OnClickListener() {
+        v.findViewById(R.id.ivAddUrlBottomSheetCancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getActivity().finish();

@@ -1,12 +1,5 @@
 package com.abdn.cooktoday.search;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,15 +7,19 @@ import android.text.TextWatcher;
 import android.transition.Fade;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.Server;
@@ -31,10 +28,10 @@ import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchRe
 import com.abdn.cooktoday.local_data.Cache;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.recipedetails.RecipeDetailsActivity;
-import com.abdn.cooktoday.search.adapters.SearchResultArrayAdapter;
-import com.abdn.cooktoday.search.bottomsheet.SearchFilterBottomSheet;
 import com.abdn.cooktoday.search.adapters.SearchHistoryRVAdapter;
+import com.abdn.cooktoday.search.adapters.SearchResultArrayAdapter;
 import com.abdn.cooktoday.search.adapters.SearchSuggestionRVAdapter;
+import com.abdn.cooktoday.search.bottomsheet.SearchFilterBottomSheet;
 import com.abdn.cooktoday.utility.Util;
 
 import java.util.ArrayList;
@@ -89,7 +86,7 @@ public class SearchFragment extends Fragment
         userSessId = Cache.read_string(Cache.KEY_USER_SESSID, "");
 
         // init elements
-        searchField = (EditText) layout.findViewById(R.id.searchBar);
+        searchField = layout.findViewById(R.id.searchBar);
         filter = layout.findViewById(R.id.searchFilterIcon);
         filter.setVisibility(View.GONE);
         RecyclerView rvSearchSuggestions = layout.findViewById(R.id.rvSearchSuggestions);

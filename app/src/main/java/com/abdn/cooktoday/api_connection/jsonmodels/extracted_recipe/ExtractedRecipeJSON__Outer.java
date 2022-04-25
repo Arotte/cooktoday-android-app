@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 public class ExtractedRecipeJSON__Outer {
 
     @SerializedName("url")
-    private String url;
+    private final String url;
 
     @SerializedName("recipe")
-    private ExtractedRecipeJSON recipe;
+    private final ExtractedRecipeJSON recipe;
 
     public ExtractedRecipeJSON__Outer(String url, ExtractedRecipeJSON recipe) {
         this.url = url;

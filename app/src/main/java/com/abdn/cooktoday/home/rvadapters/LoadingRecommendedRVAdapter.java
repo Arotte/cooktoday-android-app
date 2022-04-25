@@ -12,7 +12,7 @@ import com.abdn.cooktoday.R;
 
 public class LoadingRecommendedRVAdapter extends RecyclerView.Adapter<LoadingRecommendedRVAdapter.ViewHolder> {
 
-    private LayoutInflater mInflater;
+    private final LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private static final int nItems = 3;
 

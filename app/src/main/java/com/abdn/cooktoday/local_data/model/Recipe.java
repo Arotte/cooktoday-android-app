@@ -9,11 +9,8 @@
 
 package com.abdn.cooktoday.local_data.model;
 
-import com.abdn.cooktoday.api_connection.Server;
-import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.RecipeIngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJson;
-import com.abdn.cooktoday.local_data.LoggedInUser;
 
 import java.io.Serializable;
 import java.util.ArrayList;

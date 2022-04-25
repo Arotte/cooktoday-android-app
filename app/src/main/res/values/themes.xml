@@ -16,15 +16,6 @@
         <!--        <item name="android:windowAnimationStyle">@android:anim/accelerate_decelerate_interpolator</item>-->
     </style>
 
-    <style name="Theme.CookToday.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.CookToday.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.CookToday.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
     <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>

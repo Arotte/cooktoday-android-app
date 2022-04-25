@@ -7,20 +7,20 @@ import java.util.ArrayList;
 
 public class RecipeJson {
     @SerializedName("_id")
-    private String id;
-    private String name;
-    private String shortDesc;
-    private String longDesc;
-    private int cookingTime;
-    private int prepTime;
-    private int portionsNum;
-    private String dateOfCreation;
-    private String authorId;
-    private ArrayList<String> media;
-    private ArrayList<InstructionJson> instructions;
-    private ArrayList<RecipeIngredientJson> ingredients;
-    private int calories;
-    private String cuisine;
+    private final String id;
+    private final String name;
+    private final String shortDesc;
+    private final String longDesc;
+    private final int cookingTime;
+    private final int prepTime;
+    private final int portionsNum;
+    private final String dateOfCreation;
+    private final String authorId;
+    private final ArrayList<String> media;
+    private final ArrayList<InstructionJson> instructions;
+    private final ArrayList<RecipeIngredientJson> ingredients;
+    private final int calories;
+    private final String cuisine;
 
     public RecipeJson(String id, String name, String shortDesc, String longDesc, int cookingTime, int prepTime, int portionsNum, String dateOfCreation, String authorId, ArrayList<String> media, ArrayList<InstructionJson> instructions, ArrayList<RecipeIngredientJson> ingredients, int calories, String cuisine) {
         this.id = id;

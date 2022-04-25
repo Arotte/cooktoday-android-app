@@ -1,17 +1,17 @@
 package com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe;
 
 public class ExtractedRecipeNutritionJSON {
-    private String calories;
-    private String carbohydrateContent;
-    private String proteinContent;
-    private String fatContent;
-    private String saturatedFatContent;
-    private String transFatContent;
-    private String cholesterolContent;
-    private String sodiumContent;
-    private String fiberContent;
-    private String sugarContent;
-    private String servingSize;
+    private final String calories;
+    private final String carbohydrateContent;
+    private final String proteinContent;
+    private final String fatContent;
+    private final String saturatedFatContent;
+    private final String transFatContent;
+    private final String cholesterolContent;
+    private final String sodiumContent;
+    private final String fiberContent;
+    private final String sugarContent;
+    private final String servingSize;
 
     public ExtractedRecipeNutritionJSON(String calories, String carbohydrateContent, String proteinContent, String fatContent, String saturatedFatContent, String transFatContent, String cholesterolContent, String sodiumContent, String fiberContent, String sugarContent, String servingSize) {
         this.calories = calories;

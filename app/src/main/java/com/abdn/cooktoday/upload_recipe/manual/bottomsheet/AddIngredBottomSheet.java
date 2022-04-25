@@ -49,10 +49,10 @@ public class AddIngredBottomSheet extends BottomSheetDialogFragment {
 
     private boolean editAfterResult;
 
-    private OnIngredientAddedCallback callback;
-    private int quantityColor;
-    private int unitColor;
-    private int nameColor;
+    private final OnIngredientAddedCallback callback;
+    private final int quantityColor;
+    private final int unitColor;
+    private final int nameColor;
 
     private ListView searchList;
     private IngredSearchResultArrayAdapter searchResultAdapter;
@@ -113,10 +113,10 @@ public class AddIngredBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void initButton(View v) {
-        btnAction = (Button) v.findViewById(R.id.btnAction);
-        pbBtn = (ProgressBar) v.findViewById(R.id.pb);
-        ivBtnAction = (ImageView) v.findViewById(R.id.icAction);
-        ivBtnSuccess = (ImageView) v.findViewById(R.id.icSuccess);
+        btnAction = v.findViewById(R.id.btnAction);
+        pbBtn = v.findViewById(R.id.pb);
+        ivBtnAction = v.findViewById(R.id.icAction);
+        ivBtnSuccess = v.findViewById(R.id.icSuccess);
 
         btnHandler = new ProgressButtonHandler(pbBtn, ivBtnAction, ivBtnSuccess);
         setButtonStateDefault();
@@ -232,7 +232,7 @@ public class AddIngredBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void initEtIngred(View v) {
-        etIngred = (EditText) v.findViewById(R.id.etIngred);
+        etIngred = v.findViewById(R.id.etIngred);
         etIngred.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 if (!editAfterResult

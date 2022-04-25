@@ -2,8 +2,8 @@ package com.abdn.cooktoday.api_connection.jsonmodels.ingredient.ingred_ner;
 
 public class IngredientNerJson {
 
-    private String original;
-    private IngredNerTagsJson tags;
+    private final String original;
+    private final IngredNerTagsJson tags;
 
     public IngredientNerJson(String original, IngredNerTagsJson tags) {
         this.original = original;

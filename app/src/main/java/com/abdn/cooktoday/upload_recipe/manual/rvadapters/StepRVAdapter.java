@@ -14,8 +14,8 @@ import java.util.List;
 
 public class StepRVAdapter extends RecyclerView.Adapter<StepRVAdapter.ViewHolder> {
 
-    private List<String> mData;
-    private LayoutInflater mInflater;
+    private final List<String> mData;
+    private final LayoutInflater mInflater;
     private StepRVAdapter.ItemClickListener mClickListener;
 
     public StepRVAdapter(Context context, List<String> data) {

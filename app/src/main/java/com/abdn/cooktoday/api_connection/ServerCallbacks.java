@@ -99,7 +99,7 @@ public interface ServerCallbacks {
         void error(int errorCode);
     }
 
-    public interface CreateRecipeRequestJsonCreatedCallback {
+    interface CreateRecipeRequestJsonCreatedCallback {
         void onSuccess(CreateRecipeJson json);
         void onFailure(String error);
     }

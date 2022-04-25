@@ -38,7 +38,7 @@ public class SearchResultArrayAdapter extends ArrayAdapter<RecipeSearchResultIte
         listItem = LayoutInflater.from(mContext).inflate(R.layout.fragment_search_layout_item_autocomplete, parent, false);
 
         RecipeSearchResultItemJSON currentRecipe = recipesList.get(position);
-        TextView name = (TextView) listItem.findViewById(R.id.tvSearchResultRecipeName);
+        TextView name = listItem.findViewById(R.id.tvSearchResultRecipeName);
         name.setText(currentRecipe.getName());
 
         return listItem;

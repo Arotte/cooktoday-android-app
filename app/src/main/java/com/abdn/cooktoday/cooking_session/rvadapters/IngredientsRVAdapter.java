@@ -9,17 +9,14 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.abdn.cooktoday.R;
-import com.abdn.cooktoday.help.HelpTocItem;
 import com.abdn.cooktoday.local_data.model.Ingredient;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class IngredientsRVAdapter extends RecyclerView.Adapter<IngredientsRVAdapter.ViewHolder> {
 
-    private List<Ingredient> mData;
-    private LayoutInflater mInflater;
+    private final List<Ingredient> mData;
+    private final LayoutInflater mInflater;
     private IngredientsRVAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor

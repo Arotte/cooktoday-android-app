@@ -88,13 +88,13 @@ public class SurveyFragment4Ingreds extends Fragment implements IngredientsRVAda
 
     @Override
     public void onIngredItemClick(View view, int position) {
-        FrameLayout overlay = (FrameLayout) view.findViewById(R.id.flSurveySelectableCircleImgOverlay);
+        FrameLayout overlay = view.findViewById(R.id.flSurveySelectableCircleImgOverlay);
 
         // change background of item
         if (selected.contains(position)) {
             overlay.setBackgroundColor(
                     getResources().getColor(R.color.imageOverlay));
-            selected.remove(selected.indexOf(position));
+            selected.remove((Integer) position);
         } else {
             overlay.setBackgroundColor(
                     getResources().getColor(R.color.imageOverlayGreen));

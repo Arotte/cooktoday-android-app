@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AwsUploadedFilesJson {
-    private List<String> files;
+    private final List<String> files;
 
     public AwsUploadedFilesJson(List<String> files) {
         this.files = files;

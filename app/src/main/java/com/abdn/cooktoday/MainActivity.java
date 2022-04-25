@@ -1,25 +1,19 @@
 package com.abdn.cooktoday;
 
+import android.os.Bundle;
+import android.transition.Fade;
+import android.view.MenuItem;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.os.Bundle;
-import android.transition.Fade;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-
-import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.cookbook.CookbookFragment;
 import com.abdn.cooktoday.home.HomeFragment;
-import com.abdn.cooktoday.local_data.LoggedInUser;
-import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.profile.ProfileFragment;
 import com.abdn.cooktoday.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.List;
 
 public class MainActivity
         extends AppCompatActivity

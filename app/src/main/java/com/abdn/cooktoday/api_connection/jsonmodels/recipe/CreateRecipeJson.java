@@ -1,38 +1,28 @@
 package com.abdn.cooktoday.api_connection.jsonmodels.recipe;
 
-import android.util.Log;
-
 import com.abdn.cooktoday.CookTodaySettings;
-import com.abdn.cooktoday.api_connection.Server;
-import com.abdn.cooktoday.api_connection.ServerCallbacks;
-import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.CreateIngredientJson;
-import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredSearchResultItemJson;
-import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
-import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.Recipe;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class CreateRecipeJson {
     private static final String TAG = "CreateRecipeJson";
 
-    private String name;
-    private String shortDesc;
-    private String longDesc;
-    private int cookingTime;
-    private int prepTime;
-    private int portionsNum;
-    private String dateOfCreation;
-    private String authorId;
-    private ArrayList<String> media;
-    private ArrayList<CreatedInstructionJson> instructions;
-    private ArrayList<CreateRecipeIngredientJson> ingredients;
-    private int calories;
-    private String cuisine;
+    private final String name;
+    private final String shortDesc;
+    private final String longDesc;
+    private final int cookingTime;
+    private final int prepTime;
+    private final int portionsNum;
+    private final String dateOfCreation;
+    private final String authorId;
+    private final ArrayList<String> media;
+    private final ArrayList<CreatedInstructionJson> instructions;
+    private final ArrayList<CreateRecipeIngredientJson> ingredients;
+    private final int calories;
+    private final String cuisine;
 
     public CreateRecipeJson(
             String name,

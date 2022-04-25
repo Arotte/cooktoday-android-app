@@ -1,7 +1,5 @@
 package com.abdn.cooktoday.onboarding.registration;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,7 +9,6 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.APIRepository;
@@ -150,7 +149,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<UserJSONModel__Outer> call, Throwable t) {
-                        Log.i(TAG, t.toString() + ", " + t.getMessage());
+                        Log.i(TAG, t + ", " + t.getMessage());
                         onRegisterFailure(-1);
                     }
                 });
@@ -229,12 +228,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void showExistingEmailToast() {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.toast_cooktoday_error, (ViewGroup) findViewById(R.id.toastCookTodayError));
+        View layout = inflater.inflate(R.layout.toast_cooktoday_error, findViewById(R.id.toastCookTodayError));
 
-        ImageView image = (ImageView) layout.findViewById(R.id.ivToastCookTodayError);
+        ImageView image = layout.findViewById(R.id.ivToastCookTodayError);
         image.setImageResource(R.drawable.ic_info_circle);
         image.setColorFilter(getResources().getColor(R.color.white));
-        TextView text = (TextView) layout.findViewById(R.id.tvToastCookTodayError);
+        TextView text = layout.findViewById(R.id.tvToastCookTodayError);
         text.setText("Oops! Email already exists!");
 
         Toast toast = new Toast(getApplicationContext());

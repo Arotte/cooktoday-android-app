@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class IngredNerTagsJson {
     @SerializedName("QUANTITY")
-    private String quantity;
+    private final String quantity;
     @SerializedName("UNIT")
-    private String unit;
+    private final String unit;
     @SerializedName("NAME")
-    private String name;
+    private final String name;
     @SerializedName("O")
-    private String nil;
+    private final String nil;
 
     public IngredNerTagsJson(String quantity, String unit, String name, String nil) {
         this.quantity = quantity;

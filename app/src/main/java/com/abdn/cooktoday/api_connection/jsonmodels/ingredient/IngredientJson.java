@@ -3,14 +3,14 @@ package com.abdn.cooktoday.api_connection.jsonmodels.ingredient;
 import java.util.List;
 
 public class IngredientJson {
-    private String _id;
-    private String name;
-    private String defaultUnit;
-    private String description;
-    private List<String> diet;
-    private int protein;
-    private int carbs;
-    private int fats;
+    private final String _id;
+    private final String name;
+    private final String defaultUnit;
+    private final String description;
+    private final List<String> diet;
+    private final int protein;
+    private final int carbs;
+    private final int fats;
 
     public IngredientJson(String _id, String name, String defaultUnit, String description, List<String> diet, int protein, int carbs, int fats) {
         this._id = _id;

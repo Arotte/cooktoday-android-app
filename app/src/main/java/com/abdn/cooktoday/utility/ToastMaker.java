@@ -1,11 +1,9 @@
 package com.abdn.cooktoday.utility;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +12,7 @@ import com.abdn.cooktoday.R;
 
 public class ToastMaker {
 
-    public static enum Type {
+    public enum Type {
         ERROR,
         SUCCESS,
         WARNING,
@@ -28,15 +26,15 @@ public class ToastMaker {
         TextView text = null;
         switch (type) {
             case ERROR:
-                layout = inflater.inflate(R.layout.toast_cooktoday_error, (ViewGroup) activity.findViewById(R.id.toastCookTodayError));
-                text = (TextView) layout.findViewById(R.id.tvToastCookTodayError);
-                ImageView image = (ImageView) layout.findViewById(R.id.ivToastCookTodayError);
+                layout = inflater.inflate(R.layout.toast_cooktoday_error, activity.findViewById(R.id.toastCookTodayError));
+                text = layout.findViewById(R.id.tvToastCookTodayError);
+                ImageView image = layout.findViewById(R.id.ivToastCookTodayError);
                 image.setImageResource(R.drawable.ic_info_circle);
                 image.setColorFilter(activity.getResources().getColor(R.color.white));
                 break;
             case SUCCESS:
-                layout = inflater.inflate(R.layout.toast_cooktoday_default, (ViewGroup) activity.findViewById(R.id.toastCookTodayDefault));
-                text = (TextView) layout.findViewById(R.id.tvToastCookTodayDefault);
+                layout = inflater.inflate(R.layout.toast_cooktoday_default, activity.findViewById(R.id.toastCookTodayDefault));
+                text = layout.findViewById(R.id.tvToastCookTodayDefault);
                 break;
             default:
                 return;

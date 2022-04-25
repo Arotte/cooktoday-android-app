@@ -7,15 +7,15 @@ public class UserJSONModel {
     // ====================================================
     // fields
     @SerializedName("email")
-    private String email;
+    private final String email;
     @SerializedName("_id")
-    private String id;
+    private final String id;
     @SerializedName("firstName")
-    private String firstName;
+    private final String firstName;
     @SerializedName("lastName")
-    private String lastName;
+    private final String lastName;
     @SerializedName("role")
-    private String role;
+    private final String role;
 
     // ====================================================
     // constructors

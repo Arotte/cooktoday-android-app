@@ -14,8 +14,8 @@ import java.util.List;
 
 public class HelpGuidesRVAdapter extends RecyclerView.Adapter<HelpGuidesRVAdapter.ViewHolder> {
 
-    private List<HelpTocItem> mData;
-    private LayoutInflater mInflater;
+    private final List<HelpTocItem> mData;
+    private final LayoutInflater mInflater;
     private HelpGuidesRVAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor

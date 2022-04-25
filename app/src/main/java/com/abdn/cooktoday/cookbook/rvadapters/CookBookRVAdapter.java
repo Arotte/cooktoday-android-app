@@ -19,8 +19,8 @@ import java.util.List;
 
 public class  CookBookRVAdapter extends RecyclerView.Adapter<CookBookRVAdapter.ViewHolder> {
 
-    private List<Recipe> recipes;
-    private LayoutInflater mInflater;
+    private final List<Recipe> recipes;
+    private final LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor

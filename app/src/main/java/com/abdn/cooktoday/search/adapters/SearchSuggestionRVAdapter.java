@@ -14,8 +14,8 @@ import java.util.List;
 
 public class SearchSuggestionRVAdapter extends RecyclerView.Adapter<SearchSuggestionRVAdapter.ViewHolder> {
 
-    private List<String> mData;
-    private LayoutInflater mInflater;
+    private final List<String> mData;
+    private final LayoutInflater mInflater;
     private SearchSuggestionRVAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor

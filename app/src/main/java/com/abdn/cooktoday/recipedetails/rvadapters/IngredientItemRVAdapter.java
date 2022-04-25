@@ -15,8 +15,8 @@ import java.util.List;
 
 public class IngredientItemRVAdapter extends RecyclerView.Adapter<IngredientItemRVAdapter.ViewHolder> {
 
-    private List<Ingredient> mData;
-    private LayoutInflater mInflater;
+    private final List<Ingredient> mData;
+    private final LayoutInflater mInflater;
     private IngredientItemRVAdapter.ItemClickListener mClickListener;
 
     public IngredientItemRVAdapter(Context context, List<Ingredient> data) {

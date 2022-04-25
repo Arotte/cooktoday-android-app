@@ -10,14 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.abdn.cooktoday.MainActivity;
 import com.abdn.cooktoday.R;
-import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.local_data.Cache;
 import com.abdn.cooktoday.local_data.LoggedInUser;
-import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.onboarding.login.LoginActivity;
 import com.abdn.cooktoday.utility.OnBoardingDataRetrieval;
-
-import java.util.List;
 
 public class OnBoardingActivity extends AppCompatActivity {
     private static final String TAG = "OnBoardingActivity";
@@ -35,7 +31,7 @@ public class OnBoardingActivity extends AppCompatActivity {
             Log.i("LoginActivity", "User not logged in. Starting login flow.");
             setContentView(R.layout.activity_getstarted);
             // go to sign in activity
-            Button btn = (Button) findViewById(R.id.btn_onboarding_letsgo);
+            Button btn = findViewById(R.id.btn_onboarding_letsgo);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

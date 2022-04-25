@@ -7,7 +7,7 @@ import java.util.List;
 
 public class RecommendedRecipesJson {
     @SerializedName("recommended_recipes")
-    private List<RecipeJson> recommendedRecipes;
+    private final List<RecipeJson> recommendedRecipes;
 
     public RecommendedRecipesJson(List<RecipeJson> recommendedRecipes) {
         this.recommendedRecipes = recommendedRecipes;

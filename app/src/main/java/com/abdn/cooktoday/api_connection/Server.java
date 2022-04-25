@@ -19,8 +19,8 @@ import com.abdn.cooktoday.api_connection.jsonmodels.media.AwsUploadedFilesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreatedInstructionJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.ListOfRecipesJson;
-import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJSON__Outer;
+import com.abdn.cooktoday.api_connection.jsonmodels.recipe.RecipeJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe.SavedRecipesJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchJSON;
 import com.abdn.cooktoday.local_data.model.Ingredient;
@@ -83,7 +83,7 @@ public class Server {
                     }
                     @Override
                     public void onFailure(Call<RecipeJSON__Outer> call, Throwable t) {
-                        Log.i(TAG, t.toString() + ", " + t.getMessage());
+                        Log.i(TAG, t + ", " + t.getMessage());
                         callback.error(-1);
                     }
                 });
@@ -112,7 +112,7 @@ public class Server {
                     }
                     @Override
                     public void onFailure(Call<HomeFeedJson> call, Throwable t) {
-                        Log.i(TAG, t.toString() + ", " + t.getMessage());
+                        Log.i(TAG, t + ", " + t.getMessage());
                         resultCallback.error(-1);
                     }
                 });
@@ -140,7 +140,7 @@ public class Server {
                     }
                     @Override
                     public void onFailure(Call<IngredSearchJson> call, Throwable t) {
-                        Log.i(TAG, t.toString() + ", " + t.getMessage());
+                        Log.i(TAG, t + ", " + t.getMessage());
                         resultCallback.error(-1);
                     }
                 });
@@ -176,7 +176,7 @@ public class Server {
 
                         @Override
                         public void onFailure(Call<CreatedIngredientJson> call, Throwable t) {
-                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            Log.i(TAG, t + ", " + t.getMessage());
                             callback.error(-1, t.getMessage());
                         }
                     });
@@ -208,7 +208,7 @@ public class Server {
 
                         @Override
                         public void onFailure(Call<IngredientJson__Outer> call, Throwable t) {
-                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            Log.i(TAG, t + ", " + t.getMessage());
                             callback.error(-1);
                         }
                     });
@@ -244,7 +244,7 @@ public class Server {
 
                         @Override
                         public void onFailure(Call<ListOfRecipesJson> call, Throwable t) {
-                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            Log.i(TAG, t + ", " + t.getMessage());
                             callback.error(-1);
                         }
                     });
@@ -283,7 +283,7 @@ public class Server {
 
                         @Override
                         public void onFailure(Call<ListOfRecipesJson> call, Throwable t) {
-                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            Log.i(TAG, t + ", " + t.getMessage());
                             callback.error(-1);
                         }
                     });
@@ -326,7 +326,7 @@ public class Server {
                         public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws IOException {
                             if (response.code() == 200) {
                                 String responsejsonstr =response.body().string();
-                                Log.i(TAG, "SUCCESS UPLOADING IMAGE TO AWS! ====== " + response.toString() + " ==== " + responsejsonstr);
+                                Log.i(TAG, "SUCCESS UPLOADING IMAGE TO AWS! ====== " + response + " ==== " + responsejsonstr);
                                 try {
                                     JSONObject responseJson = new JSONObject(responsejsonstr);
                                     JSONArray fileUrls = responseJson.getJSONArray("files");
@@ -336,7 +336,7 @@ public class Server {
                                     e.printStackTrace();
                                 }
                             } else {
-                                Log.i(TAG, "ERROR UPLOADING IMAGE TO AWS! ====== " + response.toString());
+                                Log.i(TAG, "ERROR UPLOADING IMAGE TO AWS! ====== " + response);
                             }
                         }
                     });
@@ -371,7 +371,7 @@ public class Server {
 
                         @Override
                         public void onFailure(Call<IngredientNerJson> call, Throwable t) {
-                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            Log.i(TAG, t + ", " + t.getMessage());
                             resultCallback.error(-1);
                         }
                     });
@@ -407,7 +407,7 @@ public class Server {
 
                         @Override
                         public void onFailure(Call<RecommendedRecipesJson> call, Throwable t) {
-                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            Log.i(TAG, t + ", " + t.getMessage());
                             resultCallback.error(-1);
                         }
                     });
@@ -439,7 +439,7 @@ public class Server {
 
                         @Override
                         public void onFailure(Call<RecipeJSON__Outer> call, Throwable t) {
-                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            Log.i(TAG, t + ", " + t.getMessage());
                             resultCallback.error(-1);
                         }
                     });
@@ -479,7 +479,7 @@ public class Server {
 
                         @Override
                         public void onFailure(Call<SavedRecipesJson> call, Throwable t) {
-                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            Log.i(TAG, t + ", " + t.getMessage());
                             resultCallback.error(-1);
                         }
                     });
@@ -527,7 +527,7 @@ public class Server {
 
                         @Override
                         public void onFailure(Call<UserPrefsJsonModel> call, Throwable t) {
-                            Log.i(TAG, t.toString() + ", " + t.getMessage());
+                            Log.i(TAG, t + ", " + t.getMessage());
                             resultCallback.error(-1);
                         }
                     });
@@ -574,7 +574,7 @@ public class Server {
 
                                 @Override
                                 public void onFailure(Call<RecipeJSON__Outer> call, Throwable t) {
-                                    Log.i(TAG, t.toString() + ", " + t.getMessage());
+                                    Log.i(TAG, t + ", " + t.getMessage());
                                     resultCallback.error(-1);
                                 }
                             });
@@ -611,7 +611,7 @@ public class Server {
 
                     @Override
                     public void onFailure(Call<RecipeJSON__Outer> call, Throwable t) {
-                        Log.i(TAG, t.toString() + ", " + t.getMessage());
+                        Log.i(TAG, t + ", " + t.getMessage());
                         resultCallback.error(-1);
                     }
                 });
@@ -641,7 +641,7 @@ public class Server {
 
                     @Override
                     public void onFailure(Call<RecipeSearchJSON> call, Throwable t) {
-                        Log.i(TAG, t.toString() + ", " + t.getMessage());
+                        Log.i(TAG, t + ", " + t.getMessage());
                         resultCallback.error(-1);
                     }
                 });
@@ -695,7 +695,7 @@ public class Server {
 
                     @Override
                     public void onFailure(Call<ExtractedRecipeJSON__Outer> call, Throwable t) {
-                        Log.i(TAG, t.toString() + ", " + t.getMessage());
+                        Log.i(TAG, t + ", " + t.getMessage());
                         resultCallback.error(-1);
                     }
                 });

@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
 import com.abdn.cooktoday.R;
-import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.upload_recipe.from_url.UploadFromUrlActivity;
 import com.abdn.cooktoday.upload_recipe.manual.UploadActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -28,8 +27,8 @@ public class UploadTypeBottomSheet extends BottomSheetDialogFragment {
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.bottom_sheet_mycookbook_upload_type, container, false);
 
-        CardView manual = (CardView) v.findViewById(R.id.cvCookbookAddRecipeManually);
-        CardView fromUrl = (CardView) v.findViewById(R.id.cvCookbookAddRecipeFromURL);
+        CardView manual = v.findViewById(R.id.cvCookbookAddRecipeManually);
+        CardView fromUrl = v.findViewById(R.id.cvCookbookAddRecipeFromURL);
 
         // start manual upload flow
         manual.setOnClickListener(new View.OnClickListener() {

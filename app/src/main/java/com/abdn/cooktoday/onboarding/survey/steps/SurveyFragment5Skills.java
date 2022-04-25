@@ -1,16 +1,14 @@
 package com.abdn.cooktoday.onboarding.survey.steps;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import androidx.fragment.app.Fragment;
+
 import com.abdn.cooktoday.R;
-import com.google.android.material.card.MaterialCardView;
 
 
 public class SurveyFragment5Skills extends Fragment {
@@ -22,7 +20,7 @@ public class SurveyFragment5Skills extends Fragment {
         _NONE("_none");
 
         public final String label;
-        private CookingSkill(String label) {
+        CookingSkill(String label) {
             this.label = label;
         }
         @Override
@@ -61,7 +59,7 @@ public class SurveyFragment5Skills extends Fragment {
 
     private void setOnClickListeners(View layout) {
         // beginner button
-        ((MaterialCardView) layout.findViewById(R.id.cvSurveyStep5SkillsBEGINNER)).setOnClickListener(new View.OnClickListener() {
+        layout.findViewById(R.id.cvSurveyStep5SkillsBEGINNER).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 unselectAll(layout);
@@ -71,7 +69,7 @@ public class SurveyFragment5Skills extends Fragment {
         });
 
         // intermediate button
-        ((MaterialCardView) layout.findViewById(R.id.cvSurveyStep5SkillsINTERMEDIATE)).setOnClickListener(new View.OnClickListener() {
+        layout.findViewById(R.id.cvSurveyStep5SkillsINTERMEDIATE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 unselectAll(layout);
@@ -82,7 +80,7 @@ public class SurveyFragment5Skills extends Fragment {
 
         // advanced button
         // beginner button
-        ((MaterialCardView) layout.findViewById(R.id.cvSurveyStep5SkillsADVANCED)).setOnClickListener(new View.OnClickListener() {
+        layout.findViewById(R.id.cvSurveyStep5SkillsADVANCED).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 unselectAll(layout);
@@ -104,7 +102,7 @@ public class SurveyFragment5Skills extends Fragment {
     }
 
     private void select(View view, int buttonOverlay, int cvID) {
-        ((FrameLayout) view.findViewById(buttonOverlay)).setBackgroundColor(
+        view.findViewById(buttonOverlay).setBackgroundColor(
                 getResources().getColor(R.color.imageOverlayGreen));
     }
 

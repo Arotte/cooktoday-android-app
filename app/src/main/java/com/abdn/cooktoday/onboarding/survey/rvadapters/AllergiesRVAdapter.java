@@ -14,8 +14,8 @@ import java.util.List;
 
 public class AllergiesRVAdapter extends RecyclerView.Adapter<AllergiesRVAdapter.ViewHolder> {
 
-    private List<String> allergyNames;
-    private LayoutInflater mInflater;
+    private final List<String> allergyNames;
+    private final LayoutInflater mInflater;
     private AllergiesRVAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor

@@ -2,25 +2,23 @@ package com.abdn.cooktoday.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.abdn.cooktoday.MainActivity;
 import com.abdn.cooktoday.R;
-import com.abdn.cooktoday.local_data.LoggedInUser;
-import com.abdn.cooktoday.recipedetails.RecipeDetailsActivity;
 import com.abdn.cooktoday.home.rvadapters.HotRecipesRVAdapter;
 import com.abdn.cooktoday.home.rvadapters.RecommedationCirclesRVAdapter;
 import com.abdn.cooktoday.home.rvadapters.RecommendedRVAdapter;
+import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Recipe;
+import com.abdn.cooktoday.recipedetails.RecipeDetailsActivity;
 import com.abdn.cooktoday.search.SearchFragment;
 
 import java.util.List;

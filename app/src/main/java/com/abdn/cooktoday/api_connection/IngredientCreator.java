@@ -2,12 +2,9 @@ package com.abdn.cooktoday.api_connection;
 
 import android.util.Log;
 
-import com.abdn.cooktoday.api_connection.Server;
-import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.CreateIngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredSearchResultItemJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
-import com.abdn.cooktoday.api_connection.jsonmodels.recipe.CreateRecipeIngredientJson;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 
@@ -17,8 +14,8 @@ public class IngredientCreator {
     private static final String TAG = "IngredientCreator";
 
     private int nIngredCreated;
-    private int nIngredTotal;
-    private List<Ingredient> ingredientList;
+    private final int nIngredTotal;
+    private final List<Ingredient> ingredientList;
 
     public interface IngredientsCreatedCallback {
         void onIngredientsCreated(List<Ingredient> ingredients);

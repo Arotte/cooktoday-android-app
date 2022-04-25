@@ -1,19 +1,16 @@
 package com.abdn.cooktoday.cooking_session;
 
+import android.os.Bundle;
+import android.text.Html;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.Dialog;
-import android.content.res.ColorStateList;
-import android.os.Bundle;
-import android.text.Html;
-import android.util.Log;
-import android.view.ContextThemeWrapper;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.Server;

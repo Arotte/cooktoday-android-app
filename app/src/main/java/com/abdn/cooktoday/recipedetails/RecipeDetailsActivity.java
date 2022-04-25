@@ -1,22 +1,17 @@
 package com.abdn.cooktoday.recipedetails;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.Fade;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.Server;
@@ -68,7 +63,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
         initRecipeDetailsView();
         initSaveRecipeButton();
         initReviewStars();
-        ((Button) findViewById(R.id.fabtnRecipeDetailsCookDish)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.fabtnRecipeDetailsCookDish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RecipeDetailsActivity.this, CookingSessionActivity.class);
@@ -96,7 +91,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
     }
 
     private void initStepsView() {
-        RecyclerView rvSteps = (RecyclerView) findViewById(R.id.rvRecipeDetailsRecipeStepsContainer);
+        RecyclerView rvSteps = findViewById(R.id.rvRecipeDetailsRecipeStepsContainer);
 
         List<String> steps = recipe.getStepDescriptions();
         if (steps == null) {
@@ -118,7 +113,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
     }
 
     private void initIngredientsView() {
-        RecyclerView rvIngredients = (RecyclerView) findViewById(R.id.rvRecipeDetailsIngredientsContainer);
+        RecyclerView rvIngredients = findViewById(R.id.rvRecipeDetailsIngredientsContainer);
 
         List<Ingredient> ingredients = this.recipe.getIngredients();
         if (ingredients == null) {
@@ -142,7 +137,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
 
     @Override
     public void onIngredItemClick(View view, int position) {
-        CheckBox cb = (CheckBox) view.findViewById(R.id.checkboxIngredientItem);
+        CheckBox cb = view.findViewById(R.id.checkboxIngredientItem);
         TextView ingredName = view.findViewById(R.id.tvIngredientItemName);
 
         // change color of ingredient name textview
@@ -172,7 +167,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
     private void initRecipeDetailsView() {
         // recipe image
         String imgUrl = this.recipe.getImgUrl();
-        ImageView img = (ImageView) findViewById(R.id.ivRecipeDetailsImg);
+        ImageView img = findViewById(R.id.ivRecipeDetailsImg);
         if (!imgUrl.isEmpty())
             Picasso.get().load(imgUrl).into(img);
         else
@@ -207,7 +202,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
     }
 
     private void initSaveRecipeButton() {
-        saveBtn = (MaterialButton) findViewById(R.id.btnRecipeDetailsSave);
+        saveBtn = findViewById(R.id.btnRecipeDetailsSave);
         updateSaveBtnView();
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -283,12 +278,12 @@ public class RecipeDetailsActivity extends AppCompatActivity
 
             this.activeColor = activeColor;
             this.inactiveColor = inactiveColor;
-            this.tvTotalReviews = (TextView) findViewById(tvTotalReviewsID);
+            this.tvTotalReviews = findViewById(tvTotalReviewsID);
 
             stars = new ArrayList<>();
             for (int i = 0; i < starIDs.size(); i++)
                 stars.add(
-                        (ImageView) findViewById(starIDs.get(i)));
+                        findViewById(starIDs.get(i)));
         }
 
         public void set(float rating, int nTotal) {

@@ -10,17 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.local_data.model.Ingredient;
-import com.abdn.cooktoday.local_data.model.NerredIngred;
 
 import java.util.List;
 
 public class IngredientRVAdapter extends RecyclerView.Adapter<IngredientRVAdapter.ViewHolder> {
 
-    private List<Ingredient> mData;
-    private int quantityColor;
-    private int unitColor;
-    private int nameColor;
-    private LayoutInflater mInflater;
+    private final List<Ingredient> mData;
+    private final int quantityColor;
+    private final int unitColor;
+    private final int nameColor;
+    private final LayoutInflater mInflater;
     private IngredientRVAdapter.ItemClickListener mClickListener;
 
     public IngredientRVAdapter(Context context, List<Ingredient> data, int quantityColor, int unitColor, int nameColor) {

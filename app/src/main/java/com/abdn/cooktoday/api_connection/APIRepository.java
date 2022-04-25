@@ -1,7 +1,5 @@
 package com.abdn.cooktoday.api_connection;
 
-import android.provider.MediaStore;
-
 import com.abdn.cooktoday.api_connection.services.ExtractedRecipeService;
 import com.abdn.cooktoday.api_connection.services.FeedService;
 import com.abdn.cooktoday.api_connection.services.IngredientService;

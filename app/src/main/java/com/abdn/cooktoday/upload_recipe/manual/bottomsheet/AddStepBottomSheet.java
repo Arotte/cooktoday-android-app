@@ -1,6 +1,5 @@
 package com.abdn.cooktoday.upload_recipe.manual.bottomsheet;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +7,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 
 import com.abdn.cooktoday.R;
-import com.abdn.cooktoday.upload_recipe.from_url.UploadFromUrlActivity;
-import com.abdn.cooktoday.upload_recipe.manual.UploadActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 
@@ -20,7 +16,7 @@ public class AddStepBottomSheet extends BottomSheetDialogFragment {
 
     private EditText et;
     private MaterialButton btn;
-    private OnStepAddedCallback callback;
+    private final OnStepAddedCallback callback;
 
     public AddStepBottomSheet(OnStepAddedCallback callback) {
         this.callback = callback;
@@ -44,8 +40,8 @@ public class AddStepBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void setupViews(View v) {
-        et = (EditText) v.findViewById(R.id.etStepDesc);
-        btn = (MaterialButton) v.findViewById(R.id.btnAddStep);
+        et = v.findViewById(R.id.etStepDesc);
+        btn = v.findViewById(R.id.btnAddStep);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

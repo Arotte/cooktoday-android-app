@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class ExtractedRecipeStepJSON {
     @SerializedName("text")
-    private String text;
+    private final String text;
 
     @SerializedName("name")
-    private String name;
+    private final String name;
 
     @SerializedName("url")
-    private String url;
+    private final String url;
 
     public ExtractedRecipeStepJSON(String text, String name, String url) {
         this.text = text;

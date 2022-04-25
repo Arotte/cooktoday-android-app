@@ -18,7 +18,7 @@ public class SampleRecipeImgURLs {
 
     private static SampleRecipeImgURLs instance = null;
 
-    private List<String> URLs;
+    private final List<String> URLs;
 
     private SampleRecipeImgURLs() {
         URLs = new ArrayList<>(Arrays.asList(

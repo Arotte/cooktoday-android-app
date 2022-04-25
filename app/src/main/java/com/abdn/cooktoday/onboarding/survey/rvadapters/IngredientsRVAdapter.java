@@ -14,8 +14,8 @@ import java.util.List;
 
 public class IngredientsRVAdapter extends RecyclerView.Adapter<IngredientsRVAdapter.ViewHolder> {
 
-    private List<String> ingredNames;
-    private LayoutInflater mInflater;
+    private final List<String> ingredNames;
+    private final LayoutInflater mInflater;
     private IngredientsRVAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor

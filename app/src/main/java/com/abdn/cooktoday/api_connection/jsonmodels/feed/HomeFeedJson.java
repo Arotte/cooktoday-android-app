@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFeedJson {
-    private List<String> categories;
+    private final List<String> categories;
     @SerializedName("recommended_recipes")
-    private List<RecipeJson> recommendedRecipes;
+    private final List<RecipeJson> recommendedRecipes;
     @SerializedName("personalized_recipes")
-    private List<RecipeJson> personalizedRecipes;
+    private final List<RecipeJson> personalizedRecipes;
 
     public HomeFeedJson(List<String> categories, List<RecipeJson> recommendedRecipes, List<RecipeJson> personalizedRecipes) {
         this.categories = categories;

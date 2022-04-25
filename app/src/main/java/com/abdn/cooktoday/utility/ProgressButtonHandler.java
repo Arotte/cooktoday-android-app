@@ -6,15 +6,15 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 public class ProgressButtonHandler {
-    public static enum State {
+    public enum State {
         DEFAULT,
         LOADING,
         SUCCESS
     }
 
-    private ProgressBar pb;
-    private ImageView ivDefault;
-    private ImageView ivSuccess;
+    private final ProgressBar pb;
+    private final ImageView ivDefault;
+    private final ImageView ivSuccess;
 
     public ProgressButtonHandler(ProgressBar pb, ImageView ivDefault, ImageView ivSuccess) {
         this.pb = pb;

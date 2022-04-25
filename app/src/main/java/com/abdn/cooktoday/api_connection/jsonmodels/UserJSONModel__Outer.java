@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class UserJSONModel__Outer {
 
     @SerializedName("user")
-    private UserJSONModel user;
+    private final UserJSONModel user;
 
     public UserJSONModel__Outer(UserJSONModel user) {
         this.user = user;

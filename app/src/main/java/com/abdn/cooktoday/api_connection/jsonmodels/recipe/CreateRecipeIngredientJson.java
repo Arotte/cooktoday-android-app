@@ -3,11 +3,11 @@ package com.abdn.cooktoday.api_connection.jsonmodels.recipe;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 
 public class CreateRecipeIngredientJson {
-    private String ingredientId;
-    private String quantity;
-    private String unit;
-    private String comment;
-    private String processingMethod;
+    private final String ingredientId;
+    private final String quantity;
+    private final String unit;
+    private final String comment;
+    private final String processingMethod;
 
     public CreateRecipeIngredientJson(String ingredientId, String quantity, String unit, String comment, String processingMethod) {
         this.ingredientId = ingredientId;

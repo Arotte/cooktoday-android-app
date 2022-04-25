@@ -1,26 +1,19 @@
 package com.abdn.cooktoday.upload_recipe.from_url;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.api_connection.ServerCallbacks;
-import com.abdn.cooktoday.local_data.Cache;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 import com.abdn.cooktoday.local_data.model.NerredIngred;
@@ -59,7 +52,7 @@ public class UploadFromUrlActivity extends AppCompatActivity
         ingredientNerFinished = false;
         ingredNerProgress = 0;
 
-        outerScrollView = (ScrollView) findViewById(R.id.scrollViewRecipePreview);
+        outerScrollView = findViewById(R.id.scrollViewRecipePreview);
         outerScrollView.setVisibility(View.INVISIBLE);
         bottomSheet = new PasteUrlBottomSheet();
         // bottomSheet.setCancelable(false);
@@ -142,7 +135,7 @@ public class UploadFromUrlActivity extends AppCompatActivity
     }
 
     private void initIngredientsView() {
-        rvIngredients = (RecyclerView) findViewById(R.id.rvRecipePreviewIngreds);
+        rvIngredients = findViewById(R.id.rvRecipePreviewIngreds);
 
         List<Ingredient> ingredients = recipe.getIngredients();
         nIngreds = ingredients.size();
@@ -159,7 +152,7 @@ public class UploadFromUrlActivity extends AppCompatActivity
 
 
     private void initStepsView() {
-        RecyclerView rvSteps = (RecyclerView) findViewById(R.id.rvPreviewRecipeSteps);
+        RecyclerView rvSteps = findViewById(R.id.rvPreviewRecipeSteps);
 
         List<String> steps = recipe.getStepDescriptions();
 
@@ -206,7 +199,7 @@ public class UploadFromUrlActivity extends AppCompatActivity
     }
 
     private void initActionButtons() {
-        discardBtn = (ExtendedFloatingActionButton) findViewById(R.id.btnRecipePreviewDiscardRecipe);
+        discardBtn = findViewById(R.id.btnRecipePreviewDiscardRecipe);
         discardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -217,13 +210,13 @@ public class UploadFromUrlActivity extends AppCompatActivity
         });
 
         progressButtonHandler = new ProgressButtonHandler(
-                (ProgressBar) findViewById(R.id.pbAddRecipeUrl),
-                (ImageView) findViewById(R.id.ivAddRecipeUrlPlus),
-                (ImageView) findViewById(R.id.ivAddRecipeUrlDone)
+                findViewById(R.id.pbAddRecipeUrl),
+                findViewById(R.id.ivAddRecipeUrlPlus),
+                findViewById(R.id.ivAddRecipeUrlDone)
         );
         progressButtonHandler.setState(ProgressButtonHandler.State.DEFAULT);
 
-        saveBtn = (ExtendedFloatingActionButton) findViewById(R.id.btnRecipePreviewAddRecipe);
+        saveBtn = findViewById(R.id.btnRecipePreviewAddRecipe);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -3,19 +3,19 @@ package com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe;
 import java.util.List;
 
 public class ExtractedRecipeJSON {
-    private List<String> image;
-    private List<String> recipeIngredient;
-    private List<ExtractedRecipeStepJSON> recipeInstructions;
-    private ExtractedRecipeNutritionJSON nutrition;
-    private String keywords;
-    private List<String> description;
-    private String name;
-    private String cookTime;
-    private String prepTime;
-    private String headline;
-    private List<String> recipeCategory; // not used rn
-    private List<String> recipeCuisine; // not used rn
-    private String recipeYield;
+    private final List<String> image;
+    private final List<String> recipeIngredient;
+    private final List<ExtractedRecipeStepJSON> recipeInstructions;
+    private final ExtractedRecipeNutritionJSON nutrition;
+    private final String keywords;
+    private final List<String> description;
+    private final String name;
+    private final String cookTime;
+    private final String prepTime;
+    private final String headline;
+    private final List<String> recipeCategory; // not used rn
+    private final List<String> recipeCuisine; // not used rn
+    private final String recipeYield;
 
     public ExtractedRecipeJSON(List<String> image, List<String> recipeIngredient, List<ExtractedRecipeStepJSON> recipeInstructions, ExtractedRecipeNutritionJSON nutrition, String keywords, List<String> description, String name, String cookTime, String prepTime, String headline, List<String> recipeCategory, List<String> recipeCuisine, String recipeYield) {
         this.image = image;
@@ -34,7 +34,7 @@ public class ExtractedRecipeJSON {
     }
 
     public String getDescriptionStr() {
-        StringBuilder str = new StringBuilder("");
+        StringBuilder str = new StringBuilder();
         for (String d : this.description)
             str.append(d).append("\n\n");
         return str.toString();

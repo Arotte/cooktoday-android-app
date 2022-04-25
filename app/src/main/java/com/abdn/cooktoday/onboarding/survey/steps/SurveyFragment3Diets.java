@@ -1,15 +1,14 @@
 package com.abdn.cooktoday.onboarding.survey.steps;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.onboarding.survey.rvadapters.DietsRVAdapter;
@@ -77,13 +76,13 @@ public class SurveyFragment3Diets extends Fragment implements DietsRVAdapter.Ite
 
     @Override
     public void onDietItemClick(View view, int position) {
-        FrameLayout overlay = (FrameLayout) view.findViewById(R.id.flSurveySelectableCircleImgOverlay);
+        FrameLayout overlay = view.findViewById(R.id.flSurveySelectableCircleImgOverlay);
 
         // change background of item
         if (selected.contains(position)) {
             overlay.setBackgroundColor(
                     getResources().getColor(R.color.imageOverlay));
-            selected.remove(selected.indexOf(position));
+            selected.remove((Integer) position);
         } else {
             overlay.setBackgroundColor(
                     getResources().getColor(R.color.imageOverlayGreen));

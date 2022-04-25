@@ -14,8 +14,8 @@ import java.util.List;
 
 public class RecommedationCirclesRVAdapter extends RecyclerView.Adapter<RecommedationCirclesRVAdapter.ViewHolder> {
 
-    private List<String> mData;
-    private LayoutInflater mInflater;
+    private final List<String> mData;
+    private final LayoutInflater mInflater;
     private RecommedationCirclesRVAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor

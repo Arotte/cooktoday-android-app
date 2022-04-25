@@ -1,47 +1,13 @@
 <resources>
     <string name="app_name">CookToday</string>
-    <string name="let_s_go">Let\'s go!</string>
-    <string name="start_cooking">Start Cooking</string>
-    <string name="onboarding_marketing">Get genius recipe\nrecommendations</string>
-    <string name="party_smiley">🥳</string>
-    <string name="signin_welcome_back">Welcome Back!</string>
-    <string name="signin_enter_details">Please enter your\naccount details here</string>
     <string name="signin_forgot_password">Forgot Password?</string>
-    <string name="signin_or_continue_with">Or continue with</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="recipe_card_descr"><![CDATA[Food  •  > 60 mins]]></string>
-    <string name="recipe_card_name">Pancake</string>
-    <string name="for_you">Recommended</string>
 
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
     <string name="loremx3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
     <string name="loremlong">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
-    <string name="title_activity_sample_login">SampleLoginActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="take_photo">Take photo</string>
-    <string name="choose_from_gallery">Choose from gallery</string>
-    <string name="cancel">Cancel</string>
-    <string name="sample_recipe_step">Heat olive oil in a large, oven-proof non stick pan (or a well-seasoned cast iron skillet) over medium-high heat.\n\nSear chicken thighs for 3 minutes each side, until the skin becomes golden and crisp.\n\nLeave 2 tablespoons of chicken juices in the pan for added flavour, and drain any excess.</string>
     <string name="sample_recipe_step_long">Heat olive oil in a large, oven-proof non stick pan (or a well-seasoned cast iron skillet) over medium-high heat.\n\nSear chicken thighs for 3 minutes each side, until the skin becomes golden and crisp.\n\nLeave 2 tablespoons of chicken juices in the pan for added flavour, and drain any excess.\n\nHeat olive oil in a large, oven-proof non stick pan (or a well-seasoned cast iron skillet) over medium-high heat.\n\nSear chicken thighs for 3 minutes each side, until the skin becomes golden and crisp.\n\nLeave 2 tablespoons of chicken juices in the pan for added flavour, and drain any excess.</string>
-    <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
-    <string name="app_widget_description">This is an app widget description</string>
 </resources>

@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 
 import com.abdn.cooktoday.R;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredSearchResultItemJson;
-import com.abdn.cooktoday.api_connection.jsonmodels.recipe_search.RecipeSearchResultItemJSON;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ public class IngredSearchResultArrayAdapter extends ArrayAdapter<IngredSearchRes
         listItem = LayoutInflater.from(mContext).inflate(R.layout.activity_add_recipe_ingred_search_item, parent, false);
 
         IngredSearchResultItemJson currentRecipe = ingredsList.get(position);
-        TextView name = (TextView) listItem.findViewById(R.id.tvSearchResultRecipeName);
+        TextView name = listItem.findViewById(R.id.tvSearchResultRecipeName);
         name.setText(currentRecipe.getName());
 
         return listItem;

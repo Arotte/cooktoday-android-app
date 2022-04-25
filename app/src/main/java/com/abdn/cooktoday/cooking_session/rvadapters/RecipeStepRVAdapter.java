@@ -3,7 +3,6 @@ package com.abdn.cooktoday.cooking_session.rvadapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.SurfaceTexture;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,7 @@ public class RecipeStepRVAdapter extends RecyclerView.Adapter<RecipeStepRVAdapte
         PAUSED
     }
 
-    private List<State> states;
+    private final List<State> states;
     private final List<String> steps;
     private final List<String> stepTypes;
     private final int nSteps;
@@ -138,7 +137,7 @@ public class RecipeStepRVAdapter extends RecyclerView.Adapter<RecipeStepRVAdapte
 
     public void markItemAsDone(int id, View view) {
         if (id > -1) {
-            ImageView check = (ImageView) view.findViewById(R.id.ivCookingSessStepCheck);
+            ImageView check = view.findViewById(R.id.ivCookingSessStepCheck);
             check.setVisibility(View.VISIBLE);
             check.setImageResource(R.drawable.ic_check_2);
 

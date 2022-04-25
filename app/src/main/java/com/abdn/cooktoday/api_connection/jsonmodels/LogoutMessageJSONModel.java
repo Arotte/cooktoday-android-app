@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class LogoutMessageJSONModel {
     @SerializedName("msg")
-    private String msg;
+    private final String msg;
 
     public LogoutMessageJSONModel(String msg) {
         this.msg = msg;

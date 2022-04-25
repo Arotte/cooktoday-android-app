@@ -9,19 +9,13 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.abdn.cooktoday.R;
-import com.abdn.cooktoday.cooking_session.rvadapters.IngredientsRVAdapter;
-import com.abdn.cooktoday.local_data.model.Ingredient;
-
-import java.util.List;
 
 public class FinishedDialogFragment extends DialogFragment {
     public static final String TAG = "IngredientsDialog";
 
-    private FinishedCookingCallback callback;
+    private final FinishedCookingCallback callback;
 
     public FinishedDialogFragment(FinishedCookingCallback callback) {
         this.callback = callback;

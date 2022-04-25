@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,7 +24,6 @@ import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.api_connection.jsonmodels.UserPrefsJsonModel;
 import com.abdn.cooktoday.local_data.LoggedInUser;
-import com.abdn.cooktoday.onboarding.OnBoardingActivity;
 import com.abdn.cooktoday.onboarding.survey.steps.SurveyFragment1Cuisines;
 import com.abdn.cooktoday.onboarding.survey.steps.SurveyFragment2Allergies;
 import com.abdn.cooktoday.onboarding.survey.steps.SurveyFragment3Diets;
@@ -189,12 +187,12 @@ public class SurveySlidePagerActivity extends FragmentActivity {
 
     private void makeSelectCookingSkillToast() {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.toast_cooktoday_error, (ViewGroup) findViewById(R.id.toastCookTodayError));
+        View layout = inflater.inflate(R.layout.toast_cooktoday_error, findViewById(R.id.toastCookTodayError));
 
-        ImageView image = (ImageView) layout.findViewById(R.id.ivToastCookTodayError);
+        ImageView image = layout.findViewById(R.id.ivToastCookTodayError);
         image.setImageResource(R.drawable.ic_info_circle);
         image.setColorFilter(getResources().getColor(R.color.white));
-        TextView text = (TextView) layout.findViewById(R.id.tvToastCookTodayError);
+        TextView text = layout.findViewById(R.id.tvToastCookTodayError);
         text.setText("Please select a skill level.");
 
         Toast toast = new Toast(getApplicationContext());

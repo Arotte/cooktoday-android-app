@@ -17,14 +17,14 @@ public class TopStepProgressHandler {
     private static final int icOn  = R.drawable.ic_check_2;
     private static final int icOff = R.drawable.ic_check_inactive_2;
 
-    private ConstraintLayout container;
-    private ProgressBar      pb;
-    private List<ImageView>  icons;
+    private final ConstraintLayout container;
+    private final ProgressBar      pb;
+    private final List<ImageView>  icons;
 
-    private List<Integer>    pbMilestones;
-    private int              steps;
+    private final List<Integer>    pbMilestones;
+    private final int              steps;
     private int              current;
-    private int              progressAtom;
+    private final int              progressAtom;
 
 
     public TopStepProgressHandler(
@@ -114,6 +114,6 @@ public class TopStepProgressHandler {
         for (int ms : this.pbMilestones) {
             System.out.print(ms + " ");
         }
-        System.out.println("");
+        System.out.println();
     }
 }

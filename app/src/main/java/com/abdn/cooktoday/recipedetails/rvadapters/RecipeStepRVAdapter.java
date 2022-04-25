@@ -15,12 +15,12 @@ import java.util.List;
 
 public class RecipeStepRVAdapter extends RecyclerView.Adapter<RecipeStepRVAdapter.ViewHolder> {
 
-    private List<String> steps;
-    private int nSteps;
+    private final List<String> steps;
+    private final int nSteps;
     private static final String tvStepTextPrepend = "Step ";
     private static final String tvTotalStepsPrepend = "/ ";
 
-    private LayoutInflater mInflater;
+    private final LayoutInflater mInflater;
     private RecipeStepRVAdapter.ItemClickListener mClickListener;
 
     public RecipeStepRVAdapter(Context context, List<String> data) {

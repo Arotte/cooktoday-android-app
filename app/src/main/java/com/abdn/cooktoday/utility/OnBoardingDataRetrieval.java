@@ -1,15 +1,12 @@
 package com.abdn.cooktoday.utility;
 
-import android.content.Intent;
 import android.util.Log;
 
-import com.abdn.cooktoday.MainActivity;
 import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.api_connection.jsonmodels.feed.HomeFeedJson;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Recipe;
-import com.abdn.cooktoday.onboarding.OnBoardingActivity;
 
 import java.util.List;
 

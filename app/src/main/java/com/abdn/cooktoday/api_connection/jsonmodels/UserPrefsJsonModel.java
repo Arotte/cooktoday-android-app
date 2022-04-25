@@ -3,11 +3,11 @@ package com.abdn.cooktoday.api_connection.jsonmodels;
 import java.util.List;
 
 public class UserPrefsJsonModel {
-    private List<String> dislikedIngreds;
-    private List<String> cuisines;
-    private List<String> allergies;
-    private List<String> diet;
-    private String cookingSkill;
+    private final List<String> dislikedIngreds;
+    private final List<String> cuisines;
+    private final List<String> allergies;
+    private final List<String> diet;
+    private final String cookingSkill;
 
     public UserPrefsJsonModel(List<String> dislikedIngreds, List<String> cuisines, List<String> allergies, List<String> diet, String cookingSkill) {
         this.dislikedIngreds = dislikedIngreds;

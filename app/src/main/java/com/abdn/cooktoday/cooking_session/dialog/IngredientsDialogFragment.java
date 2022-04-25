@@ -1,8 +1,5 @@
 package com.abdn.cooktoday.cooking_session.dialog;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -24,7 +21,7 @@ import java.util.List;
 public class IngredientsDialogFragment extends DialogFragment {
     public static final String TAG = "IngredientsDialog";
 
-    private List<Ingredient> ingredients;
+    private final List<Ingredient> ingredients;
 
     public IngredientsDialogFragment(List<Ingredient> ingredients) {
         this.ingredients = ingredients;

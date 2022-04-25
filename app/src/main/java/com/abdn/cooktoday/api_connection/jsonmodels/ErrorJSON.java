@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName;
 public class ErrorJSON {
 
     @SerializedName("message")
-    private String message;
+    private final String message;
     @SerializedName("name")
-    private String name;
+    private final String name;
     @SerializedName("statusCode")
-    private String statusCode;
+    private final String statusCode;
 
     public ErrorJSON(String message, String name, String statusCode) {
         this.message = message;

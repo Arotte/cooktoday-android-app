@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class IngredSearchResultItemJson {
     @SerializedName("_id")
-    private String id;
-    private String name;
-    private String description;
-    private double score;
+    private final String id;
+    private final String name;
+    private final String description;
+    private final double score;
 
     public IngredSearchResultItemJson(String id, String name, String description, int score) {
         this.id = id;

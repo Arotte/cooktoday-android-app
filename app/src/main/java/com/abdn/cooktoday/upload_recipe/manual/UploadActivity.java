@@ -1,24 +1,28 @@
 package com.abdn.cooktoday.upload_recipe.manual;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
-
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.abdn.cooktoday.CookTodaySettings;
 import com.abdn.cooktoday.R;
-
-import android.widget.EditText;
-
 import com.abdn.cooktoday.api_connection.Server;
 import com.abdn.cooktoday.api_connection.ServerCallbacks;
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredSearchResultItemJson;
@@ -26,10 +30,8 @@ import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.IngredientJson;
 import com.abdn.cooktoday.api_connection.jsonmodels.media.AwsUploadedFilesJson;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.Ingredient;
-import com.abdn.cooktoday.local_data.model.NerredIngred;
 import com.abdn.cooktoday.local_data.model.Recipe;
 import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.AddIngredBottomSheet;
-import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.OnIngredientAddedCallback;
 import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.AddStepBottomSheet;
 import com.abdn.cooktoday.upload_recipe.manual.bottomsheet.OnStepAddedCallback;
 import com.abdn.cooktoday.upload_recipe.manual.dialog.AddIngredDialogCallback;
@@ -41,16 +43,6 @@ import com.abdn.cooktoday.utility.ProgressButtonHandler;
 import com.abdn.cooktoday.utility.ToastMaker;
 import com.abdn.cooktoday.utility.Util;
 import com.google.android.material.button.MaterialButton;
-
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
 import org.apache.commons.io.IOUtils;
 
@@ -71,7 +63,7 @@ public class UploadActivity extends AppCompatActivity
     private static final int ingredResultCount = 6;
 
     // image selection fields
-    private int PICK_IMAGE = 100;
+    private final int PICK_IMAGE = 100;
     private ImageView imageView;
     private String uploadedImageUrl;
     private Uri recipeImageFileUri;
@@ -129,8 +121,8 @@ public class UploadActivity extends AppCompatActivity
         steps = new ArrayList<>();
         ingredients = new ArrayList<>();
 
-        contentMainContainer = (LinearLayout) findViewById(R.id.add_recipe_content_main_container);
-        contentRecipeIngredContainer = (LinearLayout) findViewById(R.id.add_recipe_content_search_container);
+        contentMainContainer = findViewById(R.id.add_recipe_content_main_container);
+        contentRecipeIngredContainer = findViewById(R.id.add_recipe_content_search_container);
         showContentMain();
 
         quantityColor = getResources().getColor(R.color.facebook_tp);
@@ -144,17 +136,17 @@ public class UploadActivity extends AppCompatActivity
 
     private void initViews() {
         imageView = findViewById(R.id.imageViewUpload);
-        etRecipeName = (EditText) findViewById(R.id.etUploadRecipeName);
-        etRecipeDesc = (EditText) findViewById(R.id.etUploadRecipeDesc);
-        etCalories = (EditText) findViewById(R.id.etUploadCalories);
-        etServings = (EditText) findViewById(R.id.etUploadServings);
+        etRecipeName = findViewById(R.id.etUploadRecipeName);
+        etRecipeDesc = findViewById(R.id.etUploadRecipeDesc);
+        etCalories = findViewById(R.id.etUploadCalories);
+        etServings = findViewById(R.id.etUploadServings);
 
         initTimeProgressbars();
         initCancelButton();
         initIngredSearchLayout();
 
         // set up image chooser area
-        View imgUploadArea = (RelativeLayout) findViewById(R.id.uploadImageArea);
+        View imgUploadArea = findViewById(R.id.uploadImageArea);
         imgUploadArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +156,7 @@ public class UploadActivity extends AppCompatActivity
         });
 
         // UPLOAD RECIPE ACTION BUTTON
-        MaterialButton uploadButton = (MaterialButton) findViewById(R.id.btn_mycookbook_upload);
+        MaterialButton uploadButton = findViewById(R.id.btn_mycookbook_upload);
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,9 +164,9 @@ public class UploadActivity extends AppCompatActivity
             }
         });
         btnUploadHandler = new ProgressButtonHandler(
-                ((ProgressBar) findViewById(R.id.pbCookbook)),
-                ((ImageView) findViewById(R.id.icCookbookDefaultIcon)),
-                ((ImageView) findViewById(R.id.icCookbookSuccessIcon)));
+                findViewById(R.id.pbCookbook),
+                findViewById(R.id.icCookbookDefaultIcon),
+                findViewById(R.id.icCookbookSuccessIcon));
     }
 
     private void initCancelButton() {
@@ -188,11 +180,11 @@ public class UploadActivity extends AppCompatActivity
     }
 
     private void initTimeProgressbars() {
-        SeekBar seekBarCooking = (SeekBar) findViewById(R.id.sbCookingDuration);
-        SeekBar seekBarPreparation = (SeekBar) findViewById(R.id.sbPreparation);
-        TextView seekBarCookValue = (TextView)findViewById(R.id.DurationTime);
-        TextView seekBarPrepValue = (TextView)findViewById(R.id.PreparationTime);
-        TextView totalTime = (TextView)findViewById(R.id.TotalTime);
+        SeekBar seekBarCooking = findViewById(R.id.sbCookingDuration);
+        SeekBar seekBarPreparation = findViewById(R.id.sbPreparation);
+        TextView seekBarCookValue = findViewById(R.id.DurationTime);
+        TextView seekBarPrepValue = findViewById(R.id.PreparationTime);
+        TextView totalTime = findViewById(R.id.TotalTime);
         seekBarCooking.setMax(3 * 6); // 3 times 10 minutes
         seekBarPreparation.setMax(3 * 6);
 
@@ -475,7 +467,7 @@ public class UploadActivity extends AppCompatActivity
 
     private void ingredAdditionSetup() {
         // ingredients recyclerview
-        rvIngreds = (RecyclerView) findViewById(R.id.rvCreateRecipeIngreds);
+        rvIngreds = findViewById(R.id.rvCreateRecipeIngreds);
         rvIngreds.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvIngreds.setNestedScrollingEnabled(false);
         rvAdapterIngreds = new IngredientRVAdapter(this, ingredients, quantityColor, unitColor, nameColor);
@@ -484,7 +476,7 @@ public class UploadActivity extends AppCompatActivity
         rvIngreds.setAdapter(rvAdapterIngreds);
 
         // add new ingred button
-        btnAddNewIngred = (MaterialButton) findViewById(R.id.btnCreateRecipeAddIngred);
+        btnAddNewIngred = findViewById(R.id.btnCreateRecipeAddIngred);
         btnAddNewIngred.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -509,7 +501,7 @@ public class UploadActivity extends AppCompatActivity
     // =============================================================================
 
     private void stepAdditionSetup() {
-        rvSteps = (RecyclerView) findViewById(R.id.rvCreateRecipeSteps);
+        rvSteps = findViewById(R.id.rvCreateRecipeSteps);
         rvSteps.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvSteps.setNestedScrollingEnabled(false);
 
@@ -532,7 +524,7 @@ public class UploadActivity extends AppCompatActivity
             addStepBottomSheet.dismiss();
 
         // add new step button
-        btnAddNewStep = (MaterialButton) findViewById(R.id.btnCreateRecipeAddStep);
+        btnAddNewStep = findViewById(R.id.btnCreateRecipeAddStep);
         btnAddNewStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class RecipeSearchJSON {
 
     @SerializedName("recipes")
-    private ArrayList<RecipeSearchResultItemJSON> recipes;
+    private final ArrayList<RecipeSearchResultItemJSON> recipes;
 
     public RecipeSearchJSON(ArrayList<RecipeSearchResultItemJSON> recipes) {
         this.recipes = recipes;

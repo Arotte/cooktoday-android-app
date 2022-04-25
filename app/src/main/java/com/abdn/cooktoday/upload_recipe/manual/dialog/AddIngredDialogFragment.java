@@ -12,7 +12,6 @@ import android.widget.EditText;
 import androidx.fragment.app.DialogFragment;
 
 import com.abdn.cooktoday.R;
-import com.abdn.cooktoday.cooking_session.dialog.FinishedCookingCallback;
 import com.abdn.cooktoday.local_data.model.Ingredient;
 
 import java.util.ArrayList;
@@ -20,8 +19,8 @@ import java.util.ArrayList;
 public class AddIngredDialogFragment extends DialogFragment {
     public static final String TAG = "AddIngredientDialog";
 
-    private AddIngredDialogCallback callback;
-    private Ingredient ingredient;
+    private final AddIngredDialogCallback callback;
+    private final Ingredient ingredient;
 
     // ingredient fields
     private EditText name;
