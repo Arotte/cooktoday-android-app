@@ -27,6 +27,22 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+/**
+ * Upload recipe from URL activity
+ *
+ * @author Team Alpha
+ *
+ * Upon receiving the URL of the recipe, this
+ * activity will make a request to the server
+ * to get the recipe details. When the recipe
+ * details are received and displayed, this
+ * activity will also make a request to the
+ * server to parse the ingredients of the
+ * recipe (using Named Entity Recognition).
+ *
+ * The user cannot add the recipe until
+ * the parsing of the ingredients is complete.
+ */
 public class UploadFromUrlActivity extends AppCompatActivity
         implements PreviewIngredientItemRVAdapter.ItemClickListener, RecipeStepRVAdapter.ItemClickListener {
     private static final String TAG = "UploadFromUrlActivity";
