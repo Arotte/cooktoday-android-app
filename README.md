@@ -1,21 +1,54 @@
 [![Android CI](https://github.com/UoA-Software-Engineering/Alpha-21-22-FE/actions/workflows/android.yml/badge.svg)](https://github.com/UoA-Software-Engineering/Alpha-21-22-FE/actions/workflows/android.yml)
 
-# CookToday Android Application
 
-This repository contains the source of the CookToday Android mobile application.
+CookToday Android Application
+================================
 
-## TODO
 
-* integrate media upload endpoint
-* extend and update this readme with: env setup, git practices, basic documentation, how-to run, etc
+Table of Contents
+- [CookToday Android Application](#cooktoday-android-application)
+  - [Running the app](#running-the-app)
+  - [Exporting an installable APK](#exporting-an-installable-apk)
+  - [Dependencies](#dependencies)
+  - [Testing](#testing)
+  - [Contributing](#contributing)
+  - [Acknowledgements](#acknowledgements)
+  - [Developers](#developers)
 
-## Branches
+
+CookToday is the digital side-chef your kitchen needs, packed with cool and powerful features that are hard to miss. The user interface is intuitive and easy to use, designed with inclusivity and yummy-ness in mind. It features:
+- Personalized recipe recommendations
+- A cookbook allowing users to save recipes
+- Ability to view and add recipes
+- Recipe import into the app from any properly formatted website
+
+
+This repository (https://github.com/UoA-Software-Engineering/Alpha-21-22-FE) contains the source of the CookToday Android mobile application.
+
+
+Running the app
+---------------
+
+Exporting an installable APK
+------------
+
+
+Dependencies
+-------------
+
+Testing
+------------
+
+Contributing
+----------------
+
+Branches
 
 * `develop`: this is our main branch that we use for development
 * `initial_code`: this branch contains the initial app code created by Zixin and Dimana in the first semester
 
 
-## Development Setup
+Development Setup
 
 **If you already have a copy of this repository on your machine:**
 
@@ -48,11 +81,11 @@ This repository contains the source of the CookToday Android mobile application.
    git checkout develop
    ``` 
 
-## Development Practices
+Development Practices
 
 TODO
 
-### Working on your feature branch
+Working on your feature branch
 
 1. **Create a feature branch**
 
@@ -103,3 +136,11 @@ git add .
 git commit -m "your informative commit message"
 git push origin your-feature-branch
 ```
+
+
+Acknowledgements
+-------------
+
+
+Developers
+-------------
