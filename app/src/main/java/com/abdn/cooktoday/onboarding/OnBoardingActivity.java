@@ -15,6 +15,19 @@ import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.onboarding.login.LoginActivity;
 import com.abdn.cooktoday.utility.OnBoardingDataRetrieval;
 
+/**
+ * OnBoardingActivity
+ *
+ * This activity is the first activity that is shown when the app is opened.
+ * It is responsible for displaying the on boarding screen and allowing the user to
+ * to proceed to the login screen.
+ *
+ * It checks if the user has already logged in before and if so, it will skip the
+ * login/signup funnel, and proceed to the main activity.
+ *
+ * It is also responsible for retrieving essential data from the server.
+ *
+ */
 public class OnBoardingActivity extends AppCompatActivity {
     private static final String TAG = "OnBoardingActivity";
 
@@ -30,6 +43,7 @@ public class OnBoardingActivity extends AppCompatActivity {
             // not logged in
             Log.i("LoginActivity", "User not logged in. Starting login flow.");
             setContentView(R.layout.activity_getstarted);
+
             // go to sign in activity
             Button btn = findViewById(R.id.btn_onboarding_letsgo);
             btn.setOnClickListener(new View.OnClickListener() {
@@ -45,15 +59,18 @@ public class OnBoardingActivity extends AppCompatActivity {
             Log.i("LoginActivity", "User already logged in. Skipping login flow.");
             LoggedInUser.user().setUser(Cache.read_logged_in_user());
 
+            // retrieve essential data from the server
             OnBoardingDataRetrieval.retrieve(TAG, new OnBoardingDataRetrieval.RetrievalResult() {
                 @Override
                 public void success() {
+                    // we got all the data we need, go to main activity
                     startActivity(new Intent(OnBoardingActivity.this, MainActivity.class));
                     finish();
                 }
 
                 @Override
                 public void error(int where, String whereStr, int errorCode) {
+                    // something went wrong
                     Log.i(TAG, "Error while retrieving data: " + errorCode + ", " + whereStr);
                 }
             });

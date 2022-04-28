@@ -46,7 +46,6 @@ public class IngredientsRVAdapter extends RecyclerView.Adapter<IngredientsRVAdap
         return mData.size();
     }
 
-
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvName;

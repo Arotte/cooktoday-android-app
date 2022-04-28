@@ -8,6 +8,14 @@ import android.widget.TextView;
 
 import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.ingred_ner.IngredientNerJson;
 
+/**
+ * NerredIngred class
+ *
+ * Internal representation of an ingredient
+ * that went through the NER process.
+ *
+ * @author Team Alpha
+ */
 public class NerredIngred {
 
     private String original;

@@ -30,6 +30,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * CookSessionActivity
+ *
+ * This activity is started when the user taps on the
+ * "Cook" action button on any recipe details screen.
+ *
+ * It displays relevant information about the recipe.
+ *
+ * When the user finished with cooking the recipe,
+ * it sends a cooking finished confirmation to the server.
+ *
+ * The `rvadapters` sub-package of this `com.abdn.cooktoday.cooking_session`
+ * package contains the RecyclerView adapters used in this activity.
+ *
+ * The `dialog` sub-package of this `com.abdn.cooktoday.cooking_session`
+ * package contains the dialogs used in this activity.
+ */
 public class CookingSessionActivity extends AppCompatActivity implements RecipeStepRVAdapter.ItemClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     RecipeStepRVAdapter stepRVAdapter;

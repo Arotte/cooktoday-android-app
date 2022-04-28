@@ -12,6 +12,13 @@ import androidx.fragment.app.DialogFragment;
 
 import com.abdn.cooktoday.R;
 
+/**
+ * FinishedDialogFragment
+ *
+ * Simple popup dialog to show the user that the cooking session has finished.
+ *
+ * @author Team Alpha, University of Aberdeen
+ */
 public class FinishedDialogFragment extends DialogFragment {
     public static final String TAG = "IngredientsDialog";
 

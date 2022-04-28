@@ -6,6 +6,13 @@ import com.abdn.cooktoday.local_data.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * LoggedInUser
+ *
+ * This singleton class holds relevant information
+ * about the logged in user in memory during the
+ * lifetime of the app.
+ */
 public class LoggedInUser {
     private static LoggedInUser instance;
     private LoggedInUser() {

@@ -18,6 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Creates and returns Services for
  * the different endpoints and
  * functionalities of the system.
+ *
+ * @author Team Alpha, University of Aberdeen
  */
 public final class APIRepository {
     private static APIRepository instance;

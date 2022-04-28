@@ -5,6 +5,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+/**
+ * ProgressButtonHandler
+ *
+ * Small class handling the state of a
+ * progess-enabled button.
+ *
+ */
 public class ProgressButtonHandler {
     public enum State {
         DEFAULT,

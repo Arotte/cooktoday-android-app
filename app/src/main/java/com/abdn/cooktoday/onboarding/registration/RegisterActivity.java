@@ -35,6 +35,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * RegisterActivity
+ *
+ * Activity for registering a new user.
+ * It performs passwords validation and sends the user data to the server.
+ *
+ * @author Team Alpha, University of Aberdeen
+ */
 public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
 

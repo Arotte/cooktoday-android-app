@@ -42,8 +42,8 @@ public class Recipe implements Serializable {
     // =====================================================
     // fields
 
+    // default fields
     private String serverId;
-
     private String name;
     private String shortDescription;
     private String longDescription;
@@ -55,6 +55,7 @@ public class Recipe implements Serializable {
     private int cookTime;
     private String cuisine;
 
+    // internal fields
     private boolean cookedByUser;
     private boolean isSaved;
     private boolean createdByUser;
@@ -63,7 +64,7 @@ public class Recipe implements Serializable {
     private int nSteps;
     private List<String> stepDescriptions;
 
-    // ingreds
+    // ingredients:
     private int nIngreds;
     private List<Ingredient> ingredients; // TODO: list of Ingredient class
     private List<Boolean> isIngredChecked;
@@ -75,6 +76,10 @@ public class Recipe implements Serializable {
     public Recipe() {
     }
 
+    /**
+     * Constructs a Recipe object from a RecipeJson object
+     * @param recipeJson the RecipeJson object
+     */
     public Recipe(RecipeJson recipeJson) {
         String recipeImgUrl = "";
         if (!recipeJson.getMedia().isEmpty())
@@ -146,7 +151,11 @@ public class Recipe implements Serializable {
     // getters & setters
 
 
-    // custom
+    /**
+     * Returns time in a human-readable format
+     * @param timeType type of time (prep/cook/sum)
+     * @return a string representing the time in a human-readable format
+     */
     public String getTimePretty(TimeType timeType) {
         int time = prepTime;
         switch (timeType){
@@ -175,6 +184,13 @@ public class Recipe implements Serializable {
         }
     }
 
+    /**
+     * Returns the string representation of this
+     * class, with its ingredients and steps
+     * serialized.
+     *
+     * @return string representation of this class
+     */
     @Override
     public String toString() {
         StringBuilder stepDescriptionsString = new StringBuilder("[");
@@ -209,6 +225,11 @@ public class Recipe implements Serializable {
                 '}';
     }
 
+    /**
+     * Returns a string representation of
+     * the list of ingredients.
+     * @return string representation of the list of ingredients
+     */
     public List<String> getIngredientsStr() {
         ArrayList<String> ret = new ArrayList<>();
         for (Ingredient ingred : ingredients)
@@ -216,8 +237,8 @@ public class Recipe implements Serializable {
         return ret;
     }
 
-    // default
-
+    // ===============================================================
+    // generated getters and setters
 
     public List<Boolean> getIsIngredChecked() {
         return isIngredChecked;

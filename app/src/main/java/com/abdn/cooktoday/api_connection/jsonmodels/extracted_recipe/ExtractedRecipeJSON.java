@@ -2,6 +2,16 @@ package com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe;
 
 import java.util.List;
 
+/**
+ * ExtractedRecipeJSON
+ *
+ * Data class modelling the JSON response
+ * from our recipe extraction endpoint.
+ *
+ * Contains private fields, a full
+ * constructor, and getters for each
+ * field.
+ */
 public class ExtractedRecipeJSON {
     private final List<String> image;
     private final List<String> recipeIngredient;

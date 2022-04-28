@@ -33,6 +33,15 @@ import com.abdn.cooktoday.utility.OnBoardingDataRetrieval;
 import com.abdn.cooktoday.utility.ToastMaker;
 import com.google.android.material.button.MaterialButton;
 
+/**
+ * SurveySlidePagerActivity
+ *
+ * Display survey slides and allow user to skip or submit survey
+ * Contains the onboarding survey that collects relevant
+ * user preferences, that are then fed to the recommendation engine
+ *
+ * @author Team Alpha, University of Aberdeen
+ */
 public class SurveySlidePagerActivity extends FragmentActivity {
     private static final String TAG = "SurveySlidePagerActivity";
 

@@ -10,6 +10,11 @@ import android.widget.Toast;
 
 import com.abdn.cooktoday.R;
 
+/**
+ * ToastMaker
+ *
+ * This class is used to create custom toast messages.
+ */
 public class ToastMaker {
 
     public enum Type {

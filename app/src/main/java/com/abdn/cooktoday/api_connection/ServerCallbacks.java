@@ -13,8 +13,15 @@ import com.abdn.cooktoday.local_data.model.Recipe;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ServerCallbacks
+ *
+ * This meta-interface is used to define the
+ * callback methods that will be used by the
+ * main CookToday API connection class.
+ */
 public interface ServerCallbacks {
-        /*
+    /*
     =============================================
     RESULT CALLBACKS
     ============================================= */

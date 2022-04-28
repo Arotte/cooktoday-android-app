@@ -18,6 +18,13 @@ import com.abdn.cooktoday.local_data.model.Ingredient;
 
 import java.util.List;
 
+/**
+ * IngredientsDialogFragment
+ *
+ * Simple dialog fragment to display a list of ingredients
+ *
+ * @author Team Alpha, University of Aberdeen
+ */
 public class IngredientsDialogFragment extends DialogFragment {
     public static final String TAG = "IngredientsDialog";
 

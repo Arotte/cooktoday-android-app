@@ -11,6 +11,13 @@ import com.abdn.cooktoday.local_data.model.Recipe;
 
 import java.util.List;
 
+/**
+ * OnBoardingDataRetrieval
+ *
+ * This class retrieves relevant data required for basic
+ * functionality of the app. It is called when the app is first
+ * started.
+ */
 public class OnBoardingDataRetrieval {
 
     public interface RetrievalResult {

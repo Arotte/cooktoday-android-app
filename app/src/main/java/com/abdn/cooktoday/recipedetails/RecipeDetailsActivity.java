@@ -34,12 +34,22 @@ import java.util.Arrays;
 import java.util.List;
 
 
+/**
+ * RecipeDetailsActivity
+ *
+ * This activity is used to display the details of a recipe.
+ * It is called whenever a user taps on a recipe anywhere in the app.
+ *
+ * Its main purpose is to display relevant information about a recipe.
+ * It also communicates with the CookToday API when a user
+ * clicks on the "Save" button.
+ */
 public class RecipeDetailsActivity extends AppCompatActivity
         implements IngredientItemRVAdapter.ItemClickListener, RecipeStepRVAdapter.ItemClickListener {
     private static final String TAG = "RecipeDetailsActivity";
 
     Recipe recipe;
-    int nIngreds; // TODO: IMPORTANT! add this to the Ingredient class!
+    int nIngreds;
     boolean isSaved;
 
     MaterialButton saveBtn;
@@ -204,6 +214,11 @@ public class RecipeDetailsActivity extends AppCompatActivity
 
     }
 
+    /**
+     * Set up the save recipe button.
+     * Add a click listener to the button, that
+     * saves the recipe to the database.
+     */
     private void initSaveRecipeButton() {
         saveBtn = findViewById(R.id.btnRecipeDetailsSave);
         updateSaveBtnView();
@@ -236,6 +251,11 @@ public class RecipeDetailsActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Updates the view of the save button to
+     * reflect the current state of the recipe
+     * (saved or not)
+     */
     private void updateSaveBtnView() {
         if (isSaved) {
             saveBtn.setText("Saved");

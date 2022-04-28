@@ -10,6 +10,28 @@ import com.abdn.cooktoday.local_data.model.Ingredient;
 
 import java.util.List;
 
+/**
+ * IngredientCreator
+ *
+ * This class is responsible for creating a list of ingredients
+ * on the server. In communicates with the CookToday API.
+ *
+ * It receives a list of Ingredient objects, and recursively
+ * creates a list of ingredients on the server.
+ *
+ * Example usage:
+ * IngredientCreator ic = new IngredientCreator(myIngredientList);
+ * ic.create(new IngredientCreator.IngredientsCreatedCallback() {
+ *    @Override
+ *    public void onIngredientsCreated(List<Ingredient> ingredients) {
+ *      // do something with the ingredients
+ *    }
+ *    @Override
+ *    public void onIngredientsCreationFailed() {
+ *      // do something with the error
+ *    }
+ * });
+ */
 public class IngredientCreator {
     private static final String TAG = "IngredientCreator";
 
@@ -32,6 +54,10 @@ public class IngredientCreator {
         rec_create(callback);
     }
 
+    /**
+     * Recursive function that creates a list of ingredients on the server.
+     * @param ingredientsCreatedCallback callback to be called when ingredients are created
+     */
     private void rec_create(IngredientsCreatedCallback ingredientsCreatedCallback) {
         Ingredient ingredient = ingredientList.get(nIngredCreated);
         if (ingredient.getId() == null || ingredient.getId().isEmpty()) {

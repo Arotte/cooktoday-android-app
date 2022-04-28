@@ -1,5 +1,10 @@
 package com.abdn.cooktoday;
 
+/**
+ * CookTodaySettings
+ *
+ * This class holds important settings for the application.
+ */
 public final class CookTodaySettings {
 
     // set to true if CookToday server is running locally

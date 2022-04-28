@@ -31,6 +31,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * LoginActivity
+ *
+ * This activity is started when the user
+ * initiates the login process.
+ *
+ * It logs the user in, communicates with the
+ * API and stores the user's data in the cache.
+ */
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 

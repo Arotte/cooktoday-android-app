@@ -48,6 +48,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Server
+ *
+ * This class is essentially a holder class of static functions
+ * that are used to communicate with the CookToday API.
+ */
 public class Server {
     // TODO: use RxJava for threading : https://github.com/ReactiveX/RxJava
 

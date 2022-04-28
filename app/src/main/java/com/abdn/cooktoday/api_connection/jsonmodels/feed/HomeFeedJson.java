@@ -7,6 +7,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * HomeFeedJson
+ *
+ * Data class modelling the JSON response
+ * received from the CookToday API.
+ */
 public class HomeFeedJson {
     private final List<String> categories;
     @SerializedName("recommended_recipes")

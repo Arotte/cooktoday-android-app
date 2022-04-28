@@ -1,5 +1,10 @@
 package com.abdn.cooktoday.local_data.model;
 
+/**
+ * User
+ *
+ * Internal representation of a user.
+ */
 public class User {
     private String email;
     private String serverId;

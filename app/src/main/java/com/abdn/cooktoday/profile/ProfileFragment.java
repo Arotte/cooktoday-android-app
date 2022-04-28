@@ -25,6 +25,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * ProfileFragment
+ *
+ * Contains information about the user and allows the user to logout.
+ *
+ * @author Team Alpha, University of Aberdeen
+ */
 public class ProfileFragment extends Fragment {
     public ProfileFragment() {
         // required empty public constructor

@@ -5,6 +5,12 @@ import com.abdn.cooktoday.local_data.model.Recipe;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * LocalRecipes
+ *
+ * This singleton class is used to manage and store recipes locally.
+ * The recipes are stored in-memory during the lifecycle of the app.
+ */
 public class LocalRecipes {
     // Singleton setup
     private static LocalRecipes instance;

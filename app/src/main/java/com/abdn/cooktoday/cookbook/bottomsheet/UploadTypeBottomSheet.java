@@ -14,6 +14,14 @@ import com.abdn.cooktoday.upload_recipe.from_url.UploadFromUrlActivity;
 import com.abdn.cooktoday.upload_recipe.manual.UploadActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+/**
+ * UploadTypeBottomSheet
+ *
+ * Displays a bottom sheet asking the user to choose
+ * between uploading a recipe from a URL or manually.
+ *
+ * @author Team Alpha, University of Aberdeen
+ */
 public class UploadTypeBottomSheet extends BottomSheetDialogFragment {
 
     @Override

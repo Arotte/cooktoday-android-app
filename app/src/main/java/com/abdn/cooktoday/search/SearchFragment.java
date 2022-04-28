@@ -37,6 +37,16 @@ import com.abdn.cooktoday.utility.Util;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * SearchFragment
+ *
+ * Started when the user clicks the search icon in the toolbar.
+ *
+ * Supports the recipe search feature of the application.
+ * Communicates with the CookToday API to retrieve the results.
+ *
+ * @author Team Alpha, University of Aberdeen
+ */
 public class SearchFragment extends Fragment
         implements
             SearchSuggestionRVAdapter.ItemClickListener,

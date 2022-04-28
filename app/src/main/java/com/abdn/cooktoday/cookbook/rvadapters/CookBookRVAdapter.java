@@ -17,6 +17,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+/**
+ * CookBookRVAdapter
+ *
+ * RecyclerView Adapter class for the CookBookActivity.
+ * Manages the items of the RecyclerView that contains
+ * recipes saved by the user.
+ *
+ * @author Team Alpha, University of Aberdeen
+ */
 public class  CookBookRVAdapter extends RecyclerView.Adapter<CookBookRVAdapter.ViewHolder> {
 
     private final List<Recipe> recipes;

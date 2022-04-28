@@ -42,6 +42,8 @@ import java.util.List;
  *
  * The user cannot add the recipe until
  * the parsing of the ingredients is complete.
+ *
+ * @author Team Alpha, University of Aberdeen
  */
 public class UploadFromUrlActivity extends AppCompatActivity
         implements PreviewIngredientItemRVAdapter.ItemClickListener, RecipeStepRVAdapter.ItemClickListener {

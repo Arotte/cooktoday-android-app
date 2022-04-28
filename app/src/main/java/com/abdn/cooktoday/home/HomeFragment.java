@@ -24,6 +24,13 @@ import com.abdn.cooktoday.search.SearchFragment;
 
 import java.util.List;
 
+/**
+ * HomeFragment
+ *
+ * Displays the home screen a user sees when they log in.
+ *
+ * @author Team Alpha, University of Aberdeen
+ */
 public class HomeFragment extends Fragment
         implements RecommendedRVAdapter.ItemClickListener, RecommedationCirclesRVAdapter.ItemClickListener, HotRecipesRVAdapter.ItemClickListener {
     private static final String TAG = "HomeFragment";

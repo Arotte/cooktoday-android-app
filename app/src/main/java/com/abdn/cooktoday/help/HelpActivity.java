@@ -19,6 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * HelpActivity
+ *
+ * This activity is called when the user taps the help
+ * icon in the profile page. It displays CookToday's
+ * help centre.
+ */
 public class HelpActivity extends AppCompatActivity
     implements HelpGuidesRVAdapter.ItemClickListener {
 

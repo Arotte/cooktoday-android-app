@@ -23,6 +23,16 @@ import com.google.android.material.button.MaterialButton;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * PasteUrlBottomSheet
+ *
+ * Bottom sheet and features an edit text to paste a
+ * url and a button to submit the url.
+ *
+ * When the user submits the url, the url is checked
+ * for validity and if valid, the url is passed to
+ * to server for processing.
+ */
 public class PasteUrlBottomSheet extends BottomSheetDialogFragment {
 
     private enum ButtonState {

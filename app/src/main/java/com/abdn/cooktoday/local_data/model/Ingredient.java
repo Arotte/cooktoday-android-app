@@ -7,6 +7,11 @@ import com.abdn.cooktoday.api_connection.jsonmodels.ingredient.RecipeIngredientJ
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Ingredient
+ *
+ * Internal representation of an ingredient.
+ */
 public class Ingredient implements Serializable {
     // ============================================================
     // fields

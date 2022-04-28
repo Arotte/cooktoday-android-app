@@ -24,6 +24,14 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import java.util.List;
 
 
+/**
+ * CookbookFragment
+ *
+ * This fragment is shown when the user clicks
+ * on the cookbook tab in the navigation drawer.
+ * It shows the user their recipes and allows
+ * them to upload new recipes.
+ */
 public class CookbookFragment extends Fragment
     implements CookBookRVAdapter.ItemClickListener, CreatedByMeRVAdapter.ItemClickListener {
     private static final String TAG = "CookbookFragment";
@@ -56,11 +64,12 @@ public class CookbookFragment extends Fragment
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cookbook, container, false);
 
+        // set up upload type selector bottom sheet
         bottomSheet = new UploadTypeBottomSheet();
-
         if (bottomSheet.isVisible())
             bottomSheet.dismiss();
 
+        // set up add new recipe fab
         btnNewRecipe = view.findViewById(R.id.btnCookbookNewRecipe);
         btnNewRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,16 +81,6 @@ public class CookbookFragment extends Fragment
 
         setup(view);
         return view;
-    }
-
-    @Override
-    public void onRecItemClick(View view, int position) {
-        startRecipeDetailsActivity(cookbookRVAdapter.getItem(position));
-    }
-
-    @Override
-    public void onMineItemClick(View view, int position) {
-        startRecipeDetailsActivity(myRecipesAdapter.getItem(position));
     }
 
     private void startRecipeDetailsActivity(Recipe recipe) {
@@ -118,5 +117,21 @@ public class CookbookFragment extends Fragment
             TextView tvCookbookTitle = layout.findViewById(R.id.tvCookbookMyRecipes);
             tvCookbookTitle.setVisibility(View.GONE);
         }
+    }
+
+    // ==========================
+    // Click listeners for displayed
+    // recipes. They start the recipe details
+    // activity
+    // ==========================
+
+    @Override
+    public void onRecItemClick(View view, int position) {
+        startRecipeDetailsActivity(cookbookRVAdapter.getItem(position));
+    }
+
+    @Override
+    public void onMineItemClick(View view, int position) {
+        startRecipeDetailsActivity(myRecipesAdapter.getItem(position));
     }
 }

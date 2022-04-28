@@ -1,5 +1,16 @@
 package com.abdn.cooktoday.api_connection.jsonmodels.extracted_recipe;
 
+/**
+ * ExtractedRecipeNutritionJSON
+ *
+ * Data class representing the JSON object
+ * returned by the CookToday API after
+ * a successful extraction of a recipe.
+ *
+ * Contains private fields, a full
+ * constructor, and getters for each
+ * field.
+ */
 public class ExtractedRecipeNutritionJSON {
     private final String calories;
     private final String carbohydrateContent;
