@@ -130,8 +130,6 @@ Contributing
 
 To start contributing to the project, follow these steps.
 
-<br>
-
 ### Important git policies
 
 Following the policies and conventions of this project are vital for producing quality software. 
@@ -149,7 +147,6 @@ The main branches present in this repository are:
 * If you encounter bugs or have a feature idea, open a new GitHub Issue.
 
 
-<br>
 
 ### Downloading the project
 
@@ -174,8 +171,6 @@ To get a copy of the source code on your local machine, follow the steps below.
    git branch
    git checkout develop
    ``` 
-
-<br>
 
 ### Working on the app
 
