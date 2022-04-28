@@ -168,6 +168,7 @@ public class CookingSessionActivity extends AppCompatActivity implements RecipeS
                         // add recipe to user's list of cooked recipes
                         LocalRecipes.i().recipeCooked(recipe.getServerId());
                         ToastMaker.make("Recipe cooked!", ToastMaker.Type.SUCCESS, CookingSessionActivity.this);
+
                         // go back to previous activity
                         finish();
                     }

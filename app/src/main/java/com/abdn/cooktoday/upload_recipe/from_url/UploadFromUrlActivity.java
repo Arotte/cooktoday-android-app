@@ -28,9 +28,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
- * Upload recipe from URL activity
+ * UploadFromUrlActivity.java
  *
- * @author Team Alpha
+ * Upload recipe from URL activity
  *
  * Upon receiving the URL of the recipe, this
  * activity will make a request to the server
