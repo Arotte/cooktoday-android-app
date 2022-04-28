@@ -8,6 +8,9 @@ CookToday Android Application
 Table of Contents
 - [CookToday Android Application](#cooktoday-android-application)
   - [Running the app](#running-the-app)
+    - [From APK](#from-apk)
+    - [Inside an emulator](#inside-an-emulator)
+    - [On a physical Android device](#on-a-physical-android-device)
   - [Exporting an installable APK](#exporting-an-installable-apk)
   - [Dependencies](#dependencies)
   - [Testing](#testing)
@@ -25,9 +28,66 @@ CookToday is the digital side-chef your kitchen needs, packed with cool and powe
 
 This repository (https://github.com/UoA-Software-Engineering/Alpha-21-22-FE) contains the source of the CookToday Android mobile application.
 
+*Note:* The application was written in Java using Android Studio. Thus, the guides in this manual are heavily reliant on a functioning Android Studio on the developer's computer.
 
 Running the app
 ---------------
+
+### From APK
+
+We have provided a pre-built APK that should be installable and runnable on any Android smartphone.
+
+The operating system of the device used must be relatively new. If not, some UI elements might not render correctly.
+
+The API is accessible under `/prebuilt/apk/...` and is called `TODO`.
+
+Upon downloading the APK to a suitable device, tapping on it should automatically start the installation process.
+
+### Inside an emulator
+
+The app can also be run inside an Android emulator. Virtually any Android emulator can be used for this task, however the most tested approach is using Android Studio's built-in emulator feature.
+
+The steps to run CookToday in Android Studio's emulator are the following:
+   1. Click on "Device Manager" on the right sidebar.
+   2. Click on "Create Device".
+   3. Select "Phone" as a category, then select a phone from the list. Any "Pixel" device should do, we used "Pixel 4".
+   4. Click on "Next".
+   5. Select either "S" or "R" from the list that appears. If you didn't do this process before, Android Studio will start downloading the selected system image.
+   6. Click on "Next".
+   7. Click on "Finish".
+
+After these steps your virtual device should be up a running. If not, follow these steps:
+   1. Click on "Device Manager" on the right sidebar.
+   2. Click on the appearing green launch icon of your previously created device.
+
+Once the virtual device is up and running, you should be able to start the CookToday application by clicking the green start button on the top right corner of Android Studio.
+
+### On a physical Android device
+
+If you don't want to install CookToday on your physical device from the provided APK, you can install, start and debug the application directly thourgh Android Studio.
+
+**Enabling developer options**
+
+If you don't have developer options enabled on your device, follow these steps to enable it:
+   1. Go to Settings > About Phone.
+   2. Tap Software Info > Build Number.
+   3. Tap Build Number seven times. After the first few taps, you should see the steps descreasing. Continue tapping until you get a notification that developer options are now enabled.
+
+**Enabling USB debugging**
+
+Once the developer options have been enabled, you can enable USB debugging by:
+   1. Go to Settings > Developer options.
+   2. Enable USB debugging.
+
+**Running CookToday**
+
+If you have developer options and USB debugging enabled on your Android device, then running the app is as simple as:
+   1. Connect the device to your computer with a (USB) cable.
+   2. Android Studio should automatically recognize it. Check the "Device Manager" by navigating to the "Physical" tab.
+   3. Run the application by selecting your device from the drop-down list on the top righ corner, then hitting the play button.
+
+
+
 
 Exporting an installable APK
 ------------
@@ -35,6 +95,29 @@ Exporting an installable APK
 
 Dependencies
 -------------
+
+Project dependencies are automatically managed by Gradle. If they are not present on the developer's machine, Gradle will download them.
+
+For sake of completeness, the 3rd party dependencies of CookToday are listed below in Gradle format.
+
+```gradle
+    // Toggle Button Group: creates a toggle button group
+    // Source: https://github.com/Bryanx/themed-toggle-button-group
+    implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.1'
+
+    // Picasso: loads images from web URLs
+    // Source: https://square.github.io/picasso/
+    implementation 'com.squareup.picasso:picasso:2.8'
+
+    // Retrofit, Gson, OkHttp3 are needed for server communication
+    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
+
+    // Shimmer: https://facebook.github.io/shimmer-android/
+    // for shimmering loading effect
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+```
 
 Testing
 ------------

@@ -62,7 +62,6 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.8'
 
     // Retrofit, Gson, OkHttp3 are needed for server communication
-    // based on this tutorial: https://learntodroid.com/how-to-send-json-data-in-a-post-request-in-android/
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
