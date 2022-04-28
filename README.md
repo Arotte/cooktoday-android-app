@@ -15,6 +15,9 @@ Table of Contents
   - [Dependencies](#dependencies)
   - [Testing](#testing)
   - [Contributing](#contributing)
+    - [Important git policies](#important-git-policies)
+    - [Downloading the project](#downloading-the-project)
+    - [Working on the app](#working-on-the-app)
   - [Acknowledgements](#acknowledgements)
   - [Developers](#developers)
 
@@ -101,22 +104,22 @@ Project dependencies are automatically managed by Gradle. If they are not presen
 For sake of completeness, the 3rd party dependencies of CookToday are listed below in Gradle format.
 
 ```gradle
-    // Toggle Button Group: creates a toggle button group
-    // Source: https://github.com/Bryanx/themed-toggle-button-group
-    implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.1'
+// Toggle Button Group: creates a toggle button group
+// Source: https://github.com/Bryanx/themed-toggle-button-group
+implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.1'
 
-    // Picasso: loads images from web URLs
-    // Source: https://square.github.io/picasso/
-    implementation 'com.squareup.picasso:picasso:2.8'
+// Picasso: loads images from web URLs
+// Source: https://square.github.io/picasso/
+implementation 'com.squareup.picasso:picasso:2.8'
 
-    // Retrofit, Gson, OkHttp3 are needed for server communication
-    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
+// Retrofit, Gson, OkHttp3 are needed for server communication
+implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
+implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
 
-    // Shimmer: https://facebook.github.io/shimmer-android/
-    // for shimmering loading effect
-    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+// Shimmer: https://facebook.github.io/shimmer-android/
+// for shimmering loading effect
+implementation 'com.facebook.shimmer:shimmer:0.5.0'
 ```
 
 Testing
@@ -125,101 +128,98 @@ Testing
 Contributing
 ----------------
 
-Branches
+To start contributing to the project, follow these steps.
 
-* `develop`: this is our main branch that we use for development
-* `initial_code`: this branch contains the initial app code created by Zixin and Dimana in the first semester
+<br>
+
+### Important git policies
+
+Following the policies and conventions of this project are vital for producing quality software. 
+
+The main branches present in this repository are:
+
+* `develop`: This is our main branch that we use for development.
+* `initial_code`: This branch contains the initial app code created by Zixin and Dimana in the first semester. **Do not modify it.** We kept it for self-reflection purposes.
+
+*All developers must:*
+* Follow the semantic commit message convention. More on this: https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716.
+* Commit as frequently as possible. Do not produce commits that are hunders or thousands of changed lines of code long.
+* Use feature branches for your tasks. Do not commit directly to `develop`.
+* When finished with a task, push the feature branch to GitHub, open a PR, and wait for reviews. When you get the green light, merge the PR and delete your feature branch both on GitHub and locally.
+* If you encounter bugs or have a feature idea, open a new GitHub Issue.
 
 
-Development Setup
+<br>
 
-**If you already have a copy of this repository on your machine:**
+### Downloading the project
 
-1. Navigate to your project folder `<your-path>` in a terminal.
+To get a copy of the source code on your local machine, follow the steps below.
 
-2. Download and checkout the `develop` branch:
-   ```sh
-   git fetch
-   git branch
-   git checkout develop
-   git pull
-   ```
-
-**If you don't have a copy of this repository on your machine:**
-
-1. Find a convenient location on your computer (eg. `D:/cooktoday`). The location path must NOT contain special characters and spaces (**OK:** `D:/cooktoday`, **DON'T:** `D:/CS2322 Software Engineering/CookToday`). I'll refer to this path as `<your-path>`.
+1. Find a convenient location on your computer (eg. `D:/cooktoday`). **The location path must NOT contain special characters and spaces** (**OK:** `D:/cooktoday`, **DON'T:** `D:/CS2322 Software Engineering/CookToday`). I'll refer to this path as `<your-path>`.
 
 2. Open up a terminal/bash/PowerShell/Command Line/whathever prompt. Navigate to `<your-path>` (`cd <your-path>`).
 
-3. Clone this repository. Don't download it as a zip, instead: 1. Click the "Code" button on the top right corner of this page; 2. Select "SSH"; 3. Copy the link provided; 4. Go back to your terminal and type:
-   ```sh
-   git clone git@github.com:UoA-Software-Engineering/Alpha-21-22-FE.git .
-   ```
-   This will download the repository to your current working directory (which should be `<your-path>`).
+3. Clone this repository. **Don't download it as a zip!** Instead:
+   1. Click the "Code" button on the top right corner of this page.
+   2. Select "SSH".
+   3. Copy the link provided. 
+   4. Go back to your terminal and type:
+      ```sh
+      git clone git@github.com:UoA-Software-Engineering/Alpha-21-22-FE.git .
+      ```   
+      This will download the repository to your current working directory (which should be `<your-path>`).
 
 4. Checkout the `develop` branch. Git will probably set the default branch to `main`, but we use the `develop` branch for development. 
    ```sh
-   git fetch
    git branch
    git checkout develop
    ``` 
 
-Development Practices
+<br>
 
-TODO
+### Working on the app
 
-Working on your feature branch
+Before you start working on a new feature, fix or refactor, you must first follow the steps described below.
 
-1. **Create a feature branch**
+1. Create a new feature branch. The name of the branch should reflect the task you are working on. For example, if you are adding a new feature that lets users add recipes, you a name like `feat-add-recipe` for your branch.
+   ```sh
+   git branch
 
-TODO
+   git branch your-feat-branch
 
-2. **Push your changes to GitHub**
+   git checkout your-feat-branch
+   ```
 
-**If the `develop` branch has been changed:**
+2. Commit to your branch as often as possible. Use semantic commit messages, and try to produce lightweight commits. You can commit by running the following commands:
+   ```sh
+   git status
 
-```sh
+   git branch # check if you are in the correct branch
+   
+   # NOTE: if you are not on your feature branch, check it out with
+   # git checkout your-feature-branch
 
-git status
+   git add .
 
-# 1. commit changes
-git add .
-git commit -m "your informative commit message"
+   git commit -m "your informative, semantic commit message"
+   ```
 
-gitk
-git branch
+When the task you were working on is finished and tested, follow these steps to realize your changes.
 
-# 2. update develop branch
-git checkout develop
-git pull
+1. Push your branch to GitHub.
+   ```sh
+   git push origin
+   ```
+2. Open a Pull Request that merges your branch to `develop`.
+3. Wait for reviews from other developers. If you got the green light, merge your feature branch.
+4. When a feature branch has been successfully merged, it loses its right to exists, so you must delete it to keep the repository organised. Delete the branch on GitHub, then on your machine:
+   ```sh
+   git branch
 
-gitk
-git branch
-git status
+   git checkout develop
 
-# 3. rebase feature branch
-git checkout your_feature_branch
-git rebase develop
-
-gitk
-git status
-
-# 4. push changes to github
-git push origin yout_feature_branch
-```
-
-**If the the develop branch hasn't been changed:**
-
-
-```sh
-git status
-git branch # check if you are in the correct branch
-# NOTE: if you are not on your feature branch, check it out with `git checkout your-feature-branch`
-git add .
-git commit -m "your informative commit message"
-git push origin your-feature-branch
-```
-
+   git branch -D your-feat-branch
+   ```
 
 Acknowledgements
 -------------
@@ -227,3 +227,14 @@ Acknowledgements
 
 Developers
 -------------
+
+This project was developed during the period of third-year Computing Science courses CS3028 (Principles of Software Engineering, first semester) and CS3528 (Software Engineering and Professional Practice, second semester) at the University of Aberdeen.
+
+The developers were part of Team Alpha:
+- Danail Dimov
+- Andrej Szalma
+- Aron Molnar
+- Dimana Karakirova
+- Karol Hetman
+- Mahmoud Adi
+- Zixin Zeng
