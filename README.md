@@ -38,13 +38,9 @@ Running the app
 
 ### From APK
 
-We have provided a pre-built APK that should be installable and runnable on any Android smartphone.
+We have provided a pre-built APK that should be installable and runnable on any Android smartphone. The operating system of the device used must be relatively new. If not, some UI elements might not render correctly.
 
-The operating system of the device used must be relatively new. If not, some UI elements might not render correctly.
-
-The API is accessible under `/prebuilt/apk/...` and is called `TODO`.
-
-Upon downloading the APK to a suitable device, tapping on it should automatically start the installation process.
+The API is accessible under the `/prebuilt/apk/` folder and is called `cooktoday-app.apk`. Upon downloading the APK to a suitable device, tapping on it should automatically start the installation process.
 
 ### Inside an emulator
 
@@ -95,6 +91,7 @@ If you have developer options and USB debugging enabled on your Android device, 
 Exporting an installable APK
 ------------
 
+To export an installable API of the app, you can use the Android Studio's built-in `APK` exporter. Simply navigate to Build > Build APK(s) > Build APK. Android Studio will generate the API in the `app\build\intermediates\apk\debug` folder.
 
 Dependencies
 -------------
