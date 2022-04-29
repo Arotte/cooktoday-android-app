@@ -33,6 +33,11 @@ This repository (https://github.com/UoA-Software-Engineering/Alpha-21-22-FE) con
 
 *Note:* The application was written in Java using Android Studio. Thus, the guides in this manual are heavily reliant on a functioning Android Studio on the developer's computer.
 
+Folder Structure
+----------------
+
+The app itself is inside the `app/src/main/` folder of the project. The `java/` folder contains all the logic and “back-end” code of the mobile application. The `res/` folder contains all the “front-end” code of the mobile application: XML files describing how the UI should look. All of the XML files for all of our app screens are inside the `res/layout/` folder.
+
 Running the app
 ---------------
 
@@ -121,6 +126,8 @@ implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
 Testing
 ------------
+
+We are still working on integrating unit tests into the codebase. The application was tested through QA testing, the tables, questions, answers and results can be found inside the final report of the course.
 
 Contributing
 ----------------
