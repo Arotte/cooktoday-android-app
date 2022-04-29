@@ -45,7 +45,7 @@ Running the app
 
 We have provided a pre-built APK that should be installable and runnable on any Android smartphone. The operating system of the device used must be relatively new. If not, some UI elements might not render correctly.
 
-The API is accessible under the `/prebuilt/apk/` folder and is called `cooktoday-app.apk`. Upon downloading the APK to a suitable device, tapping on it should automatically start the installation process.
+The APK is accessible under the `/prebuilt/apk/` folder and is called `cooktoday-app.apk`. Upon downloading the APK to a suitable device, tapping on it should automatically start the installation process.
 
 ### Inside an emulator
 
