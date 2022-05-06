@@ -96,9 +96,9 @@ public class UploadFromUrlActivity extends AppCompatActivity
             @Override
             public void error(int errorCode) {
                 if (errorCode == 400)
-                    ToastMaker.make("No recipe found on the website", ToastMaker.Type.ERROR, UploadFromUrlActivity.this);
+                    ToastMaker.info("No recipe found on the website", UploadFromUrlActivity.this);
                 else
-                    ToastMaker.make("Oops! Something went wrong", ToastMaker.Type.ERROR, UploadFromUrlActivity.this);
+                    ToastMaker.error("Oops! Something went wrong", UploadFromUrlActivity.this);
                 errorCallback.error();
             }
         });
@@ -250,7 +250,7 @@ public class UploadFromUrlActivity extends AppCompatActivity
                             // recipe was successfully created on the server
                             progressButtonHandler.setState(ProgressButtonHandler.State.SUCCESS);
                             Log.i(TAG, "Recipe creation successful!");
-                            ToastMaker.make("Recipe added!", ToastMaker.Type.SUCCESS, UploadFromUrlActivity.this);
+                            ToastMaker.success("Recipe added!", UploadFromUrlActivity.this);
                             LocalRecipes.i().addRecipe(recipe, LocalRecipes.Type.ADDED_BY_USER);
                             finish();
                         }
@@ -260,11 +260,11 @@ public class UploadFromUrlActivity extends AppCompatActivity
                             // error during the creation of the recipe on the server
                             progressButtonHandler.setState(ProgressButtonHandler.State.DEFAULT);
                             Log.i(TAG, "Error during creation of recipe! Error code: " + errorCode);
-                            ToastMaker.make("Oops! Something went wrong", ToastMaker.Type.ERROR, UploadFromUrlActivity.this);
+                            ToastMaker.error("Oops! Something went wrong", UploadFromUrlActivity.this);
                         }
                     });
                 } else {
-                    ToastMaker.make("Please wait until the ingredients are recognized", ToastMaker.Type.ERROR, UploadFromUrlActivity.this);
+                    ToastMaker.info("Please wait until the ingredients are recognized", UploadFromUrlActivity.this);
                 }
             }
         });

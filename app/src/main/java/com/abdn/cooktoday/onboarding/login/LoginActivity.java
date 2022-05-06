@@ -181,6 +181,11 @@ public class LoginActivity extends AppCompatActivity {
             public void error(int where, String whereStr, int errorCode) {
                 Log.i(TAG, "Error while retrieving data: " + errorCode + ", " + whereStr);
             }
+
+            @Override
+            public void timeout() {
+                Log.i(TAG, "Data retrieval timeout!");
+            }
         });
     }
 

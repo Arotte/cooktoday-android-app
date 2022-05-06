@@ -27,9 +27,12 @@ import com.abdn.cooktoday.local_data.Cache;
 import com.abdn.cooktoday.local_data.LoggedInUser;
 import com.abdn.cooktoday.local_data.model.User;
 import com.abdn.cooktoday.onboarding.login.LoginActivity;
+import com.abdn.cooktoday.utility.ToastMaker;
 
 import java.io.IOException;
 import java.util.concurrent.Executor;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +48,9 @@ import retrofit2.Response;
  */
 public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
+
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     EditText pwField;
     EditText emailField;
@@ -105,8 +111,8 @@ public class RegisterActivity extends AppCompatActivity {
         successIcon.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
 
-        // get & validate email & pw
-        if (!pwValid()) {
+        // validate input fields
+        if (!checkFields()) {
             showLoginIconOnMainButton();
             return;
         }
@@ -235,20 +241,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void showExistingEmailToast() {
-        LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.toast_cooktoday_error, findViewById(R.id.toastCookTodayError));
-
-        ImageView image = layout.findViewById(R.id.ivToastCookTodayError);
-        image.setImageResource(R.drawable.ic_info_circle);
-        image.setColorFilter(getResources().getColor(R.color.white));
-        TextView text = layout.findViewById(R.id.tvToastCookTodayError);
-        text.setText("Oops! Email already exists!");
-
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.TOP, 0, 35);
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(layout);
-        toast.show();
+        ToastMaker.info("Someone's already using this email!", RegisterActivity.this);
     }
 
     private void watchIfRegisterInitiatedByUser() {
@@ -296,8 +289,32 @@ public class RegisterActivity extends AppCompatActivity {
         showLoginIconOnMainButton();
     }
 
+    private boolean emailValid() {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailField.getText().toString());
+        return matcher.find();
+    }
+
     private boolean pwValid() {
         return MINCHAR && CONTAINS_NUM && CONTAINS_UPPERCASE;
+    }
+
+    private boolean nicknameValid() {
+        return !nickNameField.getText().toString().isEmpty();
+    }
+
+    private boolean checkFields() {
+        boolean nicknameOk = nicknameValid();
+        boolean emailOk = emailValid();
+        boolean pwOk = pwValid();
+
+        if (!nicknameOk)
+            nickNameField.setError("Please provide a nickname");
+        if (!emailOk)
+            emailField.setError("Email is not in the correct form");
+        if (!pwOk)
+            pwField.setError("Please provide a strong password");
+
+        return nicknameOk && emailOk && pwOk;
     }
 
     private void togglePwChecksActive() {

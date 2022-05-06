@@ -23,6 +23,7 @@ public class OnBoardingDataRetrieval {
     public interface RetrievalResult {
         void success();
         void error(int where, String whereStr, int errorCode);
+        void timeout();
     }
 
     /**
@@ -37,22 +38,27 @@ public class OnBoardingDataRetrieval {
     public static void retrieve(String logTAG, RetrievalResult resultCallback) {
         String userSessId = LoggedInUser.user().getSessionID();
 
+        // TODO: completely refactor, nested calls are big no-no!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         // 1.) retrieve saved recipes from server, and save them locally
         Server.getAllSavedRecipes(userSessId, new ServerCallbacks.GetSavedRecipesResult() {
             @Override
             public void success(List<Recipe> savedRecipes) {
                 Log.i(logTAG, "Saved recipes successfully retrieved from server!");
                 LocalRecipes.i().addRecipes(savedRecipes, LocalRecipes.Type.SAVED);
+
                 // 2.) get all recipes created by user
                 Server.getAllOwnRecipes(userSessId, new ServerCallbacks.ListOfRecipesCallback() {
                     @Override
                     public void success(List<Recipe> createdRecipes) {
                         LocalRecipes.i().addRecipes(createdRecipes, LocalRecipes.Type.ADDED_BY_USER);
+
                         // 3.) get all recipes cooked by user
                         Server.getAllCookedRecipes(userSessId, new ServerCallbacks.ListOfRecipesCallback() {
                             @Override
                             public void success(List<Recipe> cookedRecipes) {
                                 LocalRecipes.i().addRecipes(cookedRecipes, LocalRecipes.Type.COOKED_BY_USER);
+
                                 // 4.) retrieve home feed from server
                                 Server.getHomeFeed(userSessId, new ServerCallbacks.HomeFeedResultCallback() {
                                     @Override
@@ -61,6 +67,7 @@ public class OnBoardingDataRetrieval {
                                         LocalRecipes.i().addRecipes(homeFeedJson.getRecommendedRecipesInternal(), LocalRecipes.Type.RECOMMENDED);
                                         LocalRecipes.i().addRecipes(homeFeedJson.getPersonalizedRecipesInternal(), LocalRecipes.Type.PERSONALIZED);
                                         LoggedInUser.user().setHomeFeedCategories(homeFeedJson.getCategories());
+
                                         // 5.) call success result callback
                                         resultCallback.success();
                                     }
@@ -68,6 +75,11 @@ public class OnBoardingDataRetrieval {
                                     public void error(int errorCode) {
                                         Log.i(logTAG, "Error (" + errorCode + ") while retrieving recommended recipes from server!");
                                         resultCallback.error(2, "Getting recommended recipes from server", errorCode);
+                                    }
+                                    @Override
+                                    public void timeout(Throwable exception) {
+                                        Log.i(logTAG, "Takes too long to get home feed!");
+                                        resultCallback.timeout();
                                     }
                                 });
                             }
@@ -81,10 +93,19 @@ public class OnBoardingDataRetrieval {
                     }
                 });
             }
+
+            // 1.) saved recipe retrieval error
             @Override
             public void error(int errorCode) {
                 Log.i(logTAG, "Error while querying saved recipes from server (code: " + errorCode + ")!");
                 resultCallback.error(1, "Getting saved recipes from server", errorCode);
+            }
+
+            // 1.) saved recipe retrieval timeout
+            @Override
+            public void timeout(Throwable t) {
+                Log.i(logTAG, "Saved recipes retrieval timeout!");
+                resultCallback.timeout();
             }
         });
     }

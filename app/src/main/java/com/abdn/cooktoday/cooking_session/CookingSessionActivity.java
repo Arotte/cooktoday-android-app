@@ -48,11 +48,11 @@ import java.util.List;
  * package contains the dialogs used in this activity.
  */
 public class CookingSessionActivity extends AppCompatActivity implements RecipeStepRVAdapter.ItemClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "CookingSessionActivity";
 
     RecipeStepRVAdapter stepRVAdapter;
     RecyclerView rvSteps;
 
-    View activeStepView;
     int activeStepPos;
     List<String> stepTexts;
     int nSteps;
@@ -87,31 +87,30 @@ public class CookingSessionActivity extends AppCompatActivity implements RecipeS
         stepRVAdapter.setClickListener(this);
         rvSteps.setAdapter(stepRVAdapter);
 
-        activeStepPos = -1;
-        activeStepView = null;
-
         tvRecipeStep = findViewById(R.id.tvCookingSessStepDescription);
         tvRecipeStep.setText("");
         ((TextView) findViewById(R.id.tvCookingSessTotalStepsTitle)).setText(nSteps + " steps to complete");
         tvCurrentStep = findViewById(R.id.tvCookingSessStepCountTitle);
         tvCurrentStep.setText("Start Cooking");
+
+        activeStepPos = -1;
     }
 
     @Override
     public void onStepItemClick(View view, int position) {
-        activateItem(view, position);
+        activateItem(position);
     }
 
-    private void activateItem(View view, int position) {
+    private void activateItem(int position) {
+        Log.i(TAG, "Activating item at position " + position);
         if (position != activeStepPos && activeStepPos != -1) {
-            stepRVAdapter.deactivateItem(activeStepPos, activeStepView);
+            stepRVAdapter.deactivateItem(activeStepPos);
         } else if (activeStepPos == -1) {
             ((TextView) findViewById(R.id.tvCookingSessTotalStepsTitle)).setText("/ " + nSteps);
         }
         tvCurrentStep.setText("Step " + (position + 1));
-        activeStepView = view;
         activeStepPos = position;
-        stepRVAdapter.activateItem(position, view);
+        stepRVAdapter.activateItem(position);
 
         tvRecipeStep.setText(Html.fromHtml(stepTexts.get(position)));
     }
@@ -124,16 +123,16 @@ public class CookingSessionActivity extends AppCompatActivity implements RecipeS
                 return true;
             case R.id.navbarCookingSessNext:
                 Log.i("CookingSessionActivity", "Marking Step " + activeStepPos + " as done.");
-                stepRVAdapter.markItemAsDone(activeStepPos, activeStepView);
-                if (activeStepPos + 2 <= nSteps) {
+                stepRVAdapter.markItemAsDone(activeStepPos);
+                if (activeStepPos + 1 <= nSteps - 1) {
                     rvSteps.smoothScrollToPosition(activeStepPos + 1);
-                    activateItem(rvSteps.findViewHolderForAdapterPosition(activeStepPos + 1).itemView, activeStepPos + 1);
+                    activateItem(activeStepPos + 1);
                 }
                 return true;
             case R.id.navbarCookingSessPrevious:
                 if (activeStepPos - 1 >= 0) {
                     rvSteps.smoothScrollToPosition(activeStepPos - 1);
-                    activateItem(rvSteps.findViewHolderForAdapterPosition(activeStepPos - 1).itemView, activeStepPos - 1);
+                    activateItem(activeStepPos - 1);
                 }
                 return true;
 
@@ -167,7 +166,7 @@ public class CookingSessionActivity extends AppCompatActivity implements RecipeS
                     public void success() {
                         // add recipe to user's list of cooked recipes
                         LocalRecipes.i().recipeCooked(recipe.getServerId());
-                        ToastMaker.make("Recipe cooked!", ToastMaker.Type.SUCCESS, CookingSessionActivity.this);
+                        ToastMaker.success("Recipe cooked!", CookingSessionActivity.this);
 
                         // go back to previous activity
                         finish();
@@ -175,7 +174,7 @@ public class CookingSessionActivity extends AppCompatActivity implements RecipeS
                     @Override
                     public void error(int errorCode) {
                         if (errorCode == 400) {
-                            ToastMaker.make("Hooray, you cooked this recipe again!", ToastMaker.Type.SUCCESS, CookingSessionActivity.this);
+                            ToastMaker.success("Hooray, you cooked this recipe again!", CookingSessionActivity.this);
                             // go back to previous activity
                             finish();
                         }

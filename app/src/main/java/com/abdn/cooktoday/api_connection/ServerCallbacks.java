@@ -54,6 +54,7 @@ public interface ServerCallbacks {
     interface GetSavedRecipesResult {
         void success(List<Recipe> recipes);
         void error(int errorCode);
+        void timeout(Throwable t);
     }
 
     interface SaveRecipeResult {
@@ -99,6 +100,7 @@ public interface ServerCallbacks {
     interface HomeFeedResultCallback {
         void success(HomeFeedJson homeFeed);
         void error(int errorCode);
+        void timeout(Throwable exception);
     }
 
     interface CookRecipeCallback {

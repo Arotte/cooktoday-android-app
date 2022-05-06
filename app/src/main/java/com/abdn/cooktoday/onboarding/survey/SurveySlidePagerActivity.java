@@ -225,7 +225,7 @@ public class SurveySlidePagerActivity extends FragmentActivity {
                 public void success(UserPrefsJsonModel savedUserPrefs) {
                     // user preferences successfully saved on server
                     Log.i(TAG, "Preferences successfully saved!");
-                    ToastMaker.make("Preferences successfully saved!", ToastMaker.Type.SUCCESS, SurveySlidePagerActivity.this);
+                    ToastMaker.success("Preferences successfully saved!", SurveySlidePagerActivity.this);
 
                     // retrieve essential data from server
                     OnBoardingDataRetrieval.retrieve(TAG, new OnBoardingDataRetrieval.RetrievalResult() {
@@ -241,6 +241,11 @@ public class SurveySlidePagerActivity extends FragmentActivity {
                         public void error(int where, String whereStr, int errorCode) {
                             Log.i(TAG, "Error while retrieving data: " + errorCode + ", " + whereStr);
                         }
+
+                        @Override
+                        public void timeout() {
+                            Log.i(TAG, "Data retrieval timeout!");
+                        }
                     });
                 }
 
@@ -249,7 +254,7 @@ public class SurveySlidePagerActivity extends FragmentActivity {
                 public void error(int errorCode) {
                     // error during saving of user preferences
                     Log.i(TAG, "ERROR during user pref saving! Error Code: " + errorCode);
-                    ToastMaker.make("Oops! Something went wrong!", ToastMaker.Type.SUCCESS, SurveySlidePagerActivity.this);
+                    ToastMaker.error("Oops! Something went wrong!", SurveySlidePagerActivity.this);
                 }
             }
         );

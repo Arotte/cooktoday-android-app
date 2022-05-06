@@ -61,7 +61,7 @@ public class SurveyFragment4Ingreds extends Fragment implements IngredientsRVAda
                 "Bacon",
                 "Bananas",
                 "Beeg",
-                "Brussels Sprouts",
+                "Brussels\nSprouts",
                 "Cilantro",
                 "Coconut",
                 "Eggplant",

@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvGetStartedTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_bold"
@@ -22,18 +22,33 @@
         android:layout_marginTop="50dp"/>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvGetStartedSubtitle"
         android:translationZ="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:fontFamily="@font/interr"
-        android:text="Deliciously Simple."
+        android:text="Smart. Fun. Delicious."
         android:textAlignment="center"
         android:textColor="@color/textMain"
-        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintTop_toBottomOf="@id/tvGetStartedTitle"
         android:textSize="16sp"
         />
+
+    <ImageView
+        android:id="@+id/ivGetStarted"
+        app:layout_constraintTop_toBottomOf="@id/tvGetStartedSubtitle"
+        app:layout_constraintBottom_toTopOf="@id/btn_onboarding_letsgo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/svg_ic_undraw_cooking"
+        android:scaleType="fitCenter" />
 
 
     <com.google.android.material.button.MaterialButton
@@ -59,17 +74,5 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         app:rippleColor="@color/black"/>
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="0dp"
-        android:translationZ="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/img_onboardingg"
-        tools:layout_editor_absoluteX="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

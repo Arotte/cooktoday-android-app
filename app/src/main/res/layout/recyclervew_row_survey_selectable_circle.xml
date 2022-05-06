@@ -33,7 +33,7 @@
             android:id="@+id/tvSurveySelectableCircleName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AMERICAN"
+            android:text="KID-\nFRIENDLY"
             android:translationZ="2dp"
             android:textColor="@color/white"
             android:fontFamily="@font/inter_bold"

@@ -24,7 +24,19 @@ public class ToastMaker {
         INFO
     }
 
-    public static void make(String msg, Type type, Activity activity) {
+    public static void error(String msg, Activity activity) {
+        make(msg, Type.ERROR, activity);
+    }
+
+    public static void success(String msg, Activity activity) {
+        make(msg, Type.SUCCESS, activity);
+    }
+
+    public static void info(String msg, Activity activity) {
+        make(msg, Type.INFO, activity);
+    }
+
+    private static void make(String msg, Type type, Activity activity) {
         LayoutInflater inflater = activity.getLayoutInflater();
 
         View layout = null;
@@ -33,13 +45,20 @@ public class ToastMaker {
             case ERROR:
                 layout = inflater.inflate(R.layout.toast_cooktoday_error, activity.findViewById(R.id.toastCookTodayError));
                 text = layout.findViewById(R.id.tvToastCookTodayError);
-                ImageView image = layout.findViewById(R.id.ivToastCookTodayError);
-                image.setImageResource(R.drawable.ic_info_circle);
-                image.setColorFilter(activity.getResources().getColor(R.color.white));
+                ImageView imageError = layout.findViewById(R.id.ivToastCookTodayError);
+                imageError.setImageResource(R.drawable.ic_close_square);
+                imageError.setColorFilter(activity.getResources().getColor(R.color.white));
                 break;
             case SUCCESS:
                 layout = inflater.inflate(R.layout.toast_cooktoday_default, activity.findViewById(R.id.toastCookTodayDefault));
                 text = layout.findViewById(R.id.tvToastCookTodayDefault);
+                break;
+            case INFO:
+                layout = inflater.inflate(R.layout.toast_cooktoday_info, activity.findViewById(R.id.toastCookTodayInfo));
+                text = layout.findViewById(R.id.tvToastCookTodayInfo);
+                ImageView imageInfo = layout.findViewById(R.id.ivToastCookTodayInfo);
+                imageInfo.setImageResource(R.drawable.ic_info_circle);
+                imageInfo.setColorFilter(activity.getResources().getColor(R.color.white));
                 break;
             default:
                 return;

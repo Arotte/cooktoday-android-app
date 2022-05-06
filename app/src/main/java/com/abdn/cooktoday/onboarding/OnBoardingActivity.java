@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -56,6 +58,10 @@ public class OnBoardingActivity extends AppCompatActivity {
         } else {
             // logged in
             setContentView(R.layout.activity_getstarted_splash);
+
+            ProgressBar pb = findViewById(R.id.pb_getstarted__splash);
+            ImageView iv = findViewById(R.id.ic_success__splash);
+
             Log.i("LoginActivity", "User already logged in. Skipping login flow.");
             LoggedInUser.user().setUser(Cache.read_logged_in_user());
 
@@ -63,6 +69,9 @@ public class OnBoardingActivity extends AppCompatActivity {
             OnBoardingDataRetrieval.retrieve(TAG, new OnBoardingDataRetrieval.RetrievalResult() {
                 @Override
                 public void success() {
+                    pb.setVisibility(View.GONE);
+                    iv.setVisibility(View.VISIBLE);
+
                     // we got all the data we need, go to main activity
                     startActivity(new Intent(OnBoardingActivity.this, MainActivity.class));
                     finish();
@@ -72,6 +81,11 @@ public class OnBoardingActivity extends AppCompatActivity {
                 public void error(int where, String whereStr, int errorCode) {
                     // something went wrong
                     Log.i(TAG, "Error while retrieving data: " + errorCode + ", " + whereStr);
+                }
+
+                @Override
+                public void timeout() {
+                    Log.i(TAG, "Data retrieval timeout!");
                 }
             });
         }

@@ -252,7 +252,7 @@ public class AddIngredBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void makeErrorToast() {
-        ToastMaker.make("Oops, something went wrong!", ToastMaker.Type.ERROR, getActivity());
+        ToastMaker.error("Oops, something went wrong!", getActivity());
     }
 
     private void lockEditText() {

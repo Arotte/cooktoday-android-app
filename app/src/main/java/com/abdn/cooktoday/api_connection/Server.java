@@ -33,6 +33,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -118,8 +119,13 @@ public class Server {
                     }
                     @Override
                     public void onFailure(Call<HomeFeedJson> call, Throwable t) {
-                        Log.i(TAG, t + ", " + t.getMessage());
-                        resultCallback.error(-1);
+                        if (t instanceof SocketTimeoutException) {
+                            Log.i(TAG, "Timeout while retrieving home feed!");
+                            resultCallback.timeout(t);
+                        } else {
+                            Log.i(TAG, t + ", " + t.getMessage());
+                            resultCallback.error(-1);
+                        }
                     }
                 });
             }
@@ -485,6 +491,10 @@ public class Server {
 
                         @Override
                         public void onFailure(Call<SavedRecipesJson> call, Throwable t) {
+                            if (t instanceof SocketTimeoutException) {
+                                Log.i(TAG, "Saved recipe retrieval timeout!");
+                                resultCallback.timeout(t);
+                            }
                             Log.i(TAG, t + ", " + t.getMessage());
                             resultCallback.error(-1);
                         }

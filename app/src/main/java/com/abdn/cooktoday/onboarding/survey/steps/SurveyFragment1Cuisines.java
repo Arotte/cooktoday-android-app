@@ -71,7 +71,7 @@ public class SurveyFragment1Cuisines extends Fragment implements CuisinesRVAdapt
         // fill up cuisine names list
         // TODO: get it from server + get cuisine images from server
         cuisineNames = new ArrayList<>();
-        cuisineNames = Arrays.asList("AMERICAN", "MEXICAN", "FRENCH", "ITALIAN", "ASIAN", "BBQ", "KID-FRIENDLY", "GREEK", "ENGLISH", "THAI", "GERMAN", "IRISH", "INDIAN", "CUBAN", "SWEDISH", "HUNGARIAN");
+        cuisineNames = Arrays.asList("AMERICAN", "MEXICAN", "FRENCH", "ITALIAN", "ASIAN", "BBQ", "KID-\nFRIENDLY", "GREEK", "ENGLISH", "THAI", "GERMAN", "IRISH", "INDIAN", "CUBAN", "SWEDISH", "HUNGARIAN");
 
         rvContainer.setNestedScrollingEnabled(false);
         rvContainer.setLayoutManager(new GridLayoutManager(getActivity(), 3));

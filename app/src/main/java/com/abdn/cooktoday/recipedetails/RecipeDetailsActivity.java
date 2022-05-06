@@ -152,7 +152,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
         // show "start cooking" prompt when all
         // ingredients are checked
         if (nIngredsChecked == nIngreds)
-            ToastMaker.make("Awesome, you can start cooking!", ToastMaker.Type.SUCCESS, RecipeDetailsActivity.this);
+            ToastMaker.success("Awesome, you can start cooking!", RecipeDetailsActivity.this);
 
         // etc ...
 
@@ -234,7 +234,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
                         @Override
                         public void success(Recipe recipe) {
                             Log.i(TAG, "Recipe " + recipe.getServerId() + " successfully saved to user's cookbook!");
-                            ToastMaker.make("Recipe saved to Cookbook!", ToastMaker.Type.SUCCESS, RecipeDetailsActivity.this);
+                            ToastMaker.success("Recipe saved to Cookbook!", RecipeDetailsActivity.this);
                             recipe.setSaved(true);
                             LocalRecipes.i().recipeSaved(recipe.getServerId());
                             isSaved = true;

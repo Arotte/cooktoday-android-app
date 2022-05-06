@@ -32,6 +32,11 @@ public class RecipeStepRVAdapter extends RecyclerView.Adapter<RecipeStepRVAdapte
     private final List<String> stepTypes;
     private final int nSteps;
 
+    // a very bad solution to an equally awful problem
+    private List<MaterialCardView> cardViews;
+    private List<ImageView> checkImages;
+    private List<ProgressBar> progressBars;
+
     private final LayoutInflater mInflater;
     private RecipeStepRVAdapter.ItemClickListener mClickListener;
 
@@ -44,6 +49,10 @@ public class RecipeStepRVAdapter extends RecyclerView.Adapter<RecipeStepRVAdapte
         this.states = new ArrayList<>();
         for (int i = 0; i < nSteps; i++)
             this.states.add(State.NOT_STARTED);
+
+        cardViews = new ArrayList<>();
+        checkImages = new ArrayList<>();
+        progressBars = new ArrayList<>();
     }
 
     @Override
@@ -76,7 +85,6 @@ public class RecipeStepRVAdapter extends RecyclerView.Adapter<RecipeStepRVAdapte
         // holder.tvStepType.setTextColor(Color.parseColor("#9FA5C0")); // textSecondary
     }
 
-    // total number of rows
     @Override
     public int getItemCount() {
         return steps.size();
@@ -107,6 +115,10 @@ public class RecipeStepRVAdapter extends RecyclerView.Adapter<RecipeStepRVAdapte
             check          = itemView.findViewById(R.id.ivCookingSessStepCheck);
             // stepTypeCard   = itemView.findViewById(R.id.cardCookingSessStepType);
             itemView.setOnClickListener(this);
+
+            cardViews.add(stepCard);
+            progressBars.add(progressBar);
+            checkImages.add(check);
         }
 
         @Override
@@ -131,49 +143,30 @@ public class RecipeStepRVAdapter extends RecyclerView.Adapter<RecipeStepRVAdapte
     }
 
 
-    public void startTimedStep(int id, int time) {
-
-    }
-
-    public void markItemAsDone(int id, View view) {
+    public void markItemAsDone(int id) {
         if (id > -1) {
-            ImageView check = view.findViewById(R.id.ivCookingSessStepCheck);
+            ImageView check = checkImages.get(id);
             check.setVisibility(View.VISIBLE);
             check.setImageResource(R.drawable.ic_check_2);
-
-            ((ProgressBar) view.findViewById(R.id.pbCookingSessStepPB)).setProgress(100);
-
+            progressBars.get(id).setProgress(100);
             states.set(id, State.FINISHED);
         }
     }
 
-    public void pauseTimedStep(int id) {
-
-    }
-
-    public void activateItem(int id, View view) {
-//        TextView tvStepCounter  = view.findViewById(R.id.tvCookingSessStepCount);
-//        TextView tvTotalSteps   = view.findViewById(R.id.tvCookingSessMaxSteps);
-//        TextView tvStepType     = view.findViewById(R.id.tvCookingSessStepType);
-//        ProgressBar progressBar    = view.findViewById(R.id.pbCookingSessStepPB);
-//        ImageView check          = view.findViewById(R.id.ivCookingSessStepCheck);
-//        MaterialCardView stepTypeCard   = view.findViewById(R.id.cardCookingSessStepType);
-
-        MaterialCardView stepCard = view.findViewById(R.id.containerCookingSessStepCard);
+    public void activateItem(int id) {
+        MaterialCardView stepCard = cardViews.get(id);
         stepCard.setStrokeWidth(3);
         stepCard.setStrokeColor(Color.parseColor("#1FCC79"));
     }
 
-    public void deactivateItem(int id, View view) {
-        MaterialCardView stepCard = view.findViewById(R.id.containerCookingSessStepCard);
-
+    public void deactivateItem(int id) {
+        MaterialCardView stepCard = cardViews.get(id);
         if (states.get(id) == State.FINISHED) {
             stepCard.setStrokeWidth(0);
         } else {
             stepCard.setStrokeWidth(1);
             stepCard.setStrokeColor(Color.parseColor("#9FA5C0"));
         }
-
     }
 
 }

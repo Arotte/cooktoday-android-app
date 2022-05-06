@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import androidx.fragment.app.Fragment;
@@ -31,6 +32,10 @@ public class SurveyFragment5Skills extends Fragment {
 
     CookingSkill selected;
 
+    Button btnBeginner;
+    Button btnIntermediate;
+    Button btnAdvanced;
+
     public SurveyFragment5Skills() {
     }
 
@@ -52,6 +57,10 @@ public class SurveyFragment5Skills extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_survey_step5_cooking_skills, container, false);
 
         selected = CookingSkill._NONE;
+
+        btnBeginner = layout.findViewById(R.id.btnSurveyBeginner);
+        btnIntermediate = layout.findViewById(R.id.btnSurveyIntermediate);
+        btnAdvanced = layout.findViewById(R.id.btnSurveyAdvanced);
         setOnClickListeners(layout);
 
         return layout;
@@ -59,51 +68,68 @@ public class SurveyFragment5Skills extends Fragment {
 
     private void setOnClickListeners(View layout) {
         // beginner button
-        layout.findViewById(R.id.cvSurveyStep5SkillsBEGINNER).setOnClickListener(new View.OnClickListener() {
+        btnBeginner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                unselectAll(layout);
-                select(layout, R.id.flSurveyStep5SkillsBEGINNEROverlay, R.id.cvSurveyStep5SkillsBEGINNER);
+                unselectAll();
                 selected = CookingSkill.BEGINNER;
+                select();
             }
         });
 
         // intermediate button
-        layout.findViewById(R.id.cvSurveyStep5SkillsINTERMEDIATE).setOnClickListener(new View.OnClickListener() {
+        btnIntermediate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                unselectAll(layout);
-                select(layout, R.id.flSurveyStep5SkillsINTERMEDIATEOverlay, R.id.cvSurveyStep5SkillsINTERMEDIATE);
+                unselectAll();
                 selected = CookingSkill.INTERMEDIATE;
+                select();
             }
         });
 
         // advanced button
         // beginner button
-        layout.findViewById(R.id.cvSurveyStep5SkillsADVANCED).setOnClickListener(new View.OnClickListener() {
+        btnAdvanced.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                unselectAll(layout);
-                select(layout, R.id.flSurveyStep5SkillsADVANCEDOverlay, R.id.cvSurveyStep5SkillsADVANCED);
+                unselectAll();
                 selected = CookingSkill.ADVANCED;
+                select();
             }
         });
     }
 
-    private void unselectAll(View view) {
-        FrameLayout beginner = view.findViewById(R.id.flSurveyStep5SkillsBEGINNEROverlay);
-        FrameLayout interm   = view.findViewById(R.id.flSurveyStep5SkillsINTERMEDIATEOverlay);
-        FrameLayout advanced = view.findViewById(R.id.flSurveyStep5SkillsADVANCEDOverlay);
+    private void unselectAll() {
+        btnBeginner.setBackgroundColor(getResources().getColor(R.color.white));
+        btnIntermediate.setBackgroundColor(getResources().getColor(R.color.white));
+        btnAdvanced.setBackgroundColor(getResources().getColor(R.color.white));
 
-        beginner.setBackgroundColor(getResources().getColor(R.color.textSecondary));
-        interm.setBackgroundColor(getResources().getColor(R.color.textSecondary));
-        advanced.setBackgroundColor(getResources().getColor(R.color.textSecondary));
-
+        btnBeginner.setTextColor(getResources().getColor(R.color.textSecondary));
+        btnIntermediate.setTextColor(getResources().getColor(R.color.textSecondary));
+        btnAdvanced.setTextColor(getResources().getColor(R.color.textSecondary));
     }
 
-    private void select(View view, int buttonOverlay, int cvID) {
-        view.findViewById(buttonOverlay).setBackgroundColor(
-                getResources().getColor(R.color.imageOverlayGreen));
+    private void select() {
+        Button button;
+        switch (selected) {
+            case BEGINNER:
+                button = btnBeginner;
+                break;
+            case INTERMEDIATE:
+                button = btnIntermediate;
+                break;
+            case ADVANCED:
+                button = btnAdvanced;
+                break;
+            default:
+                button = null;
+                break;
+        }
+
+        if (button != null) {
+            button.setBackgroundColor(getResources().getColor(R.color.imageOverlayGreen));
+            button.setTextColor(getResources().getColor(R.color.white));
+        }
     }
 
     public CookingSkill getSelected() {

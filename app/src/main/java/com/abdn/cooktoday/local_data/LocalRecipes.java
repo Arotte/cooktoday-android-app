@@ -33,8 +33,8 @@ public class LocalRecipes {
         if (recipes == null)
             recipes = new ArrayList<>();
 
-        if (recipes.contains(recipe)) {
-            int index = recipes.indexOf(recipe);
+        int index = contains(recipe);
+        if (index > -1) {
             this.recipes.get(index).addType(type);
         } else {
             recipes.add(new TypeRecipe(recipe, type));
@@ -141,6 +141,13 @@ public class LocalRecipes {
     // =============================================================================================
     // Helper enum and class
     // =============================================================================================
+
+    private int contains(Recipe recipe) {
+        for (int i = 0; i < recipes.size(); i++)
+            if (recipes.get(i).getRecipe() == recipe)
+                return i;
+        return -1;
+    }
 
     // Types of local recipes
     public enum Type {

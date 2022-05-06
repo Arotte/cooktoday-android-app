@@ -270,7 +270,7 @@ public class UploadActivity extends AppCompatActivity
                                         // recipe created on server
                                         btnUploadHandler.setState(ProgressButtonHandler.State.SUCCESS);
                                         Log.i(TAG, "Recipe successfully created!");
-                                        ToastMaker.make("Recipe added!", ToastMaker.Type.SUCCESS, UploadActivity.this);
+                                        ToastMaker.success("Recipe added!",  UploadActivity.this);
                                         LocalRecipes.i().addRecipe(recipe, LocalRecipes.Type.ADDED_BY_USER);
                                         finish();
                                     }
@@ -279,14 +279,14 @@ public class UploadActivity extends AppCompatActivity
                                         // error while creating recipe on server
                                         btnUploadHandler.setState(ProgressButtonHandler.State.DEFAULT);
                                         Log.i(TAG, "Error while creating recipe on server! Error code: " + errorCode);
-                                        ToastMaker.make("Oops! Something went wrong", ToastMaker.Type.ERROR, UploadActivity.this);
+                                        ToastMaker.error("Oops! Something went wrong", UploadActivity.this);
                                     }});
                     }
                     @Override
                     public void error(int errorCode) {
                         btnUploadHandler.setState(ProgressButtonHandler.State.DEFAULT);
                         Log.i(TAG, "Error while upload recipe image to AWS! Error code: " + errorCode);
-                        ToastMaker.make("Oops! Something went wrong", ToastMaker.Type.ERROR, UploadActivity.this);
+                        ToastMaker.error("Oops! Something went wrong", UploadActivity.this);
                     }
                 });
             } catch (FileNotFoundException e) {
@@ -309,7 +309,7 @@ public class UploadActivity extends AppCompatActivity
         if (!recipeDescriptionFilled)
             etRecipeDesc.setError("Description is required.");
         if (!atLeastOneIngred || !atLeastOneStep)
-            ToastMaker.make("At least one ingredient and one step is required.", ToastMaker.Type.ERROR, this);
+            ToastMaker.info("At least one ingredient and one step is required.", this);
         if (!servingsFilled)
             etServings.setError("Servings is required.");
         if (!caloriesFilled)

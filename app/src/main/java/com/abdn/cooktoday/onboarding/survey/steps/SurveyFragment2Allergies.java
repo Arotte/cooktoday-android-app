@@ -57,11 +57,11 @@ public class SurveyFragment2Allergies extends Fragment implements AllergiesRVAda
         allergies = new ArrayList<>(Arrays.asList(
                 "Egg-free",
                 "Gluten-free",
-                "Seafood-free",
-                "Sesame-free",
+                "Seafood-\nfree",
+                "Sesame-\nfree",
                 "Soy-free",
                 "Sulfite-free",
-                "Tree nut-free",
+                "Tree nut-\nfree",
                 "Peanut-free",
                 "Dairy-free",
                 "Wheat-free"

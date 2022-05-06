@@ -56,8 +56,8 @@ public class SurveyFragment3Diets extends Fragment implements DietsRVAdapter.Ite
 
     private void initAllergiesRV(View layout) {
         diets = new ArrayList<>(Arrays.asList(
-                "Vegetarian\n(no meat,\nno eggs)",
-                "Vegetarian\n(no meat,\nno dairy)",
+//                "Vegetarian\n(no meat,\nno eggs)",
+//                "Vegetarian\n(no meat,\nno dairy)",
                 "Vegetarian",
                 "Vegan",
                 "Low Fodmap",

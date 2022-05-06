@@ -168,7 +168,7 @@ public class PasteUrlBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void showErrorToast(String msg) {
-        ToastMaker.make(msg, ToastMaker.Type.ERROR, getActivity());
+        ToastMaker.error(msg, getActivity());
     }
 
     private void setButtonState(ButtonState state) {
